@@ -1,0 +1,182 @@
+name: oreed
+description: Oreed is an eCommers app for oreed Co.
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  cupertino_icons: ^0.1.2
+  random_pk: any
+  shimmer: ^0.0.6
+  transparent_image: ^0.1.0
+  flutter_slidable: ^0.4.9
+  flutter_rating: ^0.0.2
+  http: ^0.12.0+4
+  provider:
+  connectivity: ^0.4.9
+  intro_views_flutter: ^2.8.1
+  #easy_localization: ^1.3.1
+  photo_view: ^0.10.2
+  giffy_dialog: ^1.3.0
+  shared_preferences: ^0.5.7
+  dio: ^3.0.9
+  path_provider: ^1.6.11
+  sqflite: ^1.3.1
+  validators: ^2.0.0+1
+  email_validator: ^1.0.5
+  image_picker: ^0.6.7+4
+  flushbar: ^1.10.4
+  lite_rolling_switch: ^0.1.1
+  flutter_local_notifications: ^1.4.4+1
+  flutter_phoenix: ^0.1.0
+  smooth_page_indicator: ^0.1.5
+  dartz: ^0.9.0-dev.5
+  cached_network_image: ^2.2.0+1
+  flutter_html: ^1.0.2
+  auto_size_text: ^2.1.0
+  modal_bottom_sheet: ^0.2.0+1
+  animated_text_kit: ^2.2.0
+  timeago: ^2.0.27
+  rflutter_alert: ^1.0.2
+  smooth_star_rating: ^1.1.1
+  flutter_spinkit: ^4.1.2
+  path: ^1.7.0
+  carousel_slider: ^2.3.1
+  toast: ^0.1.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_launcher_icons: "^0.8.0"
+
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/logo/icon.png"
+
+flutter:
+
+  uses-material-design: true
+
+
+  fonts:
+    - family : Montserrat
+      fonts:
+        - asset: assets/font/Montserrat-Bold.otf
+        - asset: assets/font/Montserrat-BoldItalic.otf
+        - asset: assets/font/Montserrat-Medium.otf
+        - asset: assets/font/Montserrat-Regular.otf
+        - asset: assets/font/Montserrat-SemiBold.otf
+        - asset: assets/font/Montserrat-SemiBoldItalic.otf
+
+  assets:
+    - assets/intro/1.png
+    - assets/intro/2.png
+    - assets/intro/3.png
+    - assets/img/google.png
+    - assets/img/googlewallet.png
+    - assets/img/credit.png
+    - assets/img/handshake.png
+    - assets/img/paypal.png
+    - assets/img/icon_facebook.png
+    - assets/img/Logo.png
+    - assets/img/Rectangle.png
+    - assets/img/girl.png
+    - assets/img/loginscreenbackground.png
+    - assets/img/backgroundgirl.png
+    - assets/img/man.png
+    - assets/img/search.png
+    - assets/img/search2.png
+    - assets/img/chat.png
+    - assets/img/notifications-button.png
+    - assets/img/baner1.png
+    - assets/img/baner2.png
+    - assets/img/baner3.png
+    - assets/img/baner4.png
+    - assets/img/baner12.png
+    - assets/icon/book.png
+    - assets/icon/camera.png
+    - assets/icon/fashion.png
+    - assets/icon/food.png
+    - assets/icon/game.png
+    - assets/icon/handphone.png
+    - assets/icon/health.png
+    - assets/icon/mesin.png
+    - assets/icon/otomotif.png
+    - assets/icon/pc.png
+    - assets/icon/sport.png
+    - assets/icon/ticket.png
+    - assets/icon/language.png
+    - assets/icon/left-arrow.png
+    - assets/img/flashsaleicon.png
+    - assets/img/notmessage.png
+    - assets/img/noNotification.png
+    - assets/img/womanface.jpg
+    - assets/icon/truck.png
+    - assets/icon/chat.png
+    - assets/icon/notification.png
+    - assets/icon/callcenter.png
+    - assets/icon/setting.png
+    - assets/icon/aboutapp.png
+    - assets/icon/shopping-cart.png
+    - assets/icon/message.png
+    - assets/img/bannerMan1.png
+    - assets/img/bannerMan2.png
+    - assets/img/bannerMan3.png
+    - assets/img/bannerMan4.png
+    - assets/img/bag.png
+    - assets/img/courier.png
+    - assets/img/house.png
+    - assets/img/order.png
+    - assets/img/payment.png
+    - assets/icon/girlcallcenter.png
+    - assets/img/checklist.png
+    - assets/icon/creditAcount.png
+    - assets/img/creditCardVisa.png
+    - assets/img/flashsalebanner.png
+    - assets/icon/flashSaleIcon.png
+    - assets/imgIllustration/IlustrasiMessage.png
+    - assets/avatars/female.png
+    - assets/avatars/male.png
+    - assets/avatars/emptycart.png
+    - assets/avatars/forgot_password.png
+    - assets/avatars/editProfile.png
+    - assets/avatars/checked.png
+    - assets/avatars/unchecked.png
+    - assets/imgIllustration/IlustrasiCart.png
+    - assets/language/en-US.json
+    - assets/language/ar-DZ.json
+    - assets/gif/earth.gif
+    - assets/img/arab.png
+    - assets/img/us.png
+    - assets/oreedImages/adamoxy.jpg
+    - assets/oreedImages/splash_logo.png
+    - assets/oreedImages/_213_diversity_flatline.png
+    - assets/oreedImages/sell.png
+    - assets/oreedImages/buy.png
+    - assets/oreedImages/_34.png
+    - assets/oreedImages/_394_credit_card_flatline.png
+    - assets/oreedImages/delivery.png
+    - assets/oreedImages/logo.png
+    - assets/oreedImages/welcomscreen.png
+    - assets/oreedImages/splash-screen.png
+    - assets/oreedImages/splash_logo.png
+
+    - assets/oreedImages/offersOrAdds/1.jpg
+    - assets/oreedImages/offersOrAdds/2.jpg
+    - assets/oreedImages/offersOrAdds/4.jpg
+    - assets/oreed/offers_1.png
+    - assets/oreed/offer_2.png
+    - assets/oreed/man_shoes_1.png
+    - assets/oreed/pngguru.png
+    - assets/logo/loader_logo.png
+
+    - assets/logo/
