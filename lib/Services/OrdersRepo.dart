@@ -8,13 +8,10 @@ import 'package:oreed/providers/CartProvider.dart';
 import 'package:oreed/resources/ApiHandler.dart';
 
 class OrdersRepo {
-  ////////////////////////////////  Method for LogInWithOtp
-
   Future<ApiResponse> fetchOrdersList(
       {int userId, String currencyCode = "SDG"}) async {
     ApiResponse apiResponse;
     try {
-      //print("################### Back Track to OrdersRepo => fetchOrdersList");
       await ApiHandler()
           .postMethodWithoutToken(url: baseuRL + 'getorders', body: {
         "customers_id": userId, //userId,
@@ -53,8 +50,6 @@ class OrdersRepo {
   Future<ApiResponse> fetchTimeZoneList(String countryId) async {
     ApiResponse apiResponse;
     try {
-      print(
-          "########################### Back Track to CountryRepo => fetchTimeZoneList");
       await ApiHandler().postMethodWithoutToken(
           url: baseuRL + 'getzones',
           body: {"zone_country_id": countryId}).then((serverApiResponse) async {
@@ -85,33 +80,12 @@ class OrdersRepo {
     ApiResponse apiResponse;
     print(fullOrder);
     try {
-      print(
-          "########################### Back Track to OrdersRepo => placeOrder");
-      //print("########################### fullOrder ${fullOrder.toMap()}");
       await ApiHandler()
           .postMethodWithoutToken(
               url: baseuRL + 'addtoorder', body: fullOrder.toMap())
           .then((serverApiResponse) async {
-        print(
-            "***********************************  serverApiResponse  *******");
-        print(serverApiResponse.object);
-        print(serverApiResponse.code);
-        print(serverApiResponse.msg);
         if (serverApiResponse.code == 1) {
           var res = json.decode(serverApiResponse.object);
-          print(
-              "converted To Json localy and manualy !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-          print(res["success"].toString());
-          print(res["message"].toString());
-          print(res["success"].toString());
-          // print(res[0].toString());
-          print(res.toString());
-          print(
-              "converted To Json localy and manualy !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-          print(res.toString());
-          print(
-              "converted To Json localy and manualy !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-          print(res.toString());
           if (res["success"] == "1") {
             apiResponse = new ApiResponse(
                 code: 1, msg: res["message"], object: res["data"]);
@@ -125,8 +99,6 @@ class OrdersRepo {
         }
       });
     } catch (error) {
-      //print("######################################################");
-      print("error : ${error}");
       apiResponse =
           new ApiResponse(code: 0, msg: "Something Wrong, Try again later");
     }

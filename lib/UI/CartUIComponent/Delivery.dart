@@ -235,7 +235,6 @@ class _deliveryState extends State<delivery> {
                           //     checkProvider.setPostCode(value);
                           //   },
                           // ),
-
                           /// TextFromField Confirme Password
                           Padding(
                             padding: EdgeInsets.all(12.0),
@@ -346,6 +345,7 @@ class _deliveryState extends State<delivery> {
                               break;
                             case ConnectionState.done:
                               if (apiResponse.code == 1) {
+                                apiResponse.object.toSet().toList();
                                 return ListView.builder(
                                     scrollDirection: Axis.vertical,
                                     itemCount: apiResponse.object.length,

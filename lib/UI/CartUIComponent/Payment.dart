@@ -157,38 +157,42 @@ class RadioGroupWidget extends State {
             width: MediaQuery.of(context).size.width,
             child: ListView(
               children: [
-                Container(
-                  color: cart.selectedPayMent == 1 ? Colors.grey : Colors.white,
-                  child: InkWell(
-                    onTap: () {
-                      cart.setPayMent(1);
-                    },
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                              Text("Cash On Delivery",
-                                  style: TextStyle(color: Colors.black)),
-                              Container(
-                                // padding: EdgeInsets.only(left: 1),
-                                child: Image.asset(
-                                  "assets/img/handshake.png",
-                                  height: 55.0,
+                Visibility(
+                  visible: false,
+                  child: Container(
+                    color:
+                        cart.selectedPayMent == 1 ? Colors.grey : Colors.white,
+                    child: InkWell(
+                      onTap: () {
+                        cart.setPayMent(1);
+                      },
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisSize: MainAxisSize.max,
+                              children: <Widget>[
+                                Text("Cash On Delivery",
+                                    style: TextStyle(color: Colors.black)),
+                                Container(
+                                  // padding: EdgeInsets.only(left: 1),
+                                  child: Image.asset(
+                                    "assets/img/handshake.png",
+                                    height: 55.0,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
+                            padding: EdgeInsets.all(12),
+                            width: MediaQuery.of(context).size.width,
                           ),
-                          padding: EdgeInsets.all(12),
-                          width: MediaQuery.of(context).size.width,
-                        ),
-                        // Padding(
-                        //   padding: EdgeInsets.only(top: 5.0),
-                        // ),
-                      ],
+                          // Padding(
+                          //   padding: EdgeInsets.only(top: 5.0),
+                          // ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -227,38 +231,42 @@ class RadioGroupWidget extends State {
                     ),
                   ),
                 ),
-                Container(
-                  color: cart.selectedPayMent == 3 ? Colors.grey : Colors.white,
-                  child: InkWell(
-                    onTap: () {
-                      cart.setPayMent(3);
-                    },
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                              Text("SyberPay",
-                                  style: TextStyle(color: Colors.black)),
-                              Container(
-                                // padding: EdgeInsets.only(left: 1),
-                                child: Image.asset(
-                                  "assets/logo/syberpay.png",
-                                  height: 55.0,
+                Visibility(
+                  visible: false,
+                  child: Container(
+                    color:
+                        cart.selectedPayMent == 3 ? Colors.grey : Colors.white,
+                    child: InkWell(
+                      onTap: () {
+                        cart.setPayMent(3);
+                      },
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisSize: MainAxisSize.max,
+                              children: <Widget>[
+                                Text("SyberPay",
+                                    style: TextStyle(color: Colors.black)),
+                                Container(
+                                  // padding: EdgeInsets.only(left: 1),
+                                  child: Image.asset(
+                                    "assets/logo/syberpay.png",
+                                    height: 55.0,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
+                            padding: EdgeInsets.all(12),
+                            width: MediaQuery.of(context).size.width,
                           ),
-                          padding: EdgeInsets.all(12),
-                          width: MediaQuery.of(context).size.width,
-                        ),
-                        // Padding(
-                        //   padding: EdgeInsets.only(top: 5.0),
-                        // ),
-                      ],
+                          // Padding(
+                          //   padding: EdgeInsets.only(top: 5.0),
+                          // ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

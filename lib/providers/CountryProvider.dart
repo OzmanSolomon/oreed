@@ -7,7 +7,7 @@ import 'package:oreed/Services/CountryRepo.dart';
 
 class CountryProvider with ChangeNotifier {
   CountryProvider() {
-    fetchTimeZoneList();
+    // fetchTimeZoneList();
   }
   List<DropdownMenuItem<Country>> _dropdownMenuCountries = [];
   List<DropdownMenuItem<TimeZone>> _dropdownTimeZones = [];

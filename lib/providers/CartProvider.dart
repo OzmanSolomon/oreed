@@ -15,7 +15,7 @@ class CartProvider with ChangeNotifier {
   double _total = 0.0;
   int _stage = 1;
   int _selectDeliveryMethod = 1;
-  int _selectedPayMent = 1;
+  int _selectedPayMent = 2;
 
   List<Product> get getCart => _inCart;
   double get getTotalPrice => _total;
@@ -70,8 +70,8 @@ class CartProvider with ChangeNotifier {
       incrementQty(cartItem: product);
     } else {
       print("trying to add new element to cart :");
-      _inCart.add(product);
       product.productsQuantity=1;
+      _inCart.add(product);
       notifyListeners();
       print("after adding ${_inCart.length} :");
     }
@@ -112,6 +112,7 @@ class CartProvider with ChangeNotifier {
   void placeOrder({GlobalKey<ScaffoldState> scaffoldKey, User user}) async {
     var _myProducts = [];
     _inCart.forEach((item) => _myProducts.add(item.toMap()));
+    
     Navigator.of(scaffoldKey.currentContext).push(
       PageRouteBuilder(
           opaque: false,
@@ -127,6 +128,7 @@ class CartProvider with ChangeNotifier {
     print("Address: ${_currentAddress.toMap()}");
     //print("############################################");
     print("Cart Items: ${_myProducts}");
+    print("$_selectDeliveryMethod");
 
     try {
       FullOrder myOrder = new FullOrder(
