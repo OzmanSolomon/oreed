@@ -10,7 +10,7 @@ class CountryProvider with ChangeNotifier {
     // fetchTimeZoneList();
   }
   List<DropdownMenuItem<Country>> _dropdownMenuCountries = [];
-  List<DropdownMenuItem<TimeZone>> _dropdownTimeZones = [];
+  List<DropdownMenuItem<TimeZone>> dropdownTimeZones  ;
 
   Country _selectedCountry;
   TimeZone _selectedTimeZone;
@@ -22,7 +22,7 @@ class CountryProvider with ChangeNotifier {
   TimeZone get currentTimeZone => _selectedTimeZone;
 
   List<DropdownMenuItem<Country>> get countryList => _dropdownMenuCountries;
-  List<DropdownMenuItem<TimeZone>> get timeZoneList => _dropdownTimeZones;
+  List<DropdownMenuItem<TimeZone>> get timeZoneList => dropdownTimeZones;
 
   bool get isLoadingCountry => _isLoadingCountry;
   bool get isLoadingTimeZone => _isLoadingTimeZone;
@@ -53,13 +53,13 @@ class CountryProvider with ChangeNotifier {
   }
 
   void emptyTimeZonesList() {
-    _dropdownTimeZones.clear();
+    dropdownTimeZones.clear();
     _selectedTimeZone = null;
-    _dropdownTimeZones = [];
+    dropdownTimeZones = [];
     notifyListeners();
   }
 
-  void fetchTimeZoneList() async {
+  dynamic fetchTimeZoneList() async {
     _isLoadingTimeZone = true;
     try {
       String countryId = currentCountry == null
@@ -69,8 +69,9 @@ class CountryProvider with ChangeNotifier {
         if (apiResponse != null) {
           switch (apiResponse.code) {
             case 1:
+                dropdownTimeZones=[];
               for (TimeZone timeZone in apiResponse.object) {
-                _dropdownTimeZones.add(
+                dropdownTimeZones.add(
                   DropdownMenuItem(
                     child: Text(timeZone.zoneName),
                     value: timeZone,
@@ -78,6 +79,7 @@ class CountryProvider with ChangeNotifier {
                 );
               }
               _isLoadingTimeZone = false;
+              return dropdownTimeZones;
               notifyListeners();
               break;
             default:

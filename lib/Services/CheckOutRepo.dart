@@ -20,7 +20,6 @@ class CheckOutRepo {
       await ApiHandler().postMethodWithoutToken(
           url: baseuRL + 'getalladdress',
           body: {
-            "language_id": lang,
             "customers_id": userId
           }).then((serverApiResponse) async {
         if (serverApiResponse.code == 1) {
@@ -32,6 +31,7 @@ class CheckOutRepo {
                 code: 1,
                 msg: shippingAddressModel.message,
                 object: shippingAddressModel.myAddresses);
+                
           } else {
             apiResponse = new ApiResponse(
                 code: int.parse(shippingAddressModel.success),

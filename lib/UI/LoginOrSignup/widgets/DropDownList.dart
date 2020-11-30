@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oreed/Models/ApiResponse.dart';
 import 'package:oreed/providers/CountryProvider.dart';
 import 'package:provider/provider.dart';
 
@@ -83,10 +84,20 @@ class TimeZoneDropDown extends StatefulWidget {
 }
 
 class _TimeZoneDropDownState extends State<TimeZoneDropDown> {
+  Future _address;
+  @override
+  void initState() {
+    super.initState();
+    _address = CountryProvider().fetchTimeZoneList();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Consumer<CountryProvider>(builder: (context, myTimeZone, _) {
-      return myTimeZone.isLoadingTimeZone
+    return FutureBuilder(
+      future: _address,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+      var myTimeZone = snapshot.data;
+      return myTimeZone == null || myTimeZone.isEmpty
           ? Center(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -101,7 +112,7 @@ class _TimeZoneDropDownState extends State<TimeZoneDropDown> {
                 ],
               ),
             )
-          : myTimeZone.timeZoneList.isNotEmpty
+          : myTimeZone.isNotEmpty
               ? Center(
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton(

@@ -14,22 +14,22 @@ import 'package:oreed/providers/CountryProvider.dart';
 import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
-class delivery extends StatefulWidget {
-  String id;
-  delivery(this.id);
+class Address extends StatefulWidget {
+  final String id;
+  Address(this.id);
   @override
-  _deliveryState createState() => _deliveryState();
+  _AddressState createState() => _AddressState();
 }
 
-class _deliveryState extends State<delivery> {
+class _AddressState extends State<Address> {
   final _formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
-  Future<ApiResponse> _categories;
+  Future<ApiResponse> _address;
 
   @override
   void initState() {
     super.initState();
-    _categories = CheckOutRepo().fetchAddressList(lang: "1", userId: widget.id);
+    _address = CheckOutRepo().fetchAddressList(userId: widget.id);
   }
 
   @override
@@ -329,7 +329,7 @@ class _deliveryState extends State<delivery> {
                     // height: MediaQuery.of(context).size.height ,
                     child: FutureBuilder(
                         future:
-                            _categories, // here you provide your future. In your case Provider.of<PeopleModel>(context).fetchPeople()
+                            _address, // here you provide your future. In your case Provider.of<PeopleModel>(context).fetchPeople()
                         builder:
                             (BuildContext context, AsyncSnapshot snapshot) {
                           var apiResponse = snapshot.data;
@@ -338,22 +338,36 @@ class _deliveryState extends State<delivery> {
                               return Container();
                               break;
                             case ConnectionState.waiting:
-                              return Container();
+                              return Center(
+                                  child: Container(
+                                child: CircularProgressIndicator(),
+                                height: 50,
+                                width: 50,
+                              ));
                               break;
                             case ConnectionState.active:
                               return Container();
                               break;
                             case ConnectionState.done:
                               if (apiResponse.code == 1) {
-                                apiResponse.object.toSet().toList();
-                                return ListView.builder(
-                                    scrollDirection: Axis.vertical,
-                                    itemCount: apiResponse.object.length,
-                                    itemBuilder: (context, index) {
-                                      return AddressLine(
-                                          myAddresses:
-                                              apiResponse.object[index]);
-                                    });
+                                if (apiResponse.object != null &&
+                                    apiResponse.object.isNotEmpty) {
+                                  apiResponse.object.toSet().toList();
+                                  return ListView.builder(
+                                      scrollDirection: Axis.vertical,
+                                      itemCount: apiResponse.object.length,
+                                      itemBuilder: (context, index) {
+                                        return AddressLine(
+                                            myAddresses:
+                                                apiResponse.object[index]);
+                                      });
+                                } else {
+                                  return Center(
+                                      child: Container(
+                                          child: CircularProgressIndicator(),
+                                          height: 50,
+                                          width: 50));
+                                }
                               } else {
                                 return Container(
                                   child: Center(
@@ -442,8 +456,8 @@ class _AddressLineState extends State<AddressLine> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+
     setState(() {
       isDefault = widget.myAddresses.defaultAddress == 1 ?? false;
     });
@@ -486,8 +500,9 @@ class _AddressLineState extends State<AddressLine> {
                     value: widget.myAddresses.street),
               ],
             ),
-            subtitle: Visibility(visible: false,
-                          child: Row(
+            subtitle: Visibility(
+              visible: false,
+              child: Row(
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Expanded(

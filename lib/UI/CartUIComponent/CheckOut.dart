@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:oreed/UI/CartUIComponent/Delivery.dart';
+import 'package:oreed/UI/CartUIComponent/address.dart';
 import 'package:oreed/UI/CartUIComponent/Payment.dart';
 import 'package:oreed/UI/GenralWidgets/ShowSnacker.dart';
 import 'package:oreed/Utiles/Constants.dart';
@@ -20,9 +20,8 @@ class _CheckOutState extends State<CheckOut> {
   bool liveSession = false;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    Provider.of<CountryProvider>(context, listen: false).fetchTimeZoneList();
+    // CountryProvider().fetchTimeZoneList();
   }
 
   @override
@@ -52,7 +51,7 @@ class _CheckOutState extends State<CheckOut> {
       key: _key,
       body: Consumer<CartProvider>(builder: (context, cart, child) {
         return _user == null
-            ? CircularProgressIndicator()
+            ? Center(child: Container(child: CircularProgressIndicator(),height: 50,width: 50))
             : Stack(
                 fit: StackFit.expand,
                 children: <Widget>[
@@ -411,7 +410,7 @@ class _CheckOutState extends State<CheckOut> {
                               height: height - 175,
                               child: Column(
                                 children: [
-                                  Expanded(child: delivery(_user.id)),
+                                  Expanded(child: Address(_user.id)),
                                   Container(
                                     height: 45,
                                     margin: EdgeInsets.only(
