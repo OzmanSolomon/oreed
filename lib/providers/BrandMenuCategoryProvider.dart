@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:oreed/Models/CategoryModel.dart';
-import 'package:oreed/Services/BrandMenuCategoryRepo.dart';
+import 'package:oreeed/Models/CategoryModel.dart';
+import 'package:oreeed/Services/BrandMenuCategoryRepo.dart';
 
 // used OTPProvider instedbecuase of an error in the scaffoldkey
 //not used lines are commented

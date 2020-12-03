@@ -1,6 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:oreed/Library/Language_Library/lib/easy_localization_delegate.dart';
+import 'package:oreeed/Library/Language_Library/lib/easy_localization_delegate.dart';
 
 class NoData extends StatelessWidget {
   @override

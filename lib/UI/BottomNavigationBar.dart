@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:oreed/Library/Language_Library/lib/easy_localization_delegate.dart';
-import 'package:oreed/Library/Language_Library/lib/easy_localization_provider.dart';
-import 'package:oreed/UI/AcountUIComponent/Profile.dart';
-import 'package:oreed/UI/BrandUIComponent/BrandLayout.dart';
-import 'package:oreed/UI/CartUIComponent/CartLayout.dart';
-import 'package:oreed/UI/HomeUIComponent/Home.dart';
+import 'package:oreeed/Library/Language_Library/lib/easy_localization_delegate.dart';
+import 'package:oreeed/Library/Language_Library/lib/easy_localization_provider.dart';
+import 'package:oreeed/UI/AcountUIComponent/Profile.dart';
+import 'package:oreeed/UI/BrandUIComponent/BrandLayout.dart';
+import 'package:oreeed/UI/CartUIComponent/CartLayout.dart';
+import 'package:oreeed/UI/HomeUIComponent/Home.dart';
 
 import 'GenralWidgets/NetworkSensitive.dart';
 
-class bottomNavigationBar extends StatefulWidget {
+class BottomNavigationBarPage extends StatefulWidget {
+  final int initIndex;
+  BottomNavigationBarPage({this.initIndex});
   @override
-  _bottomNavigationBarState createState() => _bottomNavigationBarState();
+  _BottomNavigationBarPageState createState() =>
+      _BottomNavigationBarPageState();
 }
 
-class _bottomNavigationBarState extends State<bottomNavigationBar> {
+class _BottomNavigationBarPageState extends State<BottomNavigationBarPage> {
   int currentIndex = 0;
 
   /// Set a type current number a layout class
@@ -31,6 +34,13 @@ class _bottomNavigationBarState extends State<bottomNavigationBar> {
       default:
         return NetworkSensitive(child: Menu());
     }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    currentIndex = widget.initIndex != null ? widget.initIndex : 0;
   }
 
   /// Build BottomNavigationBar Widget

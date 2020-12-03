@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:oreed/UI/BottomNavigationBar.dart';
+import 'package:oreeed/UI/BottomNavigationBar.dart';
 
 /// Componen Login Animation to set Animation in login like a bounce ball to fullscreen
 class LoginAnimation extends StatefulWidget {
@@ -41,7 +41,7 @@ class _LoginAnimationState extends State<LoginAnimation> {
     widget.animationController.addListener(() {
       if (widget.animation.isCompleted) {
         Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (BuildContext context) => new bottomNavigationBar()));
+            builder: (BuildContext context) => new BottomNavigationBarPage()));
       }
     });
 

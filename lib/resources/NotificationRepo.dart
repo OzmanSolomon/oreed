@@ -1,6 +1,6 @@
 import 'package:http/http.dart' as http;
-import 'package:oreed/Models/ApiResponse.dart';
-import 'package:oreed/providers/NotificationProvider.dart';
+import 'package:oreeed/Models/ApiResponse.dart';
+import 'package:oreeed/providers/NotificationProvider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NotificationRepo {

@@ -1,14 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:oreed/Library/Language_Library/lib/easy_localization_delegate.dart';
-import 'package:oreed/Library/Language_Library/lib/easy_localization_provider.dart';
-import 'package:oreed/Models/ApiResponse.dart';
-import 'package:oreed/Models/ProductsModel.dart';
-import 'package:oreed/Services/ProductRepo.dart';
-import 'package:oreed/UI/BrandUIComponent/NoData.dart';
-import 'package:oreed/UI/HomeUIComponent/DetailProduct.dart';
-import 'package:oreed/UI/Products/ListView/HorizontalProductsList.dart';
-import 'package:oreed/providers/ProductsProvider.dart';
+import 'package:oreeed/Library/Language_Library/lib/easy_localization_delegate.dart';
+import 'package:oreeed/Library/Language_Library/lib/easy_localization_provider.dart';
+import 'package:oreeed/Models/ApiResponse.dart';
+import 'package:oreeed/Models/ProductsModel.dart';
+import 'package:oreeed/Services/ProductRepo.dart';
+import 'package:oreeed/UI/BrandUIComponent/NoData.dart';
+import 'package:oreeed/UI/HomeUIComponent/ProductDetails.dart';
+import 'package:oreeed/UI/Products/ListView/HorizontalProductsList.dart';
+import 'package:oreeed/providers/ProductsProvider.dart';
 import 'package:provider/provider.dart';
 
 class searchAppbar extends StatefulWidget {
@@ -145,7 +145,7 @@ class _searchAppbarState extends State<searchAppbar> {
                                 onTap: () {
                                   Navigator.of(context).push(PageRouteBuilder(
                                       pageBuilder: (_, __, ___) =>
-                                          new detailProduk(
+                                          new ProductDetails(
                                               apiResponse.object[index]),
                                       transitionDuration:
                                           Duration(milliseconds: 750),
@@ -379,7 +379,7 @@ class _searchAppbarState extends State<searchAppbar> {
                                         Navigator.of(context).push(
                                           PageRouteBuilder(
                                               pageBuilder: (_, __, ___) =>
-                                                  new detailProduk(productProvider
+                                                  new ProductDetails(productProvider
                                                           .filteredProductList[
                                                       index]),
                                               transitionDuration:

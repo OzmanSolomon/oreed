@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:oreed/Utiles/databaseHelper.dart';
+import 'package:oreeed/Utiles/databaseHelper.dart';
 
 class AppProvider with ChangeNotifier {
   // init values and params

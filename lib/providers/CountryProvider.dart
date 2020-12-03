@@ -1,14 +1,12 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:oreed/Models/CountryModel.dart';
-import 'package:oreed/Models/TimeZone.dart';
-import 'package:oreed/Services/CountryRepo.dart';
+import 'package:oreeed/Models/CountryModel.dart';
+import 'package:oreeed/Models/TimeZone.dart';
+import 'package:oreeed/Services/CountryRepo.dart';
 
 class CountryProvider with ChangeNotifier {
-  CountryProvider() {
-    // fetchTimeZoneList();
-  }
+ 
   List<DropdownMenuItem<Country>> _dropdownMenuCountries = [];
   List<DropdownMenuItem<TimeZone>> dropdownTimeZones  ;
 
@@ -58,8 +56,7 @@ class CountryProvider with ChangeNotifier {
     dropdownTimeZones = [];
     notifyListeners();
   }
-
-  dynamic fetchTimeZoneList() async {
+  void fetchTimeZoneList() async {
     _isLoadingTimeZone = true;
     try {
       String countryId = currentCountry == null
@@ -69,7 +66,7 @@ class CountryProvider with ChangeNotifier {
         if (apiResponse != null) {
           switch (apiResponse.code) {
             case 1:
-                dropdownTimeZones=[];
+            dropdownTimeZones=[];
               for (TimeZone timeZone in apiResponse.object) {
                 dropdownTimeZones.add(
                   DropdownMenuItem(
@@ -79,7 +76,6 @@ class CountryProvider with ChangeNotifier {
                 );
               }
               _isLoadingTimeZone = false;
-              return dropdownTimeZones;
               notifyListeners();
               break;
             default:
@@ -95,6 +91,43 @@ class CountryProvider with ChangeNotifier {
     }
   }
 }
+
+  // dynamic fetchTimeZoneList2() async {
+  //   _isLoadingTimeZone = true;
+  //   try {
+  //     String countryId = currentCountry == null
+  //         ? "199"
+  //         : currentCountry.countriesId.toString();
+  //     CountryRepo().fetchTimeZoneList(countryId).then((apiResponse) {
+  //       if (apiResponse != null) {
+  //         switch (apiResponse.code) {
+  //           case 1:
+  //               dropdownTimeZones=[];
+  //             for (TimeZone timeZone in apiResponse.object) {
+  //               dropdownTimeZones.add(
+  //                 DropdownMenuItem(
+  //                   child: Text(timeZone.zoneName),
+  //                   value: timeZone,
+  //                 ),
+  //               );
+  //             }
+  //             _isLoadingTimeZone = false;
+
+  //             notifyListeners();
+  //             break;
+  //           default:
+  //             break;
+  //         }
+  //       } else {}
+  //     });
+  //   } catch (Exception) {
+  //     _isLoadingTimeZone = false;
+
+  //     print("Exception:$Exception");
+  //     notifyListeners();
+  //   }
+  // }
+
 
 class Model {
   String name;

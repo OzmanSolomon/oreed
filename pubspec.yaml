@@ -1,5 +1,5 @@
-name: oreed
-description: Oreed is an eCommers app for oreed Co.
+name: oreeed
+description: Oreeed is an eCommers app for oreeed Co.
 
 version: 1.0.0+1
 
@@ -11,7 +11,7 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-
+  flutter_statusbarcolor: ^0.2.3
   cupertino_icons: ^0.1.2
   random_pk: any
   shimmer: ^0.0.6
@@ -157,26 +157,26 @@ flutter:
     - assets/gif/earth.gif
     - assets/img/arab.png
     - assets/img/us.png
-    - assets/oreedImages/adamoxy.jpg
-    - assets/oreedImages/splash_logo.png
-    - assets/oreedImages/_213_diversity_flatline.png
-    - assets/oreedImages/sell.png
-    - assets/oreedImages/buy.png
-    - assets/oreedImages/_34.png
-    - assets/oreedImages/_394_credit_card_flatline.png
-    - assets/oreedImages/delivery.png
-    - assets/oreedImages/logo.png
-    - assets/oreedImages/welcomscreen.png
-    - assets/oreedImages/splash-screen.png
-    - assets/oreedImages/splash_logo.png
+    - assets/oreeedImages/adamoxy.jpg
+    - assets/oreeedImages/splash_logo.png
+    - assets/oreeedImages/_213_diversity_flatline.png
+    - assets/oreeedImages/sell.png
+    - assets/oreeedImages/buy.png
+    - assets/oreeedImages/_34.png
+    - assets/oreeedImages/_394_credit_card_flatline.png
+    - assets/oreeedImages/delivery.png
+    - assets/oreeedImages/logo.png
+    - assets/oreeedImages/welcomscreen.png
+    - assets/oreeedImages/splash-screen.png
+    - assets/oreeedImages/splash_logo.png
 
-    - assets/oreedImages/offersOrAdds/1.jpg
-    - assets/oreedImages/offersOrAdds/2.jpg
-    - assets/oreedImages/offersOrAdds/4.jpg
-    - assets/oreed/offers_1.png
-    - assets/oreed/offer_2.png
-    - assets/oreed/man_shoes_1.png
-    - assets/oreed/pngguru.png
+    - assets/oreeedImages/offersOrAdds/1.jpg
+    - assets/oreeedImages/offersOrAdds/2.jpg
+    - assets/oreeedImages/offersOrAdds/4.jpg
+    - assets/oreeed/offers_1.png
+    - assets/oreeed/offer_2.png
+    - assets/oreeed/man_shoes_1.png
+    - assets/oreeed/pngguru.png
     - assets/logo/loader_logo.png
 
     - assets/logo/

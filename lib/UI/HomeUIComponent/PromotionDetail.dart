@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:oreed/Library/Language_Library/lib/easy_localization_delegate.dart';
-import 'package:oreed/Library/Language_Library/lib/easy_localization_provider.dart';
+import 'package:oreeed/Library/Language_Library/lib/easy_localization_delegate.dart';
+import 'package:oreeed/Library/Language_Library/lib/easy_localization_provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 class promoDetail extends StatefulWidget {

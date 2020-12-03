@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:oreed/resources/NotificationRepo.dart';
+import 'package:oreeed/resources/NotificationRepo.dart';
 
 class NotificationProvider with ChangeNotifier {
   bool _notifyTripStart = false;

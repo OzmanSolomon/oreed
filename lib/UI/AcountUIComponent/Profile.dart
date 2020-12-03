@@ -3,19 +3,19 @@ import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:oreed/Library/Language_Library/lib/easy_localization_delegate.dart';
-import 'package:oreed/Library/Language_Library/lib/easy_localization_provider.dart';
-import 'package:oreed/UI/AcountUIComponent/AboutApps.dart';
-import 'package:oreed/UI/AcountUIComponent/CallCenter.dart';
-import 'package:oreed/UI/AcountUIComponent/CreditCardSetting.dart';
-import 'package:oreed/UI/AcountUIComponent/Notification.dart';
-import 'package:oreed/UI/AcountUIComponent/languageSetting.dart';
-import 'package:oreed/UI/GenralWidgets/ShowSnacker.dart';
-import 'package:oreed/UI/LoginOrSignup/NewLogin.dart';
-import 'package:oreed/UI/OrderUIComponent/OrderHistory.dart';
-import 'package:oreed/Utiles/Constants.dart';
-import 'package:oreed/Utiles/databaseHelper.dart';
-import 'package:oreed/providers/AuthProvider.dart';
+import 'package:oreeed/Library/Language_Library/lib/easy_localization_delegate.dart';
+import 'package:oreeed/Library/Language_Library/lib/easy_localization_provider.dart';
+import 'package:oreeed/UI/AcountUIComponent/AboutApps.dart';
+import 'package:oreeed/UI/AcountUIComponent/CallCenter.dart';
+import 'package:oreeed/UI/AcountUIComponent/CreditCardSetting.dart';
+import 'package:oreeed/UI/AcountUIComponent/Notification.dart';
+import 'package:oreeed/UI/AcountUIComponent/languageSetting.dart';
+import 'package:oreeed/UI/GenralWidgets/ShowSnacker.dart';
+import 'package:oreeed/UI/LoginOrSignup/NewLogin.dart';
+import 'package:oreeed/UI/OrderUIComponent/OrderHistory.dart';
+import 'package:oreeed/Utiles/Constants.dart';
+import 'package:oreeed/Utiles/databaseHelper.dart';
+import 'package:oreeed/providers/AuthProvider.dart';
 import 'package:provider/provider.dart';
 
 import 'ProfileInfo.dart';
@@ -115,8 +115,10 @@ class _profilState extends State<profil> {
                               shape: BoxShape.circle,
                               color: Colors.blue,
                               image: DecorationImage(
+                                fit: BoxFit.cover,
                                 image: CachedNetworkImageProvider(
                                   "http://oreeed.com/${_user.avatar.toString()}",
+                                  
                                 ),
                               ),
                             ),
@@ -233,7 +235,7 @@ class _profilState extends State<profil> {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       image: DecorationImage(
-                        image: AssetImage("assets/oreedImages/splash_logo.png"),
+                        image: AssetImage("assets/oreeedImages/splash_logo.png"),
                       ),
                     ),
                   ),
@@ -278,7 +280,7 @@ class _profilState extends State<profil> {
                     child: Column(
                       /// Setting Category List
                       children: <Widget>[
-                        category(
+                        Category(
                           txt: liveSession
                               ? AppLocalizations.of(context).tr('editProfile')
                               : AppLocalizations.of(context).tr('login'),
@@ -297,7 +299,7 @@ class _profilState extends State<profil> {
                             }
                           },
                         ),
-                        category(
+                        Category(
                           txt:
                               AppLocalizations.of(context).tr('settingAccount'),
                           padding: 35.0,
@@ -311,7 +313,7 @@ class _profilState extends State<profil> {
                         ),
 
                         /// Call category class
-                        category(
+                        Category(
                           txt: AppLocalizations.of(context).tr('notification'),
                           padding: 35.0,
                           tap: () {
@@ -322,19 +324,21 @@ class _profilState extends State<profil> {
                             );
                           },
                         ),
-                        category(
-                          txt: AppLocalizations.of(context).tr('payments'),
-                          padding: 35.0,
-                          tap: () {
-                            Navigator.of(context).push(
-                              PageRouteBuilder(
-                                pageBuilder: (_, __, ___) =>
-                                    new creditCardSetting(),
-                              ),
-                            );
-                          },
+                        Visibility(visible: false,
+                                                  child: Category(
+                            txt: AppLocalizations.of(context).tr('payments'),
+                            padding: 35.0,
+                            tap: () {
+                              Navigator.of(context).push(
+                                PageRouteBuilder(
+                                  pageBuilder: (_, __, ___) =>
+                                      new creditCardSetting(),
+                                ),
+                              );
+                            },
+                          ),
                         ),
-                        category(
+                        Category(
                           txt: AppLocalizations.of(context).tr('myOrders'),
                           padding: 23.0,
                           tap: () {
@@ -353,7 +357,7 @@ class _profilState extends State<profil> {
                           },
                         ),
 
-                        category(
+                        Category(
                           txt: AppLocalizations.of(context).tr('language'),
                           padding: 30.0,
                           tap: () {
@@ -365,7 +369,7 @@ class _profilState extends State<profil> {
                             );
                           },
                         ),
-                        category(
+                        Category(
                           txt: AppLocalizations.of(context).tr('callCenter'),
                           padding: 30.0,
                           tap: () {
@@ -377,7 +381,7 @@ class _profilState extends State<profil> {
                           },
                         ),
 
-                        category(
+                        Category(
                           padding: 38.0,
                           txt: AppLocalizations.of(context).tr('aboutApps'),
                           tap: () {
@@ -454,13 +458,12 @@ class _SystemPadding extends StatelessWidget {
 }
 
 /// Component category class to set list
-class category extends StatelessWidget {
+class Category extends StatelessWidget {
+  final String txt;
+  final GestureTapCallback tap;
+  final double padding;
   @override
-  String txt;
-  GestureTapCallback tap;
-  double padding;
-
-  category({this.txt, this.tap, this.padding});
+  Category({this.txt, this.tap, this.padding});
 
   Widget build(BuildContext context) {
     return InkWell(

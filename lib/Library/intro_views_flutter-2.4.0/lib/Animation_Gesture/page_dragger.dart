@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:oreed/Library/intro_views_flutter-2.4.0/lib/Constants/constants.dart';
-import 'package:oreed/Library/intro_views_flutter-2.4.0/lib/Models/slide_update_model.dart';
+import 'package:oreeed/Library/intro_views_flutter-2.4.0/lib/Constants/constants.dart';
+import 'package:oreeed/Library/intro_views_flutter-2.4.0/lib/Models/slide_update_model.dart';
 
 /// This class is used to get user gesture and work according to it.
 

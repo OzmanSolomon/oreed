@@ -1,15 +1,15 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:oreed/Library/Language_Library/lib/easy_localization_delegate.dart';
-import 'package:oreed/Library/Language_Library/lib/easy_localization_provider.dart';
-import 'package:oreed/Library/carousel_pro/carousel_pro.dart';
-import 'package:oreed/Models/ApiResponse.dart';
-import 'package:oreed/Models/CategoryModel.dart';
-import 'package:oreed/Services/ProductRepo.dart';
-import 'package:oreed/UI/HomeUIComponent/Search.dart';
-import 'package:oreed/UI/Products/GridView/VerticalGProductsList.dart';
-import 'package:oreed/UI/Products/ListView/HorizontalProductsList.dart';
+import 'package:oreeed/Library/Language_Library/lib/easy_localization_delegate.dart';
+import 'package:oreeed/Library/Language_Library/lib/easy_localization_provider.dart';
+import 'package:oreeed/Library/carousel_pro/carousel_pro.dart';
+import 'package:oreeed/Models/ApiResponse.dart';
+import 'package:oreeed/Models/CategoryModel.dart';
+import 'package:oreeed/Services/ProductRepo.dart';
+import 'package:oreeed/UI/HomeUIComponent/Search.dart';
+import 'package:oreeed/UI/Products/GridView/VerticalGProductsList.dart';
+import 'package:oreeed/UI/Products/ListView/HorizontalProductsList.dart';
 import 'package:shimmer/shimmer.dart';
 
 class categoryDetail extends StatefulWidget {
@@ -75,10 +75,10 @@ class _categoryDetailState extends State<categoryDetail> {
           overlayShadowColors: Colors.white.withOpacity(0.9),
           overlayShadowSize: 0.9,
           images: [
-            AssetImage("assets/oreedImages/offersOrAdds/1.jpg"),
-            AssetImage("assets/oreedImages/offersOrAdds/2.jpg"),
-            AssetImage("assets/oreedImages/offersOrAdds/1.jpg"),
-            AssetImage("assets/oreedImages/offersOrAdds/4.jpg"),
+            AssetImage("assets/oreeedImages/offersOrAdds/1.jpg"),
+            AssetImage("assets/oreeedImages/offersOrAdds/2.jpg"),
+            AssetImage("assets/oreeedImages/offersOrAdds/1.jpg"),
+            AssetImage("assets/oreeedImages/offersOrAdds/4.jpg"),
           ],
         ),
       ),

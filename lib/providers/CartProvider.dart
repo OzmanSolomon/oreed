@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:oreed/Library/Language_Library/lib/easy_localization_delegate.dart';
-import 'package:oreed/Models/ProductsModel.dart';
-import 'package:oreed/Models/ShippingAddressModel.dart';
-import 'package:oreed/Services/OrdersRepo.dart';
-import 'package:oreed/UI/BottomNavigationBar.dart';
-import 'package:oreed/UI/GenralWidgets/ServerProcessLoader.dart';
-import 'package:oreed/UI/GenralWidgets/ShowSnacker.dart';
-import 'package:oreed/Utiles/databaseHelper.dart';
+import 'package:oreeed/Library/Language_Library/lib/easy_localization_delegate.dart';
+import 'package:oreeed/Models/ProductsModel.dart';
+import 'package:oreeed/Models/ShippingAddressModel.dart';
+import 'package:oreeed/Services/OrdersRepo.dart';
+import 'package:oreeed/UI/BottomNavigationBar.dart';
+import 'package:oreeed/UI/GenralWidgets/ServerProcessLoader.dart';
+import 'package:oreeed/UI/GenralWidgets/ShowSnacker.dart';
+import 'package:oreeed/Utiles/databaseHelper.dart';
 
 class CartProvider with ChangeNotifier {
   // init values and params
@@ -15,7 +15,7 @@ class CartProvider with ChangeNotifier {
   double _total = 0.0;
   int _stage = 1;
   int _selectDeliveryMethod = 1;
-  int _selectedPayMent = 2;
+  int _selectedPayMent = 1;
 
   List<Product> get getCart => _inCart;
   double get getTotalPrice => _total;
@@ -58,6 +58,7 @@ class CartProvider with ChangeNotifier {
   }
 
   void calculateTotalPrice() {
+    _total=0.0;
     _inCart.forEach((element) {
       _total += element.productsQuantity * double.parse(element.productsPrice);
     });
@@ -70,7 +71,7 @@ class CartProvider with ChangeNotifier {
       incrementQty(cartItem: product);
     } else {
       print("trying to add new element to cart :");
-      product.productsQuantity=1;
+      product.productsQuantity = 1;
       _inCart.add(product);
       notifyListeners();
       print("after adding ${_inCart.length} :");
@@ -112,12 +113,12 @@ class CartProvider with ChangeNotifier {
   void placeOrder({GlobalKey<ScaffoldState> scaffoldKey, User user}) async {
     var _myProducts = [];
     _inCart.forEach((item) => _myProducts.add(item.toMap()));
-    
+
     Navigator.of(scaffoldKey.currentContext).push(
       PageRouteBuilder(
           opaque: false,
           pageBuilder: (BuildContext context, _, __) {
-            return OverLayWidgetWithLoader();
+            return OverLayWidgetWithLoader(false);
           }),
     );
     //print("############################################");
@@ -148,6 +149,24 @@ class CartProvider with ChangeNotifier {
                   bgColor: Colors.grey.withOpacity(0.9),
                   textColor: Colors.black,
                   height: 25);
+                     Navigator.of(scaffoldKey.currentContext).push(
+                                PageRouteBuilder(
+                                    pageBuilder: (_, __, ___) =>
+                                        new BottomNavigationBarPage(),
+                                    transitionDuration:
+                                        Duration(milliseconds: 750),
+
+                                    /// Set animation with opacity
+                                    transitionsBuilder: (_,
+                                        Animation<double> animation,
+                                        __,
+                                        Widget child) {
+                                      return Opacity(
+                                        opacity: animation.value,
+                                        child: child,
+                                      );
+                                    }),
+                              );
               break;
             default:
               ShowSnackBar(
@@ -223,7 +242,7 @@ class CartProvider with ChangeNotifier {
           InkWell(
             onTap: () {
               Navigator.of(ctx).push(PageRouteBuilder(
-                  pageBuilder: (_, __, ___) => new bottomNavigationBar(),
+                  pageBuilder: (_, __, ___) => new BottomNavigationBarPage(),
                   transitionDuration: Duration(milliseconds: 750),
 
                   /// Set animation with opacity

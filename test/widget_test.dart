@@ -7,9 +7,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:oreed/main.dart';
+import 'package:oreeed/main.dart';
 
-// import 'package:oreed_patch/main.dart';
+// import 'package:oreeed_patch/main.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {

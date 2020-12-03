@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:oreed/UI/CartUIComponent/address.dart';
-import 'package:oreed/UI/CartUIComponent/Payment.dart';
-import 'package:oreed/UI/GenralWidgets/ShowSnacker.dart';
-import 'package:oreed/Utiles/Constants.dart';
-import 'package:oreed/Utiles/databaseHelper.dart';
-import 'package:oreed/providers/CartProvider.dart';
-import 'package:oreed/providers/CountryProvider.dart';
+import 'package:oreeed/UI/CartUIComponent/address.dart';
+import 'package:oreeed/UI/CartUIComponent/Payment.dart';
+import 'package:oreeed/UI/GenralWidgets/ShowSnacker.dart';
+import 'package:oreeed/Utiles/Constants.dart';
+import 'package:oreeed/Utiles/databaseHelper.dart';
+import 'package:oreeed/providers/CartProvider.dart';
+import 'package:oreeed/providers/CountryProvider.dart';
 import 'package:provider/provider.dart';
 
 class CheckOut extends StatefulWidget {
@@ -93,7 +93,7 @@ class _CheckOutState extends State<CheckOut> {
                                 shape: BoxShape.circle,
                                 image: DecorationImage(
                                   image:
-                                      AssetImage("assets/logo/oreedlogo.png"),
+                                      AssetImage("assets/logo/oreeedlogo.png"),
                                 ),
                               ),
                             ),

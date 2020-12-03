@@ -5,8 +5,8 @@
 // GNU licences.
 // ApiHandler v0.1
 import 'package:dio/dio.dart';
-import 'package:oreed/Models/ApiResponse.dart';
-import 'package:oreed/Utiles/databaseHelper.dart';
+import 'package:oreeed/Models/ApiResponse.dart';
+import 'package:oreeed/Utiles/databaseHelper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiHandler {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:oreed/Library/Language_Library/lib/easy_localization_delegate.dart';
-import 'package:oreed/Library/Language_Library/lib/easy_localization_provider.dart';
-import 'package:oreed/UI/GenralWidgets/BackButton.dart';
+import 'package:oreeed/Library/Language_Library/lib/easy_localization_delegate.dart';
+import 'package:oreeed/Library/Language_Library/lib/easy_localization_provider.dart';
+import 'package:oreeed/UI/GenralWidgets/BackButton.dart';
 
 class aboutApps extends StatefulWidget {
   @override
@@ -61,7 +61,7 @@ class _aboutAppsState extends State<aboutApps> {
                     child: Row(
                       children: <Widget>[
                         Image.asset(
-                          "assets/oreedImages/logo.PNG",
+                          "assets/oreeedImages/logo.PNG",
                           height: 50.0,
                         ),
                         Padding(

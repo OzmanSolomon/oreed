@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:oreed/Library/intro_views_flutter-2.4.0/lib/Models/page_view_model.dart';
-import 'package:oreed/Library/intro_views_flutter-2.4.0/lib/intro_views_flutter.dart';
-import 'package:oreed/UI/LoginOrSignup/ChoseLoginOrSignup.dart';
+import 'package:oreeed/Library/intro_views_flutter-2.4.0/lib/Models/page_view_model.dart';
+import 'package:oreeed/Library/intro_views_flutter-2.4.0/lib/intro_views_flutter.dart';
+import 'package:oreeed/UI/LoginOrSignup/ChoseLoginOrSignup.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class onBoarding extends StatefulWidget {

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:oreed/Models/ProductsModel.dart';
-import 'package:oreed/Services/ProductRepo.dart';
-import 'package:oreed/UI/GenralWidgets/ServerProcessLoader.dart';
-import 'package:oreed/UI/GenralWidgets/ShowSnacker.dart';
-import 'package:oreed/Utiles/Constants.dart';
-import 'package:oreed/Utiles/databaseHelper.dart';
+import 'package:oreeed/Models/ProductsModel.dart';
+import 'package:oreeed/Services/ProductRepo.dart';
+import 'package:oreeed/UI/GenralWidgets/ServerProcessLoader.dart';
+import 'package:oreeed/UI/GenralWidgets/ShowSnacker.dart';
+import 'package:oreeed/Utiles/Constants.dart';
+import 'package:oreeed/Utiles/databaseHelper.dart';
 
 // used OTPProvider instedbecuase of an error in the scaffoldkey
 //not used lines are commented
@@ -25,12 +25,17 @@ class ProductsProvider with ChangeNotifier {
   List<int> get likedProductsLists => _likedProducts;
 
   void addToLikedProducts(int id) {
-    _likedProducts.add(id);
+    if (!likedProductsLists.contains(id)) {
+      _likedProducts.add(id);
+    }
+
+    _likedProducts.toSet().toList();
     notifyListeners();
   }
 
   void deleteFromLikedProducts(int id) {
     _likedProducts.remove(id);
+    _likedProducts.toSet().toList();
     notifyListeners();
   }
 
@@ -110,7 +115,7 @@ class ProductsProvider with ChangeNotifier {
       PageRouteBuilder(
           opaque: false,
           pageBuilder: (BuildContext context, _, __) {
-            return OverLayWidgetWithLoader();
+            return OverLayWidgetWithLoader(false);
           }),
     );
 

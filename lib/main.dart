@@ -4,23 +4,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
-import 'package:oreed/UI/LoginOrSignup/ChoseLoginOrSignup.dart';
-import 'package:oreed/UI/bottomNavigationBar.dart';
-import 'package:oreed/Utiles/Constants.dart';
-import 'package:oreed/providers/AppProvider.dart';
-import 'package:oreed/providers/AuthProvider.dart';
-import 'package:oreed/providers/BrandMenuCategoryProvider.dart';
-import 'package:oreed/providers/CartProvider.dart';
-import 'package:oreed/providers/CheckOutProvider.dart';
-import 'package:oreed/providers/CountryProvider.dart';
-import 'package:oreed/providers/NetworkProvider.dart';
-import 'package:oreed/providers/NotificationProvider.dart';
-import 'package:oreed/providers/ProductsProvider.dart';
+import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
+import 'package:oreeed/UI/LoginOrSignup/ChoseLoginOrSignup.dart';
+import 'package:oreeed/Utiles/Constants.dart';
+import 'package:oreeed/providers/AppProvider.dart';
+import 'package:oreeed/providers/AuthProvider.dart';
+import 'package:oreeed/providers/BrandMenuCategoryProvider.dart';
+import 'package:oreeed/providers/CartProvider.dart';
+import 'package:oreeed/providers/CheckOutProvider.dart';
+import 'package:oreeed/providers/CountryProvider.dart';
+import 'package:oreeed/providers/NetworkProvider.dart';
+import 'package:oreeed/providers/NotificationProvider.dart';
+import 'package:oreeed/providers/ProductsProvider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Library/Language_Library/lib/easy_localization_delegate.dart';
 import 'Library/Language_Library/lib/easy_localization_provider.dart';
+import 'UI/BottomNavigationBar.dart';
 
 /// Run first apps open
 void main() {
@@ -37,20 +38,44 @@ void main() {
 
 /// Set orienttation
 class myApp extends StatelessWidget {
+  changeAppBar() async {
+    // change the status bar color to material color [green-400]
+    try {
+      await FlutterStatusbarcolor.setStatusBarColor(Color(0xffF7BE00));
+      if (useWhiteForeground(Color(0xffF7BE00))) {
+        FlutterStatusbarcolor.setStatusBarWhiteForeground(true);
+      } else {
+        FlutterStatusbarcolor.setStatusBarWhiteForeground(false);
+      }
+    } catch (e) {}
+
+// change the navigation bar color to material color [orange-200]
+    try {
+      await FlutterStatusbarcolor.setNavigationBarColor(Color(0xff033766));
+      if (useWhiteForeground(Color(0xff033766))) {
+        FlutterStatusbarcolor.setNavigationBarWhiteForeground(true);
+      } else {
+        FlutterStatusbarcolor.setNavigationBarWhiteForeground(false);
+      }
+    } catch (e) {}
+  }
+
   @override
   Widget build(BuildContext context) {
     var data = EasyLocalizationProvider.of(context).data;
 
-    /// To set orientation always portrait
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
+    // /// To set orientation always portrait
+    // SystemChrome.setPreferredOrientations([
+    //   DeviceOrientation.portraitUp,
+    //   DeviceOrientation.portraitDown,
+    // ]);
 
-    ///Set color status bar
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light.copyWith(
-      statusBarColor: Colors.transparent, //or set color with: Color(0xFF0000FF)
-    ));
+    // ///Set color status bar
+    // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light.copyWith(
+    //   statusBarColor: Colors.transparent, //or set color with: Color(0xFF0000FF)
+    // ));
+
+    changeAppBar();
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AppProvider()),
@@ -149,7 +174,7 @@ class _SplashScreenState extends State<SplashScreen> {
       if (_checkUerSession) {
         Navigator.of(context).pushReplacement(
           PageRouteBuilder(
-            pageBuilder: (_, __, ___) => bottomNavigationBar(),
+            pageBuilder: (_, __, ___) => BottomNavigationBarPage(),
           ),
         );
       } else {
@@ -194,7 +219,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       children: <Widget>[
                         Container(
                           child: Image.asset(
-                            'assets/oreedImages/splash_logo.png',
+                            'assets/oreeedImages/splash_logo.png',
                             width: 50,
                             height: 50,
                           ),
@@ -294,7 +319,7 @@ class _ThirdScreenState extends State<ThirdScreen> {
                           Navigator.of(context).pushReplacement(
                             PageRouteBuilder(
                               pageBuilder: (_, __, ___) =>
-                                  bottomNavigationBar(),
+                                  BottomNavigationBarPage(),
                             ),
                           );
                         }

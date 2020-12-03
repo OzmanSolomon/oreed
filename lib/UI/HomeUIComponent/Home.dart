@@ -1,15 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:oreed/Library/Language_Library/lib/easy_localization_delegate.dart';
-import 'package:oreed/Library/Language_Library/lib/easy_localization_provider.dart';
-import 'package:oreed/Models/ApiResponse.dart';
-import 'package:oreed/Services/ConfigurationRepo.dart';
-import 'package:oreed/UI/HomeUIComponent/AppbarGradient.dart';
-import 'package:oreed/UI/HomeUIComponent/Widgets/CategoryList.dart';
-import 'package:oreed/UI/HomeUIComponent/Widgets/MenuItemList.dart';
-import 'package:oreed/UI/HomeUIComponent/Widgets/Recomended.dart';
-import 'package:oreed/Utiles/Constants.dart';
+import 'package:oreeed/Library/Language_Library/lib/easy_localization_delegate.dart';
+import 'package:oreeed/Library/Language_Library/lib/easy_localization_provider.dart';
+import 'package:oreeed/Models/ApiResponse.dart';
+import 'package:oreeed/Services/ConfigurationRepo.dart';
+import 'package:oreeed/UI/HomeUIComponent/AppbarGradient.dart';
+import 'package:oreeed/UI/HomeUIComponent/Widgets/CategoryList.dart';
+import 'package:oreeed/UI/HomeUIComponent/Widgets/MenuItemList.dart';
+import 'package:oreeed/UI/HomeUIComponent/Widgets/Recomended.dart';
+import 'package:oreeed/Utiles/Constants.dart';
 import 'package:shimmer/shimmer.dart';
 
 import 'Widgets/FlashSale.dart';

@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:oreed/Library/Language_Library/lib/easy_localization_delegate.dart';
-import 'package:oreed/Library/Language_Library/lib/easy_localization_provider.dart';
-import 'package:oreed/ListItem/notificationsData.dart';
-import 'package:oreed/UI/GenralWidgets/BackButton.dart';
-import 'package:oreed/UI/GenralWidgets/ShowSnacker.dart';
-import 'package:oreed/providers/NotificationProvider.dart';
+import 'package:oreeed/Library/Language_Library/lib/easy_localization_delegate.dart';
+import 'package:oreeed/Library/Language_Library/lib/easy_localization_provider.dart';
+import 'package:oreeed/ListItem/notificationsData.dart';
+import 'package:oreeed/UI/GenralWidgets/BackButton.dart';
+import 'package:oreeed/UI/GenralWidgets/ShowSnacker.dart';
+import 'package:oreeed/providers/NotificationProvider.dart';
 import 'package:provider/provider.dart';
 
 class notification extends StatefulWidget {
@@ -21,28 +21,28 @@ class _notificationState extends State<notification> {
     setState(() {
       items.add(
         Post(
-            image: "assets/oreedImages/logo.PNG",
+            image: "assets/oreeedImages/logo.PNG",
             id: 1,
             title: "Oreeed Shop",
-            desc: "Thanks for downloaded Oreed shop application"),
+            desc: "Thanks for downloaded Oreeed shop application"),
       );
       items.add(
         Post(
-            image: "assets/oreedImages/logo.PNG",
+            image: "assets/oreeedImages/logo.PNG",
             id: 2,
             title: "Oreeed Shop",
             desc: "Your Item Delivery"),
       );
       items.add(
         Post(
-            image: "assets/oreedImages/logo.PNG",
+            image: "assets/oreeedImages/logo.PNG",
             id: 3,
             title: "Oreeed Shop",
             desc: "Pending List Item Shoes"),
       );
       items.add(
         Post(
-            image: "assets/oreedImages/logo.PNG",
+            image: "assets/oreeedImages/logo.PNG",
             id: 4,
             title: "Oreeed Shop",
             desc: "Get 10% Discount for macbook pro 2018"),

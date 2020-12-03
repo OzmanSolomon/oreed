@@ -1,47 +1,46 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_html/style.dart';
 import 'package:flutter_rating/flutter_rating.dart';
-import 'package:oreed/Library/Language_Library/lib/easy_localization_delegate.dart';
-import 'package:oreed/Library/Language_Library/lib/easy_localization_provider.dart';
-import 'package:oreed/Models/ApiResponse.dart';
-import 'package:oreed/Models/ProductsModel.dart';
-import 'package:oreed/Services/ProductRepo.dart';
-import 'package:oreed/UI/BrandUIComponent/NoData.dart';
-import 'package:oreed/UI/CartUIComponent/CartLayout.dart';
-import 'package:oreed/UI/GenralWidgets/ShowSnacker.dart';
-import 'package:oreed/UI/HomeUIComponent/ReviewLayout.dart';
-import 'package:oreed/UI/Products/GridView/VerticalGProductsList.dart';
-import 'package:oreed/UI/TEstZone/FullImagePageRoute.dart';
-import 'package:oreed/Utiles/Constants.dart';
-import 'package:oreed/Utiles/databaseHelper.dart';
-import 'package:oreed/providers/CartProvider.dart';
-import 'package:oreed/providers/ProductsProvider.dart';
+import 'package:oreeed/Library/Language_Library/lib/easy_localization_delegate.dart';
+import 'package:oreeed/Library/Language_Library/lib/easy_localization_provider.dart';
+import 'package:oreeed/Models/ApiResponse.dart';
+import 'package:oreeed/Models/ProductsModel.dart';
+import 'package:oreeed/Services/ProductRepo.dart';
+import 'package:oreeed/UI/BrandUIComponent/NoData.dart';
+import 'package:oreeed/UI/CartUIComponent/CartLayout.dart';
+import 'package:oreeed/UI/GenralWidgets/ShowSnacker.dart';
+import 'package:oreeed/UI/HomeUIComponent/ReviewLayout.dart';
+import 'package:oreeed/UI/Products/GridView/VerticalGProductsList.dart';
+import 'package:oreeed/UI/TEstZone/FullImagePageRoute.dart';
+import 'package:oreeed/Utiles/Constants.dart';
+import 'package:oreeed/Utiles/databaseHelper.dart';
+import 'package:oreeed/providers/CartProvider.dart';
+import 'package:oreeed/providers/ProductsProvider.dart';
 import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-class detailProduk extends StatefulWidget {
-  Product gridItem;
+class ProductDetails extends StatefulWidget {
+  final Product gridItem;
 
-  detailProduk(this.gridItem);
+  ProductDetails(this.gridItem);
 
   @override
-  _detailProdukState createState() => _detailProdukState(gridItem);
+  _ProductDetailsState createState() => _ProductDetailsState(gridItem);
 }
 
 /// Detail Product for Recomended Grid in home screen
-class _detailProdukState extends State<detailProduk> {
+class _ProductDetailsState extends State<ProductDetails> {
   final _formKey = GlobalKey<FormState>();
   double rating = 3.5;
   int starCount = 5;
 
   /// Declaration List item HomeGridItemRe....dart Class
   final Product gridItem;
-  _detailProdukState(this.gridItem);
+  _ProductDetailsState(this.gridItem);
 
   @override
   static BuildContext ctx;
@@ -88,19 +87,19 @@ class _detailProdukState extends State<detailProduk> {
                           //Optional parameters:
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20.0),
-                        child: Text(
-                          AppLocalizations.of(context).tr('spesifications'),
-                          style: TextStyle(
-                              fontFamily: "Montserrat",
-                              fontWeight: FontWeight.w600,
-                              fontSize: 15.0,
-                              color: Colors.black,
-                              letterSpacing: 0.3,
-                              wordSpacing: 0.5),
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(left: 20.0),
+                      //   child: Text(
+                      //     AppLocalizations.of(context).tr('spesifications'),
+                      //     style: TextStyle(
+                      //         fontFamily: "Montserrat",
+                      //         fontWeight: FontWeight.w600,
+                      //         fontSize: 15.0,
+                      //         color: Colors.black,
+                      //         letterSpacing: 0.3,
+                      //         wordSpacing: 0.5),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
@@ -277,60 +276,71 @@ class _detailProdukState extends State<detailProduk> {
                             ? gridItem.images.isNotEmpty
                                 ? Builder(
                                     builder: (BuildContext context) {
-                                      String _selected =
-                                          gridItem.images[0].image;
+                                      String _selected = gridItem.productsImage;
                                       return Column(
                                         children: [
                                           Container(
                                             height: 300.0,
-                                            child: Hero(
-                                              tag:
-                                                  "hero-grid-${gridItem.productsId}",
-                                              child: GestureDetector(
-                                                child: CachedNetworkImage(
-                                                  imageUrl:
-                                                      "http://oreeed.com/" +
-                                                          _selected,
-                                                ),
-                                                onTap: () {
-                                                  Navigator.of(context).push(
-                                                    PageRouteBuilder(
-                                                        pageBuilder: (context,
-                                                            animation,
-                                                            anotherAnimation) {
-                                                          return FullImagePageRoute(
-                                                              "http://oreeed.com/" +
-                                                                  _selected);
-                                                        },
-                                                        transitionDuration:
-                                                            Duration(
-                                                                milliseconds:
-                                                                    2000),
-                                                        transitionsBuilder:
-                                                            (context,
-                                                                animation,
-                                                                anotherAnimation,
-                                                                child) {
-                                                          animation =
-                                                              CurvedAnimation(
-                                                                  curve: Curves
-                                                                      .fastOutSlowIn,
-                                                                  parent:
-                                                                      animation);
-                                                          return Align(
-                                                            child:
-                                                                SizeTransition(
-                                                              sizeFactor:
+                                            child: Stack(
+                                              children: [
+                                                Positioned.fill(
+                                                                                                  child: Hero(
+                                                    tag:
+                                                        "hero-grid-${gridItem.productsId}",
+                                                    child: GestureDetector(
+                                                      child: CachedNetworkImage(
+                                                        imageUrl:
+                                                            "http://oreeed.com/" +
+                                                                _selected,
+                                                      ),
+                                                      onTap: () {
+                                                        Navigator.of(context).push(
+                                                          PageRouteBuilder(
+                                                              pageBuilder: (context,
                                                                   animation,
-                                                              child: child,
-                                                              axisAlignment:
-                                                                  0.0,
-                                                            ),
-                                                          );
-                                                        }),
-                                                  );
-                                                },
-                                              ),
+                                                                  anotherAnimation) {
+                                                                return FullImagePageRoute(
+                                                                    "http://oreeed.com/" +
+                                                                        _selected);
+                                                              },
+                                                              transitionDuration:
+                                                                  Duration(
+                                                                      milliseconds:
+                                                                          2000),
+                                                              transitionsBuilder:
+                                                                  (context,
+                                                                      animation,
+                                                                      anotherAnimation,
+                                                                      child) {
+                                                                animation =
+                                                                    CurvedAnimation(
+                                                                        curve: Curves
+                                                                            .fastOutSlowIn,
+                                                                        parent:
+                                                                            animation);
+                                                                return Align(
+                                                                  child:
+                                                                      SizeTransition(
+                                                                    sizeFactor:
+                                                                        animation,
+                                                                    child: child,
+                                                                    axisAlignment:
+                                                                        0.0,
+                                                                  ),
+                                                                );
+                                                              }),
+                                                        );
+                                                      },
+                                                    ),
+                                                  ),
+                                                ),
+                                       Align(
+                                                      alignment:
+                                                          Alignment.topRight,
+                                                      child: FavoriteIcon(
+                                                          gridItem.id),
+                                                    ),
+                                              ],
                                             ),
                                           ),
                                           Row(
@@ -441,12 +451,7 @@ class _detailProdukState extends State<detailProduk> {
                                           //                   Axis.horizontal,
                                           //             ),
                                           //           ),
-                                          //           Align(
-                                          //             alignment:
-                                          //                 Alignment.topRight,
-                                          //             child: FavoriteIcon(
-                                          //                 gridItem.id),
-                                          //           ),
+                                                   
                                           //         ],
                                           //       ),
                                           //     ),
@@ -561,8 +566,11 @@ class _detailProdukState extends State<detailProduk> {
                                 ),
                                 Padding(padding: EdgeInsets.only(top: 5.0)),
                                 Text(
-                                  gridItem.currency.toString() +
-                                      gridItem.productsPrice,
+                                  gridItem.currency != null
+                                      ? gridItem.productsPrice +
+                                          ' ' +
+                                          gridItem.currency.toString()
+                                      : gridItem.productsPrice + ' ' + "SDG",
                                   style: _customTextStyle,
                                 ),
                                 Padding(padding: EdgeInsets.only(top: 10.0)),
@@ -708,11 +716,44 @@ class _detailProdukState extends State<detailProduk> {
                                                 ? Row(
                                                     children: List.generate(
                                                       /// Get data in flashSaleItem.dart (ListItem folder)
-                                                      gridItem.attributes[1]
+                                                      gridItem.attributes[0]
                                                           .values.length,
-                                                      (index) =>
-                                                          RadioButtonColor(
-                                                              Colors.black),
+                                                      (index) => RadioButtonColor(
+                                                          gridItem
+                                                                      .attributes[
+                                                                          0]
+                                                                      .values[
+                                                                          index]
+                                                                      .value ==
+                                                                  'blue'
+                                                              ? Colors.
+                                                              blue
+                                                              : gridItem
+                                                                          .attributes[
+                                                                              0]
+                                                                          .values[
+                                                                              index]
+                                                                          .value ==
+                                                                      'Red'
+                                                                  ? Colors.
+                                                                  red
+                                                                  : gridItem.attributes[0].values[index].value ==
+                                                                          'Pink'
+                                                                      ? Colors
+                                                                          .pink
+                                                                      : gridItem.attributes[0].values[index].value ==
+                                                                              'green'
+                                                                          ? Colors
+                                                                              .green
+                                                                          : gridItem.attributes[0].values[index].value == 'Sky Blue'
+                                                                              ? Colors.
+                                                                              blueAccent
+                                                                              : gridItem.attributes[0].values[index].value == 'Purple'
+                                                                                  ? Colors.
+                                                                                  purple
+                                                                                  : Colors.
+                                                                                  black
+                                                          ),
                                                     ),
                                                   )
                                                 : Container(),
@@ -1128,33 +1169,13 @@ class _detailProdukState extends State<detailProduk> {
                                                         color: appBlue),
                                                   ),
                                                   Container(),
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Icon(
-                                                        Icons.star,
-                                                        color: Colors.redAccent,
-                                                      ),
-                                                      Icon(
-                                                        Icons.star,
-                                                        color: Colors.redAccent,
-                                                      ),
-                                                      Icon(
-                                                        Icons.star,
-                                                        color: Colors.redAccent,
-                                                      ),
-                                                      Icon(
-                                                        Icons.star,
-                                                        color: Colors.redAccent,
-                                                      ),
-                                                      Icon(
-                                                        Icons.star,
-                                                        color: Colors.redAccent,
-                                                      )
-                                                    ],
-                                                  ),
+                                                 StarRating(
+                                                                  rating:gridItem.rating!=null? double.parse(gridItem.rating) :
+                                                                      5.0,
+                                                                  size: 25,
+                                                                  color: Color(
+                                                                      0xffFAC917),
+                                                                ),
                                                 ]),
                                           ),
                                         ),
@@ -1176,15 +1197,15 @@ class _detailProdukState extends State<detailProduk> {
                   onTap: () {
                     // if (widget.gridItem.productsMaxStock > 0) {
                     // if (!cartProvider.getCart.contains(widget.gridItem)) {
-                      cartProvider.addToCart(
-                        product: widget.gridItem,
-                      );
-                      ShowSnackBar(
-                          context: _key.currentContext,
-                          msg: AppLocalizations.of(context).tr('itemAdded'),
-                          bgColor: Colors.blue.withOpacity(0.5),
-                          textColor: Colors.black,
-                          height: 25);
+                    cartProvider.addToCart(
+                      product: widget.gridItem,
+                    );
+                    ShowSnackBar(
+                        context: _key.currentContext,
+                        msg: AppLocalizations.of(context).tr('itemAdded'),
+                        bgColor: Colors.blue.withOpacity(0.5),
+                        textColor: Colors.black,
+                        height: 25);
                     // } else {
                     //   ShowSnackBar(
                     //       context: _key.currentContext,
@@ -1404,7 +1425,7 @@ class FavoriteItem extends StatelessWidget {
         onTap: () {
           Navigator.of(context).push(
             PageRouteBuilder(
-                pageBuilder: (_, __, ___) => new detailProduk(gridItem),
+                pageBuilder: (_, __, ___) => new ProductDetails(gridItem),
                 transitionDuration: Duration(milliseconds: 750),
 
                 /// Set animation with opacity
@@ -1584,7 +1605,7 @@ class _TopRatedListState extends State<TopRatedList> {
 }
 
 class FavoriteIcon extends StatelessWidget {
-  int id;
+  final int id;
   FavoriteIcon(this.id);
 
   @override

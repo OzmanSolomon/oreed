@@ -1,15 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:oreed/Library/Language_Library/lib/easy_localization.dart';
-import 'package:oreed/Library/Language_Library/lib/easy_localization_provider.dart';
-import 'package:oreed/Models/ApiResponse.dart';
-import 'package:oreed/Models/MyOrdersModel.dart';
-import 'package:oreed/Services/OrdersRepo.dart';
-import 'package:oreed/UI/GenralWidgets/BackButton.dart';
-import 'package:oreed/UI/HomeUIComponent/OrdersHistory.dart';
-import 'package:oreed/UI/Products/GridView/VerticalGProductsList.dart';
-import 'package:oreed/Utiles/Constants.dart';
-import 'package:oreed/Utiles/databaseHelper.dart';
+import 'package:oreeed/Library/Language_Library/lib/easy_localization.dart';
+import 'package:oreeed/Library/Language_Library/lib/easy_localization_provider.dart';
+import 'package:oreeed/Models/ApiResponse.dart';
+import 'package:oreeed/Models/MyOrdersModel.dart';
+import 'package:oreeed/Services/OrdersRepo.dart';
+import 'package:oreeed/UI/GenralWidgets/BackButton.dart';
+import 'package:oreeed/UI/HomeUIComponent/OrdersHistory.dart';
+import 'package:oreeed/UI/Products/GridView/VerticalGProductsList.dart';
+import 'package:oreeed/Utiles/Constants.dart';
+import 'package:oreeed/Utiles/databaseHelper.dart';
 
 class OrderHome extends StatefulWidget {
   @override
@@ -59,6 +59,8 @@ class _OrderHomeState extends State<OrderHome> {
           title: Text('My Orders '),
         ),
         body: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
           padding: EdgeInsets.only(left: 8, right: 8),
           child: FutureBuilder(
               future: _orders,
@@ -79,8 +81,10 @@ class _OrderHomeState extends State<OrderHome> {
                     print(apiResponse.object.toString());
                     if (apiResponse.code == 1) {
                       return ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
                         itemCount: apiResponse.object.length,
-                        itemBuilder: (BuildContext context, int index) {
+                        itemBuilder: (context, index) {
                           return MySingleOrderView(apiResponse.object[index]);
                         },
                       );
@@ -115,7 +119,7 @@ class BodyModel {
 }
 
 class MySingleOrderView extends StatefulWidget {
-  MyOrders myOrder;
+  final MyOrders myOrder;
   MySingleOrderView(this.myOrder);
   @override
   _MySingleOrderViewState createState() => _MySingleOrderViewState();

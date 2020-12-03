@@ -1,5 +1,5 @@
-import 'package:oreed/Library/intro_views_flutter-2.4.0/lib/Constants/constants.dart';
-import 'package:oreed/Library/intro_views_flutter-2.4.0/lib/Models/page_view_model.dart';
+import 'package:oreeed/Library/intro_views_flutter-2.4.0/lib/Constants/constants.dart';
+import 'package:oreeed/Library/intro_views_flutter-2.4.0/lib/Models/page_view_model.dart';
 
 //view model for page indicator
 

@@ -9,7 +9,7 @@ void ShowSnackBar(
     Color textColor,
     double height = 25,
     double width,
-    int displayDuration = 3}) {
+    int displayDuration = 1}) {
   Toast.show(msg, context,
       duration: displayDuration,
       gravity: Toast.BOTTOM,

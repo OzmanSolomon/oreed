@@ -1,15 +1,15 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:oreed/Library/Language_Library/lib/easy_localization_delegate.dart';
-import 'package:oreed/Library/Language_Library/lib/easy_localization_provider.dart';
-import 'package:oreed/UI/GenralWidgets/ShowSnacker.dart';
-import 'package:oreed/UI/LoginOrSignup/ForgetPassword.dart';
-import 'package:oreed/UI/LoginOrSignup/LoginAnimation.dart';
-import 'package:oreed/UI/LoginOrSignup/NewSinup.dart';
-import 'package:oreed/UI/LoginOrSignup/widgets/TextFromField.dart';
-import 'package:oreed/Utiles/Constants.dart';
-import 'package:oreed/providers/AuthProvider.dart';
+import 'package:oreeed/Library/Language_Library/lib/easy_localization_delegate.dart';
+import 'package:oreeed/Library/Language_Library/lib/easy_localization_provider.dart';
+import 'package:oreeed/UI/GenralWidgets/ShowSnacker.dart';
+import 'package:oreeed/UI/LoginOrSignup/ForgetPassword.dart';
+import 'package:oreeed/UI/LoginOrSignup/LoginAnimation.dart';
+import 'package:oreeed/UI/LoginOrSignup/NewSinup.dart';
+import 'package:oreeed/UI/LoginOrSignup/widgets/TextFromField.dart';
+import 'package:oreeed/Utiles/Constants.dart';
+import 'package:oreeed/providers/AuthProvider.dart';
 import 'package:provider/provider.dart';
 
 class NewLogin extends StatefulWidget {
@@ -163,7 +163,7 @@ class _NewLoginState extends State<NewLogin> {
                         shape: BoxShape.circle,
                         image: DecorationImage(
                           image:
-                              AssetImage("assets/oreedImages/splash_logo.png"),
+                              AssetImage("assets/oreeedImages/splash_logo.png"),
                         ),
                       ),
                     ),

@@ -1,7 +1,7 @@
-import 'package:oreed/Models/ApiResponse.dart';
-import 'package:oreed/Models/TimeZone.dart';
-import 'package:oreed/Utiles/Constants.dart';
-import 'package:oreed/resources/ApiHandler.dart';
+import 'package:oreeed/Models/ApiResponse.dart';
+import 'package:oreeed/Models/TimeZone.dart';
+import 'package:oreeed/Utiles/Constants.dart';
+import 'package:oreeed/resources/ApiHandler.dart';
 
 class CountryRepo {
   ////////////////////////////////  Method for LogInWithOtp

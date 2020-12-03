@@ -1,13 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:oreed/Library/Language_Library/lib/easy_localization_provider.dart';
-import 'package:oreed/Models/ApiResponse.dart';
-import 'package:oreed/Models/MyOrdersModel.dart';
-import 'package:oreed/Services/OrdersRepo.dart';
-import 'package:oreed/UI/Products/GridView/VerticalGProductsList.dart';
-import 'package:oreed/Utiles/databaseHelper.dart';
-import 'package:oreed/providers/AuthProvider.dart';
-import 'package:oreed/providers/CartProvider.dart';
+import 'package:oreeed/Library/Language_Library/lib/easy_localization_provider.dart';
+import 'package:oreeed/Models/ApiResponse.dart';
+import 'package:oreeed/Models/MyOrdersModel.dart';
+import 'package:oreeed/Services/OrdersRepo.dart';
+import 'package:oreeed/UI/Products/GridView/VerticalGProductsList.dart';
+import 'package:oreeed/Utiles/databaseHelper.dart';
+import 'package:oreeed/providers/AuthProvider.dart';
+import 'package:oreeed/providers/CartProvider.dart';
 import 'package:provider/provider.dart';
 
 class OrdersHistory extends StatefulWidget {
@@ -557,8 +557,9 @@ class noItemCart extends StatelessWidget {
     MediaQueryData mediaQueryData = MediaQuery.of(context);
     return Container(
       width: 500.0,
+
       color: Colors.white,
-      height: double.infinity,
+      height: 500,
       child: SingleChildScrollView(
         child: Center(
           child: Column(
@@ -567,10 +568,7 @@ class noItemCart extends StatelessWidget {
               Padding(
                   padding:
                       EdgeInsets.only(top: mediaQueryData.padding.top + 50.0)),
-              Image.asset(
-                "assets/imgIllustration/IlustrasiCart.png",
-                height: 300.0,
-              ),
+             Icon(Icons.remove_shopping_cart_rounded,size: 200,),
               Padding(padding: EdgeInsets.only(bottom: 10.0)),
               Text(
                 "You Don't Have Any Order",

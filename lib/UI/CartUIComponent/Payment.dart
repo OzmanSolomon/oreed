@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:oreed/Library/Language_Library/lib/easy_localization_delegate.dart';
-import 'package:oreed/Library/Language_Library/lib/easy_localization_provider.dart';
-import 'package:oreed/UI/BottomNavigationBar.dart';
-import 'package:oreed/providers/CartProvider.dart';
+import 'package:oreeed/Library/Language_Library/lib/easy_localization_delegate.dart';
+import 'package:oreeed/Library/Language_Library/lib/easy_localization_provider.dart';
+import 'package:oreeed/UI/BottomNavigationBar.dart';
+import 'package:oreeed/providers/CartProvider.dart';
 import 'package:provider/provider.dart';
 
 class payment extends StatefulWidget {
@@ -21,7 +21,7 @@ class _paymentState extends State<payment> {
   /// Navigation to route after user succes payment
   void navigator() {
     Navigator.of(context).pushReplacement(PageRouteBuilder(
-        pageBuilder: (_, __, ___) => new bottomNavigationBar()));
+        pageBuilder: (_, __, ___) => new BottomNavigationBarPage()));
   }
 
   @override
@@ -158,7 +158,7 @@ class RadioGroupWidget extends State {
             child: ListView(
               children: [
                 Visibility(
-                  visible: false,
+                  visible: true,
                   child: Container(
                     color:
                         cart.selectedPayMent == 1 ? Colors.grey : Colors.white,
@@ -196,38 +196,41 @@ class RadioGroupWidget extends State {
                     ),
                   ),
                 ),
-                Container(
-                  color: cart.selectedPayMent == 2 ? Colors.grey : Colors.white,
-                  child: InkWell(
-                    onTap: () {
-                      cart.setPayMent(2);
-                    },
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                              Text("mBOK",
-                                  style: TextStyle(color: Colors.black)),
-                              Container(
-                                // padding: EdgeInsets.only(left: 1),
-                                child: Image.asset(
-                                  "assets/logo/bankaklogo.png",
-                                  height: 55.0,
+             Visibility(
+                  visible: false,
+                                  child: Container(
+                    color: cart.selectedPayMent == 2 ? Colors.grey : Colors.white,
+                    child: InkWell(
+                      onTap: () {
+                        cart.setPayMent(2);
+                      },
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisSize: MainAxisSize.max,
+                              children: <Widget>[
+                                Text("mBOK",
+                                    style: TextStyle(color: Colors.black)),
+                                Container(
+                                  // padding: EdgeInsets.only(left: 1),
+                                  child: Image.asset(
+                                    "assets/logo/bankaklogo.png",
+                                    height: 55.0,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
+                            padding: EdgeInsets.all(12),
+                            width: MediaQuery.of(context).size.width,
                           ),
-                          padding: EdgeInsets.all(12),
-                          width: MediaQuery.of(context).size.width,
-                        ),
-                        // Padding(
-                        //   padding: EdgeInsets.only(top: 5.0),
-                        // ),
-                      ],
+                          // Padding(
+                          //   padding: EdgeInsets.only(top: 5.0),
+                          // ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

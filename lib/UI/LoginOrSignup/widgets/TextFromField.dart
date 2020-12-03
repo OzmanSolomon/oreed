@@ -12,6 +12,7 @@ class TextFromField extends StatelessWidget {
   final Function onChange;
   final bool isPassword;
   final bool isEmail;
+  bool isNum;
 
   TextFromField(
       {this.hintText,
@@ -19,6 +20,7 @@ class TextFromField extends StatelessWidget {
       this.inputType,
       this.isPassword,
       this.isEmail,
+      this.isNum,
       this.keyBoardType,
       this.onSaved,
       this.isEnabled = true,
@@ -27,6 +29,7 @@ class TextFromField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    isNum = isNum == null ? false : isNum;
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 30.0),
       child: Container(
@@ -62,8 +65,12 @@ class TextFromField extends StatelessWidget {
                   color: Colors.black38,
                   fontWeight: FontWeight.w600),
             ),
-            keyboardType:
-                isEmail ? TextInputType.emailAddress : TextInputType.text,
+            maxLength: isNum==true?10:null,
+            keyboardType: isEmail
+                ? TextInputType.emailAddress
+                : isNum
+                    ? TextInputType.number
+                    : TextInputType.text,
           ),
         ),
       ),

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:oreed/Library/Language_Library/lib/easy_localization_delegate.dart';
-import 'package:oreed/Library/Language_Library/lib/easy_localization_provider.dart';
-import 'package:oreed/Models/ApiResponse.dart';
-import 'package:oreed/Services/BrandMenuCategoryRepo.dart';
-import 'package:oreed/UI/HomeUIComponent/Search.dart';
-import 'package:oreed/UI/Products/GridView/VerticalGProductsList.dart';
+import 'package:oreeed/Library/Language_Library/lib/easy_localization_delegate.dart';
+import 'package:oreeed/Library/Language_Library/lib/easy_localization_provider.dart';
+import 'package:oreeed/Models/ApiResponse.dart';
+import 'package:oreeed/Services/BrandMenuCategoryRepo.dart';
+import 'package:oreeed/UI/HomeUIComponent/Search.dart';
+import 'package:oreeed/UI/Products/GridView/VerticalGProductsList.dart';
 
 bool loadImage = true;
 

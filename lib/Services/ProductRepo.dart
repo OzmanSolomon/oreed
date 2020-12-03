@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:oreed/Models/ApiResponse.dart';
-import 'package:oreed/Models/ProductsModel.dart';
-import 'package:oreed/Models/ReviewsModel.dart';
-import 'package:oreed/Utiles/Constants.dart';
-import 'package:oreed/resources/ApiHandler.dart';
+import 'package:oreeed/Models/ApiResponse.dart';
+import 'package:oreeed/Models/ProductsModel.dart';
+import 'package:oreeed/Models/ReviewsModel.dart';
+import 'package:oreeed/Utiles/Constants.dart';
+import 'package:oreeed/resources/ApiHandler.dart';
 
 class ProductRepo {
   ////////////////////////////////  Method for LogInWithOtp

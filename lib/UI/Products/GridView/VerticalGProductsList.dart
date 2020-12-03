@@ -2,14 +2,14 @@ import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:oreed/Library/Language_Library/lib/easy_localization_delegate.dart';
-import 'package:oreed/Library/Language_Library/lib/easy_localization_provider.dart';
-import 'package:oreed/Models/ApiResponse.dart';
-import 'package:oreed/Models/ProductsModel.dart';
-import 'package:oreed/Services/ProductRepo.dart';
-import 'package:oreed/UI/BrandUIComponent/NoData.dart';
-import 'package:oreed/UI/HomeUIComponent/DetailProduct.dart';
-import 'package:oreed/providers/ProductsProvider.dart';
+import 'package:oreeed/Library/Language_Library/lib/easy_localization_delegate.dart';
+import 'package:oreeed/Library/Language_Library/lib/easy_localization_provider.dart';
+import 'package:oreeed/Models/ApiResponse.dart';
+import 'package:oreeed/Models/ProductsModel.dart';
+import 'package:oreeed/Services/ProductRepo.dart';
+import 'package:oreeed/UI/BrandUIComponent/NoData.dart';
+import 'package:oreeed/UI/HomeUIComponent/ProductDetails.dart';
+import 'package:oreeed/providers/ProductsProvider.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -225,8 +225,7 @@ class _VerticalGProductsListWithoutHeaderState
                             children: List.generate(
                               /// Get data in flashSaleItem.dart (ListItem folder)
                               apiResponse.object.length,
-                              (index) =>
-                                  ItemGrid(product: apiResponse.object[index]),
+                              (index) => ItemGrid(product: apiResponse[index]),
                             ),
                           ),
                         );
@@ -267,7 +266,7 @@ class ItemGrid extends StatelessWidget {
     return InkWell(
       onTap: () {
         Navigator.of(context).push(PageRouteBuilder(
-            pageBuilder: (_, __, ___) => new detailProduk(product),
+            pageBuilder: (_, __, ___) => new ProductDetails(product),
             transitionDuration: Duration(milliseconds: 750),
 
             /// Set animation with opacity
@@ -312,21 +311,24 @@ class ItemGrid extends StatelessWidget {
                                   "http://oreeed.com/" + product.productsImage),
                               fit: BoxFit.cover)),
                     ),
-                    Container(
-                      height: 25.5,
-                      width: 55.0,
-                      decoration: BoxDecoration(
-                          color: Color(0xFFD7124A),
-                          borderRadius: BorderRadius.only(
-                              bottomRight: Radius.circular(20.0),
-                              topLeft: Radius.circular(5.0))),
-                      child: Center(
-                          child: Text(
-                        "${product.discountPrice}%",
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.w600),
-                      )),
-                    )
+                    product.discountPrice != null
+                        ? Container(
+                            height: 25.5,
+                            width: 55.0,
+                            decoration: BoxDecoration(
+                                color: Color(0xFFD7124A),
+                                borderRadius: BorderRadius.only(
+                                    bottomRight: Radius.circular(20.0),
+                                    topLeft: Radius.circular(5.0))),
+                            child: Center(
+                                child: Text(
+                              "${product.discountPrice}%",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600),
+                            )),
+                          )
+                        : Container()
                   ],
                 ),
                 Padding(padding: EdgeInsets.only(top: 7.0)),
@@ -573,12 +575,16 @@ class _FavoriteProductsListState extends State<FavoriteProductsList> {
                       case ConnectionState.done:
                         if (apiResponse.code == 1) {
                           List<Product> myList = apiResponse.object;
+                          _productList.clear();
                           for (int i = 0; i < myList.length - 1; i++) {
                             if (productProvider.likedProductsLists
                                 .contains(myList[i].id)) {
                               _productList.add(myList[i]);
                             }
                           }
+                          // final finalList =
+                          //     _productList.map((e) => e.productsId).toSet();
+                          // _productList.retainWhere((x) => finalList.remove(x));
                           return _productList.isNotEmpty
                               ? Container(
                                   width: MediaQuery.of(context).size.width,

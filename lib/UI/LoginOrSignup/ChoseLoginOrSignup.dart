@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:oreed/Library/Language_Library/lib/easy_localization_delegate.dart';
-import 'package:oreed/Library/Language_Library/lib/easy_localization_provider.dart';
-import 'package:oreed/UI/BottomNavigationBar.dart';
-import 'package:oreed/UI/LoginOrSignup/NewLogin.dart';
-import 'package:oreed/UI/LoginOrSignup/NewSinup.dart';
-import 'package:oreed/UI/LoginOrSignup/widgets/ButtonCustom.dart';
+import 'package:oreeed/Library/Language_Library/lib/easy_localization_delegate.dart';
+import 'package:oreeed/Library/Language_Library/lib/easy_localization_provider.dart';
+import 'package:oreeed/UI/BottomNavigationBar.dart';
+import 'package:oreeed/UI/LoginOrSignup/NewLogin.dart';
+import 'package:oreeed/UI/LoginOrSignup/NewSinup.dart';
+import 'package:oreeed/UI/LoginOrSignup/widgets/ButtonCustom.dart';
 
 class ChoseLogin extends StatefulWidget {
   @override
@@ -121,7 +121,7 @@ class _ChoseLoginState extends State<ChoseLogin> with TickerProviderStateMixin {
                               Navigator.of(context).push(
                                 PageRouteBuilder(
                                     pageBuilder: (_, __, ___) =>
-                                        new bottomNavigationBar(),
+                                        new BottomNavigationBarPage(),
                                     transitionDuration:
                                         Duration(milliseconds: 750),
 

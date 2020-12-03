@@ -1,4 +1,4 @@
-package com.example.oreed_patch
+package com.example.oreeed_patch
 
 import io.flutter.embedding.android.FlutterActivity
 

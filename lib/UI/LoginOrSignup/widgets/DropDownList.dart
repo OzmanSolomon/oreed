@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:oreed/Models/ApiResponse.dart';
-import 'package:oreed/providers/CountryProvider.dart';
+import 'package:oreeed/Models/ApiResponse.dart';
+import 'package:oreeed/Models/CountryModel.dart';
+import 'package:oreeed/Models/TimeZone.dart';
+import 'package:oreeed/Services/CountryRepo.dart';
+import 'package:oreeed/providers/CountryProvider.dart';
 import 'package:provider/provider.dart';
 
 // class CountriesDropDown extends StatefulWidget {
@@ -84,48 +87,93 @@ class TimeZoneDropDown extends StatefulWidget {
 }
 
 class _TimeZoneDropDownState extends State<TimeZoneDropDown> {
-  Future _address;
+  List<DropdownMenuItem<TimeZone>> dropdownTimeZones;
+  bool _isLoadingTimeZone = false;
+  Country _selectedCountry;
+  Country get currentCountry => _selectedCountry;
+  TimeZone _selectedTimeZone;
+
+
+  void fetchTimeZoneList() async {
+    _isLoadingTimeZone = true;
+    try {
+      String countryId = currentCountry == null
+          ? "199"
+          : currentCountry.countriesId.toString();
+      CountryRepo().fetchTimeZoneList(countryId).then((apiResponse) {
+        if (apiResponse != null) {
+          switch (apiResponse.code) {
+            case 1:
+              dropdownTimeZones = [];
+              for (TimeZone timeZone in apiResponse.object) {
+                dropdownTimeZones.add(
+                  DropdownMenuItem(
+                    child: Text(timeZone.zoneName),
+                    value: timeZone,
+                  ),
+                );
+              }
+              _isLoadingTimeZone = false;
+              if (this.mounted) {
+                setState(() {});
+              }
+              break;
+            default:
+              break;
+          }
+        } else {}
+      });
+    } catch (Exception) {
+      _isLoadingTimeZone = false;
+
+      print("Exception:$Exception");
+      setState(() {});
+    }
+  }
+
+  void setTimeZone(TimeZone timeZone) {
+    _selectedTimeZone = timeZone;
+    setState(() {});
+  }
+
   @override
   void initState() {
     super.initState();
-    _address = CountryProvider().fetchTimeZoneList();
+    fetchTimeZoneList();
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: _address,
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-      var myTimeZone = snapshot.data;
-      return myTimeZone == null || myTimeZone.isEmpty
-          ? Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  CircleAvatar(radius: 12, child: CircularProgressIndicator()),
-                  Icon(
-                    Icons.details,
-                    size: 20,
-                  )
-                ],
-              ),
-            )
-          : myTimeZone.isNotEmpty
-              ? Center(
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton(
-                        dropdownColor: Colors.white,
-                        hint: Text('time Zone'),
-                        value: myTimeZone.currentTimeZone,
-                        items: myTimeZone.timeZoneList,
-                        onChanged: (value) {
-                          myTimeZone.setTimeZone(value);
-                        }),
-                  ),
+    return _isLoadingTimeZone || dropdownTimeZones == null
+        ? Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                CircleAvatar(radius: 12, child: CircularProgressIndicator()),
+                Icon(
+                  Icons.details,
+                  size: 20,
                 )
-              : Container();
-    });
+              ],
+            ),
+          )
+        : dropdownTimeZones.isNotEmpty
+            ? Center(
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton(
+                      dropdownColor: Colors.white,
+                      hint: Text('time Zone'),
+                      value: _selectedTimeZone,
+                      items: dropdownTimeZones,
+                      onChanged: (value) {
+                        setTimeZone(value);
+                        Provider.of<CountryProvider>(context, listen: false)
+                            .setTimeZone(value);
+                      }),
+                ),
+              )
+            : Container();
   }
 }

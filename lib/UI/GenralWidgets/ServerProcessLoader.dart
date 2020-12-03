@@ -2,7 +2,8 @@ import 'dart:math';
 
 import "package:flutter/material.dart";
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:oreed/Library/Language_Library/lib/easy_localization.dart';
+import 'package:oreeed/Library/Language_Library/lib/easy_localization.dart';
+import 'package:oreeed/UI/CartUIComponent/CheckOut.dart';
 
 class ServerProcessLoader extends StatefulWidget {
   final double radius;
@@ -206,6 +207,8 @@ class Dot extends StatelessWidget {
 }
 
 class OverLayWidgetWithLoader extends StatefulWidget {
+  final bool added;
+  OverLayWidgetWithLoader(this.added);
   @override
   _OverLayWidgetWithLoaderState createState() =>
       _OverLayWidgetWithLoaderState();
@@ -217,18 +220,22 @@ class _OverLayWidgetWithLoaderState extends State<OverLayWidgetWithLoader> {
   bool watcher = false;
 
   void route() {
-    Navigator.pop(_addInfoScaffoldKey.currentContext);
+    if (widget.added != true) {
+      Navigator.pop(_addInfoScaffoldKey.currentContext);
+    } else {}
   }
 
   initiateRoute() {
-    Future.delayed(Duration(seconds: 4)).then((value) => {
-          if (mounted)
-            {
-              setState(() {
-                watcher = true;
-              })
-            }
-        });
+    if (widget.added != true) {
+      Future.delayed(Duration(seconds: 4)).then((value) => {
+            if (mounted)
+              {
+                setState(() {
+                  watcher = true;
+                })
+              }
+          });
+    }
   }
 
   @override

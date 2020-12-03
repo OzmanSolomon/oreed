@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:oreed/Models/ApiResponse.dart';
-import 'package:oreed/Services/BrandMenuCategoryRepo.dart';
-import 'package:oreed/Services/ProductRepo.dart';
-import 'package:oreed/UI/BrandUIComponent/NoData.dart';
-import 'package:oreed/UI/HomeUIComponent/DetailProduct.dart';
+import 'package:oreeed/Models/ApiResponse.dart';
+import 'package:oreeed/Services/BrandMenuCategoryRepo.dart';
+import 'package:oreeed/Services/ProductRepo.dart';
+import 'package:oreeed/UI/BrandUIComponent/NoData.dart';
+import 'package:oreeed/UI/HomeUIComponent/ProductDetails.dart';
 
 /// Component item Menu icon bellow a ImageSlider
 class MenuItemList extends StatefulWidget {
@@ -150,7 +150,7 @@ class _WeekPromotionListState extends State<WeekPromotionList> {
                                 onTap: () {
                                   Navigator.of(context).push(PageRouteBuilder(
                                       pageBuilder: (_, __, ___) =>
-                                          new detailProduk(
+                                          new ProductDetails(
                                               apiResponse.object[index]),
                                       transitionDuration:
                                           Duration(milliseconds: 750),

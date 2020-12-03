@@ -1,13 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:oreed/Library/Language_Library/lib/easy_localization_delegate.dart';
-import 'package:oreed/Library/Language_Library/lib/easy_localization_provider.dart';
-import 'package:oreed/UI/CartUIComponent/CheckOut.dart';
-import 'package:oreed/UI/GenralWidgets/ShowSnacker.dart';
-import 'package:oreed/UI/LoginOrSignup/NewLogin.dart';
-import 'package:oreed/Utiles/databaseHelper.dart';
-import 'package:oreed/providers/CartProvider.dart';
+import 'package:oreeed/Library/Language_Library/lib/easy_localization_delegate.dart';
+import 'package:oreeed/Library/Language_Library/lib/easy_localization_provider.dart';
+import 'package:oreeed/UI/CartUIComponent/CheckOut.dart';
+import 'package:oreeed/UI/GenralWidgets/ShowSnacker.dart';
+import 'package:oreeed/UI/LoginOrSignup/NewLogin.dart';
+import 'package:oreeed/Utiles/databaseHelper.dart';
+import 'package:oreeed/providers/CartProvider.dart';
 import 'package:provider/provider.dart';
 
 class cart extends StatefulWidget {
@@ -216,15 +216,7 @@ class _cartState extends State<cart> {
                                                           padding:
                                                               EdgeInsets.only(
                                                                   top: 10.0)),
-                                                      Text(
-                                                        '${cart.getCart[position].productsStatus}',
-                                                        style: TextStyle(
-                                                          color: Colors.black54,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          fontSize: 12.0,
-                                                        ),
-                                                      ),
+
                                                       Padding(
                                                           padding:
                                                               EdgeInsets.only(

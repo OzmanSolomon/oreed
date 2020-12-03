@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:oreed/Models/ApiResponse.dart';
-import 'package:oreed/Utiles/Constants.dart';
-import 'package:oreed/Utiles/databaseHelper.dart';
-import 'package:oreed/resources/ApiHandler.dart';
+import 'package:oreeed/Models/ApiResponse.dart';
+import 'package:oreeed/Utiles/Constants.dart';
+import 'package:oreeed/Utiles/databaseHelper.dart';
+import 'package:oreeed/resources/ApiHandler.dart';
 
 class AuthRepo {
   ////////////////////////////////  Method for LogInWithOtp

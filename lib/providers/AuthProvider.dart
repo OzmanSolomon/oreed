@@ -1,13 +1,13 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:oreed/Library/Language_Library/lib/easy_localization.dart';
-import 'package:oreed/Services/AuthRepo.dart';
-import 'package:oreed/UI/BottomNavigationBar.dart';
-import 'package:oreed/UI/GenralWidgets/ServerProcessLoader.dart';
-import 'package:oreed/UI/GenralWidgets/ShowSnacker.dart';
-import 'package:oreed/Utiles/Constants.dart';
-import 'package:oreed/Utiles/databaseHelper.dart';
+import 'package:oreeed/Library/Language_Library/lib/easy_localization.dart';
+import 'package:oreeed/Services/AuthRepo.dart';
+import 'package:oreeed/UI/BottomNavigationBar.dart';
+import 'package:oreeed/UI/GenralWidgets/ServerProcessLoader.dart';
+import 'package:oreeed/UI/GenralWidgets/ShowSnacker.dart';
+import 'package:oreeed/Utiles/Constants.dart';
+import 'package:oreeed/Utiles/databaseHelper.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -173,7 +173,7 @@ class AuthProvider with ChangeNotifier {
       PageRouteBuilder(
           opaque: false,
           pageBuilder: (BuildContext context, _, __) {
-            return OverLayWidgetWithLoader();
+            return OverLayWidgetWithLoader(false);
           }),
     );
     try {
@@ -192,8 +192,8 @@ class AuthProvider with ChangeNotifier {
                   listen: false);
 
               userData.reSetUser();
-              Navigator.of(scaffoldKey.currentContext).push(PageRouteBuilder(
-                  pageBuilder: (_, __, ___) => new bottomNavigationBar(),
+              Navigator.of(scaffoldKey.currentContext).pushReplacement(PageRouteBuilder(
+                  pageBuilder: (_, __, ___) => new BottomNavigationBarPage(),
                   transitionDuration: Duration(milliseconds: 750),
 
                   /// Set animation with opacity
@@ -243,7 +243,7 @@ class AuthProvider with ChangeNotifier {
       PageRouteBuilder(
           opaque: false,
           pageBuilder: (BuildContext context, _, __) {
-            return OverLayWidgetWithLoader();
+            return OverLayWidgetWithLoader(true);
           }),
     );
     try {
@@ -259,6 +259,9 @@ class AuthProvider with ChangeNotifier {
                 bgColor: Colors.grey.withOpacity(0.5),
                 textColor: Colors.black,
                 height: 25);
+  Navigator.of(scaffoldKey.currentContext).pushReplacement(PageRouteBuilder(
+                  pageBuilder: (_, __, ___) => new BottomNavigationBarPage(initIndex: 3),
+                  transitionDuration: Duration(milliseconds: 750)));
           } else {
             ShowSnackBar(
                 context: scaffoldKey.currentContext,
@@ -296,7 +299,7 @@ class AuthProvider with ChangeNotifier {
       PageRouteBuilder(
           opaque: false,
           pageBuilder: (BuildContext context, _, __) {
-            return OverLayWidgetWithLoader();
+            return OverLayWidgetWithLoader(false);
           }),
     );
     try {
@@ -313,8 +316,8 @@ class AuthProvider with ChangeNotifier {
                   scaffoldKey.currentContext,
                   listen: false);
               userData.reSetUser();
-              Navigator.of(scaffoldKey.currentContext).push(PageRouteBuilder(
-                  pageBuilder: (_, __, ___) => new bottomNavigationBar(),
+              Navigator.of(scaffoldKey.currentContext).pushReplacement(PageRouteBuilder(
+                  pageBuilder: (_, __, ___) => new BottomNavigationBarPage(),
                   transitionDuration: Duration(milliseconds: 750),
 
                   /// Set animation with opacity
@@ -364,7 +367,7 @@ class AuthProvider with ChangeNotifier {
       PageRouteBuilder(
           opaque: false,
           pageBuilder: (BuildContext context, _, __) {
-            return OverLayWidgetWithLoader();
+            return OverLayWidgetWithLoader(false);
           }),
     );
     try {
@@ -414,7 +417,7 @@ class AuthProvider with ChangeNotifier {
       PageRouteBuilder(
           opaque: false,
           pageBuilder: (BuildContext context, _, __) {
-            return OverLayWidgetWithLoader();
+            return OverLayWidgetWithLoader(false);
           }),
     );
     try {
@@ -479,7 +482,7 @@ class AuthProvider with ChangeNotifier {
       PageRouteBuilder(
           opaque: false,
           pageBuilder: (BuildContext context, _, __) {
-            return OverLayWidgetWithLoader();
+            return OverLayWidgetWithLoader(false);
           }),
     );
     try {

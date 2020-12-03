@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:oreed/Services/CheckOutRepo.dart';
-import 'package:oreed/UI/GenralWidgets/ServerProcessLoader.dart';
-import 'package:oreed/UI/GenralWidgets/ShowSnacker.dart';
+import 'package:oreeed/Services/CheckOutRepo.dart';
+import 'package:oreeed/UI/CartUIComponent/CheckOut.dart';
+import 'package:oreeed/UI/GenralWidgets/ServerProcessLoader.dart';
+import 'package:oreeed/UI/GenralWidgets/ShowSnacker.dart';
 
 class CheckOutProvider with ChangeNotifier {
   DeliveryAddress model = DeliveryAddress();
@@ -15,7 +16,7 @@ class CheckOutProvider with ChangeNotifier {
       PageRouteBuilder(
           opaque: false,
           pageBuilder: (BuildContext context, _, __) {
-            return OverLayWidgetWithLoader();
+            return OverLayWidgetWithLoader(true);
           }),
     );
     try {
@@ -31,7 +32,8 @@ class CheckOutProvider with ChangeNotifier {
                 bgColor: Colors.grey.withOpacity(0.5),
                 textColor: Colors.black,
                 height: 25);
-            Navigator.of(scaffoldKey.currentContext).pop();
+            Navigator.of(scaffoldKey.currentContext).push(
+                PageRouteBuilder(pageBuilder: (_, __, ___) => new CheckOut()));
           } else {
             ShowSnackBar(
                 context: scaffoldKey.currentContext,

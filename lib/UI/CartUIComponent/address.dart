@@ -1,16 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:oreed/Library/Language_Library/lib/easy_localization_delegate.dart';
-import 'package:oreed/Library/Language_Library/lib/easy_localization_provider.dart';
-import 'package:oreed/Models/ApiResponse.dart';
-import 'package:oreed/Models/ShippingAddressModel.dart';
-import 'package:oreed/Services/CheckOutRepo.dart';
-import 'package:oreed/UI/GenralWidgets/ServerProcessLoader.dart';
-import 'package:oreed/UI/LoginOrSignup/widgets/DropDownList.dart';
-import 'package:oreed/UI/LoginOrSignup/widgets/TextFromField.dart';
-import 'package:oreed/providers/CartProvider.dart';
-import 'package:oreed/providers/CheckOutProvider.dart';
-import 'package:oreed/providers/CountryProvider.dart';
+import 'package:oreeed/Library/Language_Library/lib/easy_localization_delegate.dart';
+import 'package:oreeed/Library/Language_Library/lib/easy_localization_provider.dart';
+import 'package:oreeed/Models/ApiResponse.dart';
+import 'package:oreeed/Models/ShippingAddressModel.dart';
+import 'package:oreeed/Services/CheckOutRepo.dart';
+import 'package:oreeed/UI/GenralWidgets/ServerProcessLoader.dart';
+import 'package:oreeed/UI/LoginOrSignup/widgets/DropDownList.dart';
+import 'package:oreeed/UI/LoginOrSignup/widgets/TextFromField.dart';
+import 'package:oreeed/providers/CartProvider.dart';
+import 'package:oreeed/providers/CheckOutProvider.dart';
+import 'package:oreeed/providers/CountryProvider.dart';
 import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
@@ -137,6 +137,7 @@ class _AddressState extends State<Address> {
                             keyBoardType: TextInputType.number,
                             icon: Icons.phone,
                             isEmail: false,
+                            isNum: true,
                             isPassword: false,
                             validator: (String value) {
                               if (value.isEmpty) {
@@ -316,6 +317,7 @@ class _AddressState extends State<Address> {
                               style: TextStyle(
                                   letterSpacing: 0.1,
                                   fontWeight: FontWeight.w500,
+                                  fontSize: 11,
                                   color: Colors.green,
                                   fontFamily: "Montserrat"),
                             )),
@@ -523,7 +525,7 @@ class _AddressLineState extends State<AddressLine> {
                               PageRouteBuilder(
                                   opaque: false,
                                   pageBuilder: (BuildContext context, _, __) {
-                                    return OverLayWidgetWithLoader();
+                                    return OverLayWidgetWithLoader(false);
                                   }),
                             );
                             Future.delayed(Duration(seconds: 4))

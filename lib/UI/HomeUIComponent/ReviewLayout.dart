@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating/flutter_rating.dart';
-import 'package:oreed/Library/Expanded/ExpandedDetailReviews.dart';
-import 'package:oreed/Library/Language_Library/lib/easy_localization_delegate.dart';
-import 'package:oreed/Library/Language_Library/lib/easy_localization_provider.dart';
-import 'package:oreed/Models/ApiResponse.dart';
-import 'package:oreed/Services/ProductRepo.dart';
-import 'package:oreed/UI/BrandUIComponent/NoData.dart';
+import 'package:oreeed/Library/Expanded/ExpandedDetailReviews.dart';
+import 'package:oreeed/Library/Language_Library/lib/easy_localization_delegate.dart';
+import 'package:oreeed/Library/Language_Library/lib/easy_localization_provider.dart';
+import 'package:oreeed/Models/ApiResponse.dart';
+import 'package:oreeed/Services/ProductRepo.dart';
+import 'package:oreeed/UI/BrandUIComponent/NoData.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class ReviewsAll extends StatefulWidget {

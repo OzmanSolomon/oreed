@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:oreed/Library/Language_Library/lib/easy_localization.dart';
-import 'package:oreed/Models/ApiResponse.dart';
-import 'package:oreed/Models/ProductsModel.dart';
-import 'package:oreed/Services/ProductRepo.dart';
-import 'package:oreed/UI/BrandUIComponent/NoData.dart';
-import 'package:oreed/UI/HomeUIComponent/DetailProduct.dart';
+import 'package:oreeed/Library/Language_Library/lib/easy_localization.dart';
+import 'package:oreeed/Models/ApiResponse.dart';
+import 'package:oreeed/Models/ProductsModel.dart';
+import 'package:oreeed/Services/ProductRepo.dart';
+import 'package:oreeed/UI/BrandUIComponent/NoData.dart';
+import 'package:oreeed/UI/HomeUIComponent/ProductDetails.dart';
 
 class RecommendedList extends StatefulWidget {
   @override
@@ -106,7 +106,7 @@ class ItemGrid extends StatelessWidget {
       onTap: () {
         Navigator.of(context).push(
           PageRouteBuilder(
-              pageBuilder: (_, __, ___) => new detailProduk(gridItem),
+              pageBuilder: (_, __, ___) => new ProductDetails(gridItem),
               transitionDuration: Duration(milliseconds: 900),
 
               /// Set animation Opacity in route to detailProduk layout

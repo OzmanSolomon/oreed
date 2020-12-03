@@ -1,6 +1,6 @@
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
-import 'package:oreed/providers/NetworkProvider.dart';
+import 'package:oreeed/providers/NetworkProvider.dart';
 import 'package:provider/provider.dart';
 
 class NetworkSensitive extends StatefulWidget {

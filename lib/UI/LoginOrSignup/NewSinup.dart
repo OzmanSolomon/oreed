@@ -3,13 +3,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:oreed/Library/Language_Library/lib/easy_localization_delegate.dart';
-import 'package:oreed/Library/Language_Library/lib/easy_localization_provider.dart';
-import 'package:oreed/UI/LoginOrSignup/LoginAnimation.dart';
-import 'package:oreed/UI/LoginOrSignup/NewLogin.dart';
-import 'package:oreed/UI/LoginOrSignup/widgets/TextFromField.dart';
-import 'package:oreed/Utiles/Constants.dart';
-import 'package:oreed/providers/AuthProvider.dart';
+import 'package:oreeed/Library/Language_Library/lib/easy_localization_delegate.dart';
+import 'package:oreeed/Library/Language_Library/lib/easy_localization_provider.dart';
+import 'package:oreeed/UI/LoginOrSignup/LoginAnimation.dart';
+import 'package:oreeed/UI/LoginOrSignup/NewLogin.dart';
+import 'package:oreeed/UI/LoginOrSignup/widgets/TextFromField.dart';
+import 'package:oreeed/Utiles/Constants.dart';
+import 'package:oreeed/providers/AuthProvider.dart';
 import 'package:provider/provider.dart';
 
 import 'widgets/DropDownList.dart';
@@ -122,7 +122,7 @@ class _NewSinupState extends State<NewSinUp> {
                         shape: BoxShape.circle,
                         image: DecorationImage(
                           image:
-                              AssetImage("assets/oreedImages/splash_logo.png"),
+                              AssetImage("assets/oreeedImages/splash_logo.png"),
                         ),
                       ),
                     ),

@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:oreed/Models/ApiResponse.dart';
-import 'package:oreed/Services/BrandMenuCategoryRepo.dart';
+import 'package:oreeed/Models/ApiResponse.dart';
+import 'package:oreeed/Services/BrandMenuCategoryRepo.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../CategoryDetail.dart';

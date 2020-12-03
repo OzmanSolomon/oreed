@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:oreed/Models/ApiResponse.dart';
-import 'package:oreed/Models/ProductsModel.dart';
-import 'package:oreed/Services/ProductRepo.dart';
-import 'package:oreed/UI/BrandUIComponent/NoData.dart';
-import 'package:oreed/UI/HomeUIComponent/CategoryDetail.dart';
-import 'package:oreed/UI/HomeUIComponent/DetailProduct.dart';
+import 'package:oreeed/Models/ApiResponse.dart';
+import 'package:oreeed/Models/ProductsModel.dart';
+import 'package:oreeed/Services/ProductRepo.dart';
+import 'package:oreeed/UI/BrandUIComponent/NoData.dart';
+import 'package:oreeed/UI/HomeUIComponent/CategoryDetail.dart';
+import 'package:oreeed/UI/HomeUIComponent/ProductDetails.dart';
 
 /// Component item Menu icon bellow a ImageSlider
 class HorizontalProductsList extends StatefulWidget {
@@ -80,7 +80,7 @@ class ProductItem extends StatelessWidget {
       child: InkWell(
         onTap: () {
           Navigator.of(context).push(PageRouteBuilder(
-              pageBuilder: (_, __, ___) => new detailProduk(product),
+              pageBuilder: (_, __, ___) => new ProductDetails(product),
               transitionDuration: Duration(milliseconds: 750),
 
               /// Set animation with opacity

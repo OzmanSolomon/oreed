@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-import 'package:oreed/Models/ApiResponse.dart';
-import 'package:oreed/Models/MyOrdersModel.dart';
-import 'package:oreed/Models/TimeZone.dart';
-import 'package:oreed/Utiles/Constants.dart';
-import 'package:oreed/providers/CartProvider.dart';
-import 'package:oreed/resources/ApiHandler.dart';
+import 'package:oreeed/Models/ApiResponse.dart';
+import 'package:oreeed/Models/MyOrdersModel.dart';
+import 'package:oreeed/Models/TimeZone.dart';
+import 'package:oreeed/Utiles/Constants.dart';
+import 'package:oreeed/providers/CartProvider.dart';
+import 'package:oreeed/resources/ApiHandler.dart';
 
 class OrdersRepo {
   Future<ApiResponse> fetchOrdersList(
@@ -78,7 +78,6 @@ class OrdersRepo {
 
   Future<ApiResponse> placeOrder({FullOrder fullOrder}) async {
     ApiResponse apiResponse;
-    print(fullOrder);
     try {
       await ApiHandler()
           .postMethodWithoutToken(
@@ -89,6 +88,7 @@ class OrdersRepo {
           if (res["success"] == "1") {
             apiResponse = new ApiResponse(
                 code: 1, msg: res["message"], object: res["data"]);
+              
           } else {
             apiResponse = new ApiResponse(
                 code: int.parse(res["success"]), msg: res["message"]);
@@ -99,8 +99,12 @@ class OrdersRepo {
         }
       });
     } catch (error) {
-      apiResponse =
-          new ApiResponse(code: 0, msg: "Something Wrong, Try again later");
+      print(fullOrder.toMap());
+      apiResponse = new ApiResponse(
+          code: 0,
+          msg: error.message != null
+              ? "${error.message}"
+              : "Something Wrong, Try again later");
     }
     return apiResponse;
   }

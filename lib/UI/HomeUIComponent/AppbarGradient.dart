@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:oreed/Library/Language_Library/lib/easy_localization_provider.dart';
-import 'package:oreed/UI/AcountUIComponent/Notification.dart';
-import 'package:oreed/UI/HomeUIComponent/Search.dart';
-import 'package:oreed/providers/NotificationProvider.dart';
+import 'package:oreeed/Library/Language_Library/lib/easy_localization_provider.dart';
+import 'package:oreeed/UI/AcountUIComponent/Notification.dart';
+import 'package:oreeed/UI/HomeUIComponent/Search.dart';
+import 'package:oreeed/providers/NotificationProvider.dart';
 import 'package:provider/provider.dart';
 
 class AppbarGradient extends StatefulWidget {

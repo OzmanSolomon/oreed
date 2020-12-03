@@ -1,10 +1,10 @@
-import 'package:oreed/Models/ApiResponse.dart';
-import 'package:oreed/Models/ProductsModel.dart';
-import 'package:oreed/Models/ShippingAddressModel.dart';
-import 'package:oreed/Utiles/Constants.dart';
-import 'package:oreed/providers/CartProvider.dart';
-import 'package:oreed/providers/CheckOutProvider.dart';
-import 'package:oreed/resources/ApiHandler.dart';
+import 'package:oreeed/Models/ApiResponse.dart';
+import 'package:oreeed/Models/ProductsModel.dart';
+import 'package:oreeed/Models/ShippingAddressModel.dart';
+import 'package:oreeed/Utiles/Constants.dart';
+import 'package:oreeed/providers/CartProvider.dart';
+import 'package:oreeed/providers/CheckOutProvider.dart';
+import 'package:oreeed/resources/ApiHandler.dart';
 
 class CheckOutRepo {
   ////////////////////////////////  Method for LogInWithOtp
