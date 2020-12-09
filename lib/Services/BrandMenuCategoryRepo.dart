@@ -4,36 +4,45 @@ import 'package:oreeed/Models/TimeZone.dart';
 import 'package:oreeed/Utiles/Constants.dart';
 import 'package:oreeed/resources/ApiHandler.dart';
 
+ApiResponse categories;
+
 class BrandMenuCategoryRepo {
   ////////////////////////////////  Method for LogInWithOtp
 
   Future<ApiResponse> fetchCategoryList() async {
     ApiResponse apiResponse;
     try {
-      print(
-          "########################### Back Track to BrandMenuCategoryRepo => login");
-      await ApiHandler().postMethodWithoutToken(
-          url: baseuRL + 'get_categories',
-          body: {"language_id": 1}).then((serverApiResponse) async {
-        final categoryModel = categoryModelFromMap(serverApiResponse.object);
-        if (serverApiResponse.code == 1) {
-          if (categoryModel.success == "1") {
-            apiResponse = new ApiResponse(
-                code: 1,
-                msg: categoryModel.message,
-                object: categoryModel.categoryList);
+      if (categories == null) {
+        print(
+            "########################### Back Track to BrandMenuCategoryRepo => login");
+        await ApiHandler().postMethodWithoutToken(
+            url: baseuRL + 'get_categories',
+            body: {"language_id": 1}).then((serverApiResponse) async {
+          final categoryModel = categoryModelFromMap(serverApiResponse.object);
+          if (serverApiResponse.code == 1) {
+            if (categoryModel.success == "1") {
+              apiResponse = new ApiResponse(
+                  code: 1,
+                  msg: categoryModel.message,
+                  object: categoryModel.categoryList);
+              categories = apiResponse;
+            } else {
+              apiResponse = new ApiResponse(
+                  code: int.parse(categoryModel.success),
+                  msg: categoryModel.message);
+              categories = apiResponse;
+            }
           } else {
-            apiResponse = new ApiResponse(
-                code: int.parse(categoryModel.success),
-                msg: categoryModel.message);
+            apiResponse =
+                new ApiResponse(code: apiResponse.code, msg: apiResponse.msg);
+            categories = apiResponse;
           }
-        } else {
-          apiResponse =
-              new ApiResponse(code: apiResponse.code, msg: apiResponse.msg);
-        }
-      });
+        });
+      }
+      return categories;
     } catch (error) {
       apiResponse = new ApiResponse(code: 0, msg: "Network Error");
+      categories = apiResponse;
     }
     return apiResponse;
   }

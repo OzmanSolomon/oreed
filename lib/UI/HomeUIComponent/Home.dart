@@ -104,10 +104,9 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
                               initialPage: 0,
                               enableInfiniteScroll: true,
                               reverse: false,
-                              autoPlay: true,
-                              autoPlayInterval: Duration(seconds: 1),
-                              autoPlayAnimationDuration:
-                                  Duration(milliseconds: 600),
+                              autoPlay: false,
+                              autoPlayInterval: Duration(seconds: 5),
+                              autoPlayAnimationDuration: Duration(seconds: 5),
                               autoPlayCurve: Curves.fastOutSlowIn,
                               enlargeCenterPage: true,
                               onPageChanged: (index, reason) {

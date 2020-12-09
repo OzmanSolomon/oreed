@@ -6,6 +6,10 @@ import 'package:oreeed/Models/ReviewsModel.dart';
 import 'package:oreeed/Utiles/Constants.dart';
 import 'package:oreeed/resources/ApiHandler.dart';
 
+ApiResponse specialList;
+ApiResponse flashSaleList;
+ApiResponse favList;
+
 class ProductRepo {
   ////////////////////////////////  Method for LogInWithOtp
 
@@ -43,98 +47,119 @@ class ProductRepo {
   Future<ApiResponse> fetchSpecialList() async {
     ApiResponse apiResponse;
     try {
-      await ApiHandler().postMethodWithoutToken(
-          url: baseuRL + 'specials',
-          body: {"language_id": 1}).then((serverApiResponse) async {
-        if (serverApiResponse.code == 1) {
-          final productsModel = productsModelFromMap(serverApiResponse.object);
-          if (productsModel.success == "1") {
-            apiResponse = new ApiResponse(
-                code: 1,
-                msg: productsModel.message,
-                object: productsModel.product);
+      if (specialList == null) {
+        await ApiHandler().postMethodWithoutToken(
+            url: baseuRL + 'specials',
+            body: {"language_id": 1}).then((serverApiResponse) async {
+          if (serverApiResponse.code == 1) {
+            final productsModel =
+                productsModelFromMap(serverApiResponse.object);
+            if (productsModel.success == "1") {
+              apiResponse = new ApiResponse(
+                  code: 1,
+                  msg: productsModel.message,
+                  object: productsModel.product);
+              specialList = apiResponse;
+            } else {
+              apiResponse = new ApiResponse(
+                  code: int.parse(productsModel.success),
+                  msg: productsModel.message);
+              specialList = apiResponse;
+            }
           } else {
-            apiResponse = new ApiResponse(
-                code: int.parse(productsModel.success),
-                msg: productsModel.message);
+            apiResponse =
+                new ApiResponse(code: apiResponse.code, msg: apiResponse.msg);
+            specialList = apiResponse;
           }
-        } else {
-          apiResponse =
-              new ApiResponse(code: apiResponse.code, msg: apiResponse.msg);
-        }
-      });
+        });
+      }
     } catch (error) {
       apiResponse = new ApiResponse(code: 0, msg: "Network Error");
+      specialList = apiResponse;
     }
-    return apiResponse;
+    return specialList;
   }
 
   Future<ApiResponse> fetchFlashSaleList() async {
     ApiResponse apiResponse;
     try {
-      print(
-          "####### Back Track to BrandMenuFlashCategoryRepo => fetchFlashSaleList");
+      if (flashSaleList == null) {
+        print(
+            "####### Back Track to BrandMenuFlashCategoryRepo => fetchFlashSaleList");
 
-      await ApiHandler().postMethodWithoutToken(
-          url: baseuRL + 'flash_seals',
-          body: {"type": "flashsale"}).then((serverApiResponse) async {
-        if (serverApiResponse.code == 1) {
-          final productsModel = productsModelFromMap(serverApiResponse.object);
-          print(
-              "########### product ##########${productsModel.product.toString()}");
-          //print("######### flashsale ##########");
-          //print("######### message ##########${productsModel.message}");
-          //print("######### success ########${productsModel.success}");
-          //print("######### product #########${serverApiResponse.object}");
-          if (productsModel.success == "1") {
-            apiResponse = new ApiResponse(
-                code: 1,
-                msg: productsModel.message,
-                object: productsModel.product);
+        await ApiHandler().postMethodWithoutToken(
+            url: baseuRL + 'flash_seals',
+            body: {"type": "flashsale"}).then((serverApiResponse) async {
+          if (serverApiResponse.code == 1) {
+            final productsModel =
+                productsModelFromMap(serverApiResponse.object);
+            print(
+                "########### product ##########${productsModel.product.toString()}");
+            //print("######### flashsale ##########");
+            //print("######### message ##########${productsModel.message}");
+            //print("######### success ########${productsModel.success}");
+            //print("######### product #########${serverApiResponse.object}");
+            if (productsModel.success == "1") {
+              apiResponse = new ApiResponse(
+                  code: 1,
+                  msg: productsModel.message,
+                  object: productsModel.product);
+              flashSaleList = apiResponse;
+            } else {
+              apiResponse = new ApiResponse(
+                  code: int.parse(productsModel.success),
+                  msg: productsModel.message);
+              flashSaleList = apiResponse;
+            }
           } else {
-            apiResponse = new ApiResponse(
-                code: int.parse(productsModel.success),
-                msg: productsModel.message);
+            apiResponse =
+                new ApiResponse(code: apiResponse.code, msg: apiResponse.msg);
+            flashSaleList = apiResponse;
           }
-        } else {
-          apiResponse =
-              new ApiResponse(code: apiResponse.code, msg: apiResponse.msg);
-        }
-      });
+        });
+      }
     } catch (error) {
       apiResponse = new ApiResponse(code: 0, msg: "Network Error");
+      flashSaleList = apiResponse;
     }
-    return apiResponse;
+    return flashSaleList;
   }
 
   Future<ApiResponse> fetchProductList(String router) async {
     ApiResponse apiResponse;
     try {
-      await ApiHandler().postMethodWithoutToken(
-          url: baseuRL + router,
-          body: {"language_id": 1}).then((serverApiResponse) async {
-        if (serverApiResponse.code == 1) {
-          final productsModel = productsModelFromMap(serverApiResponse.object);
-          if (productsModel.success == "1") {
-            apiResponse = new ApiResponse(
-                code: 1,
-                msg: productsModel.message,
-                object: productsModel.product);
+      if (favList == null) {
+        await ApiHandler().postMethodWithoutToken(
+            url: baseuRL + router,
+            body: {"language_id": 1}).then((serverApiResponse) async {
+          if (serverApiResponse.code == 1) {
+            final productsModel =
+                productsModelFromMap(serverApiResponse.object);
+            if (productsModel.success == "1") {
+              apiResponse = new ApiResponse(
+                  code: 1,
+                  msg: productsModel.message,
+                  object: productsModel.product);
+              favList = apiResponse;
+            } else {
+              apiResponse = new ApiResponse(
+                  code: int.parse(productsModel.success),
+                  msg: productsModel.message,
+                  object: []);
+              favList = apiResponse;
+            }
           } else {
             apiResponse = new ApiResponse(
-                code: int.parse(productsModel.success),
-                msg: productsModel.message,
-                object: []);
+                code: apiResponse.code, msg: apiResponse.msg, object: []);
+            favList = apiResponse;
           }
-        } else {
-          apiResponse = new ApiResponse(
-              code: apiResponse.code, msg: apiResponse.msg, object: []);
-        }
-      });
+        });
+      }
     } catch (error) {
       apiResponse = new ApiResponse(code: 0, msg: "Network Error");
+      favList = apiResponse;
     }
-    return apiResponse;
+    return favList;
   }
 
   Future<ApiResponse> fetchProductByCategory(String id) async {
@@ -208,7 +233,6 @@ class ProductRepo {
       {int userId, int productId, double rating, String body}) async {
     ApiResponse apiResponse;
     try {
-
       await ApiHandler()
           .postMethodWithoutToken(url: baseuRL + 'givereview', body: {
         "language_id": 1,

@@ -8,7 +8,7 @@ class NoData extends StatelessWidget {
     return Container(
       width: 500.0,
       color: Colors.white,
-      height: double.infinity,
+      height: 200,
       child: SingleChildScrollView(
         child: Center(
           child: Column(

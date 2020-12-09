@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:oreeed/Library/Language_Library/lib/easy_localization_delegate.dart';
 import 'package:oreeed/Library/Language_Library/lib/easy_localization_provider.dart';
@@ -7,9 +8,11 @@ import 'package:oreeed/Library/carousel_pro/carousel_pro.dart';
 import 'package:oreeed/Models/ApiResponse.dart';
 import 'package:oreeed/Models/CategoryModel.dart';
 import 'package:oreeed/Services/ProductRepo.dart';
+import 'package:oreeed/UI/BrandUIComponent/NoData.dart';
 import 'package:oreeed/UI/HomeUIComponent/Search.dart';
 import 'package:oreeed/UI/Products/GridView/VerticalGProductsList.dart';
 import 'package:oreeed/UI/Products/ListView/HorizontalProductsList.dart';
+import 'package:oreeed/Utiles/Constants.dart';
 import 'package:shimmer/shimmer.dart';
 
 class categoryDetail extends StatefulWidget {
@@ -75,10 +78,7 @@ class _categoryDetailState extends State<categoryDetail> {
           overlayShadowColors: Colors.white.withOpacity(0.9),
           overlayShadowSize: 0.9,
           images: [
-            AssetImage("assets/oreeedImages/offersOrAdds/1.jpg"),
-            AssetImage("assets/oreeedImages/offersOrAdds/2.jpg"),
-            AssetImage("assets/oreeedImages/offersOrAdds/1.jpg"),
-            AssetImage("assets/oreeedImages/offersOrAdds/4.jpg"),
+            CachedNetworkImageProvider(imageUrl + widget.category.image)
           ],
         ),
       ),
@@ -396,9 +396,55 @@ class _categoryDetailState extends State<categoryDetail> {
                 children: <Widget>[
                   _imageSlider,
                   _subCategory,
-                  _itemDiscount,
-                  _itemPopular,
-                  _itemNew
+                  FutureBuilder(
+                      future: _products,
+                      builder: (BuildContext context, AsyncSnapshot snapshot) {
+                        var apiResponse = snapshot.data;
+                        switch (snapshot.connectionState) {
+                          case ConnectionState.none:
+                            return isLoadinging(context: context, count: 6);
+                            break;
+                          case ConnectionState.waiting:
+                            return isLoadinging(context: context, count: 6);
+                            break;
+                          case ConnectionState.active:
+                            return isLoadinging(context: context, count: 6);
+                            break;
+                          case ConnectionState.done:
+                            if (apiResponse.code == 1 &&
+                                apiResponse.object.isNotEmpty) {
+                              return Container(
+                                width: MediaQuery.of(context).size.width,
+                                child: GridView.count(
+                                  shrinkWrap: true,
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 7.0, vertical: 10.0),
+                                  crossAxisSpacing: 10.0,
+                                  mainAxisSpacing: 15.0,
+                                  childAspectRatio: 0.545,
+                                  crossAxisCount: 2,
+                                  primary: false,
+                                  children: List.generate(
+                                    /// Get data in flashSaleItem.dart (ListItem folder)
+                                    apiResponse.object.length,
+                                    (index) => ItemGrid(
+                                        product: apiResponse.object[index]),
+                                  ),
+                                ),
+                              );
+                            } else {
+                              return NoData();
+                            }
+                            break;
+                          default:
+                            return null;
+                            break;
+                        }
+                      }),
+
+                  // _itemDiscount,
+                  // _itemPopular,
+                  // _itemNew
                 ],
               ),
             ),

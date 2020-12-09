@@ -151,17 +151,9 @@ class AuthProvider with ChangeNotifier {
     });
   }
 
-  Future<bool> logMeOut(String userId) {
-    int id = int.parse(userId);
+  Future<bool> logMeOut(String userId) async {
     SharedPreferences prefs;
-    return helper.deleteUser(id).then((flag) async {
-      prefs = await SharedPreferences.getInstance();
-      if (flag < 1) {
-        return await prefs.remove("session").then((value) => true);
-      } else {
-        return false;
-      }
-    });
+    await prefs.clear();
   }
 
   void login(
@@ -186,24 +178,26 @@ class AuthProvider with ChangeNotifier {
         if (apiResponse != null) {
           switch (apiResponse.code) {
             case 1:
-              prefs.setString("session", "Live");
+              prefs.setBool("isLogin", true);
               var userData = Provider.of<AuthProvider>(
                   scaffoldKey.currentContext,
                   listen: false);
 
               userData.reSetUser();
-              Navigator.of(scaffoldKey.currentContext).pushReplacement(PageRouteBuilder(
-                  pageBuilder: (_, __, ___) => new BottomNavigationBarPage(),
-                  transitionDuration: Duration(milliseconds: 750),
+              Navigator.of(scaffoldKey.currentContext).pushReplacement(
+                  PageRouteBuilder(
+                      pageBuilder: (_, __, ___) =>
+                          new BottomNavigationBarPage(),
+                      transitionDuration: Duration(milliseconds: 750),
 
-                  /// Set animation with opacity
-                  transitionsBuilder:
-                      (_, Animation<double> animation, __, Widget child) {
-                    return Opacity(
-                      opacity: animation.value,
-                      child: child,
-                    );
-                  }));
+                      /// Set animation with opacity
+                      transitionsBuilder:
+                          (_, Animation<double> animation, __, Widget child) {
+                        return Opacity(
+                          opacity: animation.value,
+                          child: child,
+                        );
+                      }));
               this.resetLoginButton();
               break;
             default:
@@ -259,9 +253,11 @@ class AuthProvider with ChangeNotifier {
                 bgColor: Colors.grey.withOpacity(0.5),
                 textColor: Colors.black,
                 height: 25);
-  Navigator.of(scaffoldKey.currentContext).pushReplacement(PageRouteBuilder(
-                  pageBuilder: (_, __, ___) => new BottomNavigationBarPage(initIndex: 3),
-                  transitionDuration: Duration(milliseconds: 750)));
+            Navigator.of(scaffoldKey.currentContext).pushReplacement(
+                PageRouteBuilder(
+                    pageBuilder: (_, __, ___) =>
+                        new BottomNavigationBarPage(initIndex: 3),
+                    transitionDuration: Duration(milliseconds: 750)));
           } else {
             ShowSnackBar(
                 context: scaffoldKey.currentContext,
@@ -311,23 +307,25 @@ class AuthProvider with ChangeNotifier {
         if (apiResponse != null) {
           switch (apiResponse.code) {
             case 1:
-              prefs.setString("session", "Live");
+              prefs.setBool("isLogin", true);
               var userData = Provider.of<AuthProvider>(
                   scaffoldKey.currentContext,
                   listen: false);
               userData.reSetUser();
-              Navigator.of(scaffoldKey.currentContext).pushReplacement(PageRouteBuilder(
-                  pageBuilder: (_, __, ___) => new BottomNavigationBarPage(),
-                  transitionDuration: Duration(milliseconds: 750),
+              Navigator.of(scaffoldKey.currentContext).pushReplacement(
+                  PageRouteBuilder(
+                      pageBuilder: (_, __, ___) =>
+                          new BottomNavigationBarPage(),
+                      transitionDuration: Duration(milliseconds: 750),
 
-                  /// Set animation with opacity
-                  transitionsBuilder:
-                      (_, Animation<double> animation, __, Widget child) {
-                    return Opacity(
-                      opacity: animation.value,
-                      child: child,
-                    );
-                  }));
+                      /// Set animation with opacity
+                      transitionsBuilder:
+                          (_, Animation<double> animation, __, Widget child) {
+                        return Opacity(
+                          opacity: animation.value,
+                          child: child,
+                        );
+                      }));
               this.resetLoginButton();
               break;
             default:

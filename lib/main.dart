@@ -30,14 +30,14 @@ void main() {
     Phoenix(
       child: EasyLocalization(
         // child: MaterialApp(home: ThirdScreen()),
-        child: myApp(),
+        child: MyApp(),
       ),
     ),
   );
 }
 
 /// Set orienttation
-class myApp extends StatelessWidget {
+class MyApp extends StatelessWidget {
   changeAppBar() async {
     // change the status bar color to material color [green-400]
     try {
@@ -126,42 +126,37 @@ class SplashScreen extends StatefulWidget {
 /// Component UI
 class _SplashScreenState extends State<SplashScreen> {
   /// Check user
-  bool _checkUser = false;
-  bool _checkUerSession = false;
+  bool isLogin = false;
+  bool sawIntro = false;
 
   SharedPreferences prefs;
 
-  Future<Null> _function() async {
+  Future<Null> _session() async {
     SharedPreferences prefs;
     prefs = await SharedPreferences.getInstance();
     this.setState(() {
-      if (prefs.getString("username") != null) {
-        if (prefs.getString("session") != null) {
-          print("your are alive");
-          _checkUerSession = true;
+      if (prefs.getBool("isLogin") != null) {
+        if (prefs.getBool("sawIntro") != null) {
+          sawIntro = true;
         } else {
-          print("your are not alive");
-          _checkUerSession = false;
+          sawIntro = false;
         }
-        print('false');
-        _checkUser = false;
+        isLogin = true;
       } else {
-        print('true');
-        _checkUser = true;
+        if (prefs.getBool("sawIntro") != null) {
+          sawIntro = true;
+        } else {
+          sawIntro = false;
+        }
+        isLogin = false;
       }
     });
-  }
-
-  @override
-
-  /// Setting duration in splash screen
-  startTime() async {
-    return new Timer(Duration(milliseconds: 3500), NavigatorPage);
+    navigatorPage();
   }
 
   /// To navigate layout change
-  void NavigatorPage() {
-    if (_checkUser) {
+  void navigatorPage() {
+    if (!sawIntro) {
       /// if userhas never been login
       Navigator.of(context).pushReplacement(
         PageRouteBuilder(
@@ -171,7 +166,7 @@ class _SplashScreenState extends State<SplashScreen> {
       );
     } else {
       /// if userhas ever been login
-      if (_checkUerSession) {
+      if (isLogin) {
         Navigator.of(context).pushReplacement(
           PageRouteBuilder(
             pageBuilder: (_, __, ___) => BottomNavigationBarPage(),
@@ -191,8 +186,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    startTime();
-    _function();
+    _session();
   }
 
   /// Code Create UI Splash Screen
@@ -314,14 +308,26 @@ class _ThirdScreenState extends State<ThirdScreen> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     GestureDetector(
-                      onTap: () {
+                      onTap: () async {
+                        SharedPreferences prefs;
+                        prefs = await SharedPreferences.getInstance();
                         if (appProvider.splashIndex == 1) {
-                          Navigator.of(context).pushReplacement(
-                            PageRouteBuilder(
-                              pageBuilder: (_, __, ___) =>
-                                  BottomNavigationBarPage(),
-                            ),
-                          );
+                          prefs.setBool("sawIntro", true);
+
+                          if (prefs.getBool("isLogin") == true) {
+                            Navigator.of(context).pushReplacement(
+                              PageRouteBuilder(
+                                pageBuilder: (_, __, ___) =>
+                                    BottomNavigationBarPage(),
+                              ),
+                            );
+                          } else {
+                            Navigator.of(context).pushReplacement(
+                              PageRouteBuilder(
+                                pageBuilder: (_, __, ___) => ChoseLogin(),
+                              ),
+                            );
+                          }
                         }
                         if (appProvider.splashIndex <= 0) {
                         } else {
@@ -389,22 +395,32 @@ class _ThirdScreenState extends State<ThirdScreen> {
                         if (appProvider.splashIndex == 3) {
                           SharedPreferences prefs;
                           prefs = await SharedPreferences.getInstance();
-                          prefs.setString("username", "Login");
-                          Navigator.of(context).pushReplacement(
-                            PageRouteBuilder(
-                              pageBuilder: (_, __, ___) => new ChoseLogin(),
-                              transitionsBuilder: (_,
-                                  Animation<double> animation,
-                                  __,
-                                  Widget widget) {
-                                return Opacity(
-                                  opacity: animation.value,
-                                  child: widget,
-                                );
-                              },
-                              transitionDuration: Duration(milliseconds: 1500),
-                            ),
-                          );
+                          prefs.setBool("sawIntro", true);
+                          if (prefs.getBool("isLogin") == true) {
+                            Navigator.of(context).pushReplacement(
+                              PageRouteBuilder(
+                                pageBuilder: (_, __, ___) =>
+                                    BottomNavigationBarPage(),
+                              ),
+                            );
+                          } else {
+                            Navigator.of(context).pushReplacement(
+                              PageRouteBuilder(
+                                pageBuilder: (_, __, ___) => new ChoseLogin(),
+                                transitionsBuilder: (_,
+                                    Animation<double> animation,
+                                    __,
+                                    Widget widget) {
+                                  return Opacity(
+                                    opacity: animation.value,
+                                    child: widget,
+                                  );
+                                },
+                                transitionDuration:
+                                    Duration(milliseconds: 1500),
+                              ),
+                            );
+                          }
                         }
                         if (appProvider.splashIndex <= 0) {
                         } else {
