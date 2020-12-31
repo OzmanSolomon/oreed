@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "816857496204",
+    "project_id": "oreeed-b044c",
+    "storage_bucket": "oreeed-b044c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:816857496204:android:6fac76b2e098fe502ad9a9",
+        "android_client_info": {
+          "package_name": "com.cremetechnology.oreed"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "816857496204-psrcfcufrvtccjolnav79p3fdkcc2fi2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuZKWTPCXEwJwTj2YZHsk511icMfqvO4k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "816857496204-psrcfcufrvtccjolnav79p3fdkcc2fi2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -183,10 +183,14 @@ class Product {
             ? null
             : json["flash_expires_date"],
         flashPrice: json["flash_price"] == null ? "0.0" : json["flash_price"],
-        images: List<ImageList>.from(
-            json["images"].map((x) => ImageList.fromMap(x))),
-        categories: List<Category>.from(
-            json["categories"].map((x) => Category.fromMap(x))),
+        images: json["images"] != null
+            ? List<ImageList>.from(
+                json["images"].map((x) => ImageList.fromMap(x)))
+            : [],
+        categories: json["categories"] != null
+            ? List<Category>.from(
+                json["categories"].map((x) => Category.fromMap(x)))
+            : [],
         rating: json["rating"],
         totalUserRated: json["total_user_rated"],
         fiveRatio: json["five_ratio"],
@@ -194,11 +198,15 @@ class Product {
         threeRatio: json["three_ratio"],
         twoRatio: json["two_ratio"],
         oneRatio: json["one_ratio"],
-        reviewedCustomers: List<ReviewedCustomer>.from(
-            json["reviewed_customers"].map((x) => ReviewedCustomer.fromMap(x))),
+        reviewedCustomers: json["reviewed_customers"] != null
+            ? List<ReviewedCustomer>.from(json["reviewed_customers"]
+                .map((x) => ReviewedCustomer.fromMap(x)))
+            : [],
         defaultStock: json["defaultStock"],
-        attributes: List<Attribute>.from(
-            json["attributes"].map((x) => Attribute.fromMap(x))),
+        attributes: json["attributes"] != null
+            ? List<Attribute>.from(
+                json["attributes"].map((x) => Attribute.fromMap(x)))
+            : [],
       );
 
   Map<String, dynamic> toMap() => {

@@ -121,7 +121,8 @@ class ProductItem extends StatelessWidget {
                               topRight: Radius.circular(7.0)),
                           image: DecorationImage(
                               image: CachedNetworkImageProvider(
-                                  "http://oreeed.com/" + product.productsImage),
+                                  "http://staging.oreeed.com/" +
+                                      product.productsImage),
                               fit: BoxFit.cover)),
                     ),
                     Padding(padding: EdgeInsets.only(top: 7.0)),

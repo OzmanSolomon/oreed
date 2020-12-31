@@ -117,8 +117,7 @@ class _profilState extends State<profil> {
                               image: DecorationImage(
                                 fit: BoxFit.cover,
                                 image: CachedNetworkImageProvider(
-                                  "http://oreeed.com/${_user.avatar.toString()}",
-                                  
+                                  "http://staging.oreeed.com/${_user.avatar.toString()}",
                                 ),
                               ),
                             ),
@@ -235,7 +234,8 @@ class _profilState extends State<profil> {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       image: DecorationImage(
-                        image: AssetImage("assets/oreeedImages/splash_logo.png"),
+                        image:
+                            AssetImage("assets/oreeedImages/splash_logo.png"),
                       ),
                     ),
                   ),
@@ -324,8 +324,9 @@ class _profilState extends State<profil> {
                             );
                           },
                         ),
-                        Visibility(visible: false,
-                                                  child: Category(
+                        Visibility(
+                          visible: false,
+                          child: Category(
                             txt: AppLocalizations.of(context).tr('payments'),
                             padding: 35.0,
                             tap: () {

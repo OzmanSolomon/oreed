@@ -178,7 +178,7 @@ class _cartState extends State<cart> {
                                                       ]),
                                                   child: CachedNetworkImage(
                                                     imageUrl:
-                                                        "http://oreeed.com/${cart.getCart[position].productsImage}",
+                                                        "http://staging.oreeed.com/${cart.getCart[position].productsImage}",
                                                     height: 130.0,
                                                     width: 120.0,
                                                     fit: BoxFit.cover,
@@ -216,7 +216,6 @@ class _cartState extends State<cart> {
                                                           padding:
                                                               EdgeInsets.only(
                                                                   top: 10.0)),
-
                                                       Padding(
                                                           padding:
                                                               EdgeInsets.only(

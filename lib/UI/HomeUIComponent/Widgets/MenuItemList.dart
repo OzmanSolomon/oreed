@@ -136,7 +136,7 @@ class _WeekPromotionListState extends State<WeekPromotionList> {
                               image: DecorationImage(
                                 fit: BoxFit.cover,
                                 image: CachedNetworkImageProvider(
-                                    "http://oreeed.com/" +
+                                    "http://staging.oreeed.com/" +
                                         apiResponse
                                             .object[index].productsImage),
                               ),

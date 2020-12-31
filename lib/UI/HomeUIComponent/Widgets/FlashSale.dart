@@ -150,7 +150,8 @@ class flashSaleItem extends StatelessWidget {
                     decoration: BoxDecoration(
                       image: DecorationImage(
                           image: CachedNetworkImageProvider(
-                            "http://oreeed.com/" + product.productsFlashImage,
+                            "http://staging.oreeed.com/" +
+                                product.productsFlashImage,
                           ),
                           fit: BoxFit.cover),
                     ),

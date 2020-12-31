@@ -1,11 +1,13 @@
 import 'dart:async';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:oreeed/UI/LoginOrSignup/ChoseLoginOrSignup.dart';
+import 'package:oreeed/UI/Products/GridView/VerticalGProductsList.dart';
 import 'package:oreeed/Utiles/Constants.dart';
 import 'package:oreeed/providers/AppProvider.dart';
 import 'package:oreeed/providers/AuthProvider.dart';
@@ -18,10 +20,11 @@ import 'package:oreeed/providers/NotificationProvider.dart';
 import 'package:oreeed/providers/ProductsProvider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'Library/Language_Library/lib/easy_localization_delegate.dart';
 import 'Library/Language_Library/lib/easy_localization_provider.dart';
 import 'UI/BottomNavigationBar.dart';
+import 'Utiles/databaseHelper.dart';
 
 /// Run first apps open
 void main() {
@@ -182,11 +185,47 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
+  Future updateFBToken(context) async {
+    try {
+      DatabaseHelper helper = DatabaseHelper();
+      User _user;
+      _user = (await helper.getUserList())[0];
+      userId = _user.id;
+      var token = await FirebaseMessaging().getToken();
+      print(token);
+      var response = await Dio().post(
+        (baseuRL + 'update_firebase_code'),
+        data: ({
+          "firebase_token": token,
+          "customer_id": _user.id,
+        }),
+      );
+      print(response.data);
+
+      return response.data;
+    } on DioError catch (error) {
+      print('DIO ERROR');
+      print(error);
+      switch (error.type) {
+        case DioErrorType.CONNECT_TIMEOUT:
+        case DioErrorType.SEND_TIMEOUT:
+        case DioErrorType.CANCEL:
+          return throw error;
+          break;
+        default:
+          return throw error;
+      }
+    } catch (error) {
+      return throw error;
+    }
+  }
+
   /// Declare startTime to InitState
   @override
   void initState() {
     super.initState();
     _session();
+    updateFBToken(context);
   }
 
   /// Code Create UI Splash Screen

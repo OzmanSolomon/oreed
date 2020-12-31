@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_html/style.dart';
@@ -7,6 +8,7 @@ import 'package:oreeed/Library/Language_Library/lib/easy_localization_delegate.d
 import 'package:oreeed/Library/Language_Library/lib/easy_localization_provider.dart';
 import 'package:oreeed/Models/ApiResponse.dart';
 import 'package:oreeed/Models/ProductsModel.dart';
+import 'package:oreeed/Services/BrandMenuCategoryRepo.dart';
 import 'package:oreeed/Services/ProductRepo.dart';
 import 'package:oreeed/UI/BrandUIComponent/NoData.dart';
 import 'package:oreeed/UI/CartUIComponent/CartLayout.dart';
@@ -284,23 +286,24 @@ class _ProductDetailsState extends State<ProductDetails> {
                                             child: Stack(
                                               children: [
                                                 Positioned.fill(
-                                                                                                  child: Hero(
+                                                  child: Hero(
                                                     tag:
                                                         "hero-grid-${gridItem.productsId}",
                                                     child: GestureDetector(
                                                       child: CachedNetworkImage(
                                                         imageUrl:
-                                                            "http://oreeed.com/" +
+                                                            "http://staging.oreeed.com/" +
                                                                 _selected,
                                                       ),
                                                       onTap: () {
-                                                        Navigator.of(context).push(
+                                                        Navigator.of(context)
+                                                            .push(
                                                           PageRouteBuilder(
                                                               pageBuilder: (context,
                                                                   animation,
                                                                   anotherAnimation) {
                                                                 return FullImagePageRoute(
-                                                                    "http://oreeed.com/" +
+                                                                    "http://staging.oreeed.com/" +
                                                                         _selected);
                                                               },
                                                               transitionDuration:
@@ -312,18 +315,18 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                                       animation,
                                                                       anotherAnimation,
                                                                       child) {
-                                                                animation =
-                                                                    CurvedAnimation(
-                                                                        curve: Curves
-                                                                            .fastOutSlowIn,
-                                                                        parent:
-                                                                            animation);
+                                                                animation = CurvedAnimation(
+                                                                    curve: Curves
+                                                                        .fastOutSlowIn,
+                                                                    parent:
+                                                                        animation);
                                                                 return Align(
                                                                   child:
                                                                       SizeTransition(
                                                                     sizeFactor:
                                                                         animation,
-                                                                    child: child,
+                                                                    child:
+                                                                        child,
                                                                     axisAlignment:
                                                                         0.0,
                                                                   ),
@@ -334,12 +337,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                     ),
                                                   ),
                                                 ),
-                                       Align(
-                                                      alignment:
-                                                          Alignment.topRight,
-                                                      child: FavoriteIcon(
-                                                          gridItem.id),
-                                                    ),
+                                                Align(
+                                                  alignment: Alignment.topRight,
+                                                  child: FavoriteIcon(
+                                                      gridItem.id,
+                                                      int.parse(_user.id)),
+                                                ),
                                               ],
                                             ),
                                           ),
@@ -363,8 +366,17 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                   child: Center(
                                                     child: CachedNetworkImage(
                                                       imageUrl:
-                                                          "http://oreeed.com/" +
+                                                          "http://staging.oreeed.com/" +
                                                               e.image,
+                                                      placeholder: (context,
+                                                              url) =>
+                                                          CupertinoActivityIndicator(),
+                                                      errorWidget: (context,
+                                                              url, error) =>
+                                                          new Icon(
+                                                        Icons.error,
+                                                        color: Colors.grey,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
@@ -389,7 +401,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                           //                 child:
                                           //                     CachedNetworkImage(
                                           //                   imageUrl:
-                                          //                       "http://oreeed.com/" +
+                                          //                       "http://staging.oreeed.com/" +
                                           //                           gridItem
                                           //                               .images[
                                           //                                   image]
@@ -403,7 +415,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                           //                         pageBuilder: (context,
                                           //                             animation,
                                           //                             anotherAnimation) {
-                                          //                           return FullImagePageRoute("http://oreeed.com/" +
+                                          //                           return FullImagePageRoute("http://staging.oreeed.com/" +
                                           //                               gridItem
                                           //                                   .images[image]
                                           //                                   .image);
@@ -451,7 +463,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                           //                   Axis.horizontal,
                                           //             ),
                                           //           ),
-                                                   
+
                                           //         ],
                                           //       ),
                                           //     ),
@@ -472,15 +484,18 @@ class _ProductDetailsState extends State<ProductDetails> {
                                               image: DecorationImage(
                                                 image:
                                                     CachedNetworkImageProvider(
-                                                  "http://oreeed.com/" +
-                                                      gridItem.productsImage,
+                                                  gridItem.productsImage != null
+                                                      ? "http://staging.oreeed.com/" +
+                                                          gridItem.productsImage
+                                                      : "",
                                                 ),
                                               ),
                                             ),
                                           ),
                                           Align(
                                             alignment: Alignment.topRight,
-                                            child: FavoriteIcon(gridItem.id),
+                                            child: FavoriteIcon(
+                                                gridItem.id, int.parse(userId)),
                                           ),
                                         ],
                                       ),
@@ -491,7 +506,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                               pageBuilder: (context, animation,
                                                   anotherAnimation) {
                                                 return FullImagePageRoute(
-                                                  "http://oreeed.com/" +
+                                                  "http://staging.oreeed.com/" +
                                                       gridItem.productsImage,
                                                 );
                                               },
@@ -523,7 +538,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       decoration: BoxDecoration(
                                         image: DecorationImage(
                                           image: CachedNetworkImageProvider(
-                                            "http://oreeed.com/" +
+                                            "http://staging.oreeed.com/" +
                                                 gridItem.productsImage,
                                           ),
                                         ),
@@ -531,7 +546,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     ),
                                     Align(
                                       alignment: Alignment.topRight,
-                                      child: FavoriteIcon(gridItem.id),
+                                      child: FavoriteIcon(
+                                          gridItem.id, int.parse(_user.id)),
                                     ),
                                   ],
                                 ),
@@ -559,7 +575,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Text(
-                                      gridItem.productsName,
+                                      gridItem.productsName ?? "unkown",
                                       style: _customTextStyle,
                                     ),
                                   ],
@@ -718,42 +734,39 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                       /// Get data in flashSaleItem.dart (ListItem folder)
                                                       gridItem.attributes[0]
                                                           .values.length,
-                                                      (index) => RadioButtonColor(
-                                                          gridItem
+                                                      (index) => RadioButtonColor(gridItem
+                                                                  .attributes[0]
+                                                                  .values[index]
+                                                                  .value ==
+                                                              'blue'
+                                                          ? Colors.blue
+                                                          : gridItem
                                                                       .attributes[
                                                                           0]
                                                                       .values[
                                                                           index]
                                                                       .value ==
-                                                                  'blue'
-                                                              ? Colors.
-                                                              blue
+                                                                  'Red'
+                                                              ? Colors.red
                                                               : gridItem
                                                                           .attributes[
                                                                               0]
                                                                           .values[
                                                                               index]
                                                                           .value ==
-                                                                      'Red'
-                                                                  ? Colors.
-                                                                  red
+                                                                      'Pink'
+                                                                  ? Colors.pink
                                                                   : gridItem.attributes[0].values[index].value ==
-                                                                          'Pink'
+                                                                          'green'
                                                                       ? Colors
-                                                                          .pink
+                                                                          .green
                                                                       : gridItem.attributes[0].values[index].value ==
-                                                                              'green'
+                                                                              'Sky Blue'
                                                                           ? Colors
-                                                                              .green
-                                                                          : gridItem.attributes[0].values[index].value == 'Sky Blue'
-                                                                              ? Colors.
-                                                                              blueAccent
-                                                                              : gridItem.attributes[0].values[index].value == 'Purple'
-                                                                                  ? Colors.
-                                                                                  purple
-                                                                                  : Colors.
-                                                                                  black
-                                                          ),
+                                                                              .blueAccent
+                                                                          : gridItem.attributes[0].values[index].value == 'Purple'
+                                                                              ? Colors.purple
+                                                                              : Colors.black),
                                                     ),
                                                   )
                                                 : Container(),
@@ -1097,6 +1110,14 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                                     .toString() !=
                                                                 null) {
                                                           ProductsProvider().addReview(
+                                                              userName: _user
+                                                                          .userName !=
+                                                                      null
+                                                                  ? _user
+                                                                      .userName
+                                                                  : _user.firstName ??
+                                                                      '',
+                                                              product: gridItem,
                                                               scaffoldKey: _key,
                                                               userId: int.parse(
                                                                   _user.id),
@@ -1105,7 +1126,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                               rating:
                                                                   rateValue +
                                                                       0.0,
-                                                              body: "body");
+                                                              body:
+                                                                  _reviewTextController
+                                                                      .text);
                                                         } else {
                                                           ShowSnackBar(
                                                               context: _key
@@ -1169,13 +1192,15 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                         color: appBlue),
                                                   ),
                                                   Container(),
-                                                 StarRating(
-                                                                  rating:gridItem.rating!=null? double.parse(gridItem.rating) :
-                                                                      5.0,
-                                                                  size: 25,
-                                                                  color: Color(
-                                                                      0xffFAC917),
-                                                                ),
+                                                  StarRating(
+                                                    rating:
+                                                        gridItem.rating != null
+                                                            ? double.parse(
+                                                                gridItem.rating)
+                                                            : 5.0,
+                                                    size: 25,
+                                                    color: Color(0xffFAC917),
+                                                  ),
                                                 ]),
                                           ),
                                         ),
@@ -1414,7 +1439,6 @@ class _RadioButtonColorState extends State<RadioButtonColor> {
 /// Class for card product in "Top Rated Products"
 class FavoriteItem extends StatelessWidget {
   Product gridItem;
-
   FavoriteItem(this.gridItem);
 
   @override
@@ -1465,7 +1489,8 @@ class FavoriteItem extends StatelessWidget {
                             topRight: Radius.circular(7.0)),
                         image: DecorationImage(
                             image: CachedNetworkImageProvider(
-                                "http://oreeed.com/" + gridItem.productsImage),
+                                "http://staging.oreeed.com/" +
+                                    gridItem.productsImage),
                             fit: BoxFit.cover)),
                   ),
                   Padding(padding: EdgeInsets.only(top: 15.0)),
@@ -1606,35 +1631,50 @@ class _TopRatedListState extends State<TopRatedList> {
 
 class FavoriteIcon extends StatelessWidget {
   final int id;
-  FavoriteIcon(this.id);
+  final int userId;
+  FavoriteIcon(this.id, this.userId);
 
   @override
   Widget build(BuildContext context) {
     return Consumer<ProductsProvider>(builder: (context, productProvider, _) {
+      myIds = [];
+      if (favs != null && favs.isNotEmpty) {
+        favs.forEach((element) {
+          myIds.add(element['liked_products_id']);
+        });
+      }
       return Padding(
         padding: EdgeInsets.only(right: 18.0, top: 12),
-        child: productProvider.likedProductsLists.contains(id)
-            ? InkWell(
-                onTap: () {
-                  productProvider.deleteFromLikedProducts(id);
-                },
-                child: Icon(
-                  Icons.favorite,
-                  size: 35,
-                  color: appBlue,
-                ),
-              )
-            : InkWell(
-                onTap: () {
-                  productProvider.addToLikedProducts(id);
-                },
-                child: Icon(
-                  Icons.favorite_border,
-                  size: 35,
-                  color: appBlue,
-                ),
-              ),
+        child: processList.contains(id)
+            ? CupertinoActivityIndicator()
+            : favs != null && myIds.contains(id)
+                ? InkWell(
+                    onTap: () {
+                      myIds.removeWhere((element) => element == id);
+                      productProvider.deleteFromLikedProducts(
+                          context, id, userId);
+                    },
+                    child: Icon(
+                      Icons.favorite,
+                      size: 35,
+                      color: appBlue,
+                    ),
+                  )
+                : InkWell(
+                    onTap: () {
+                      myIds.add(id);
+                      productProvider.addToLikedProducts(context, id, userId);
+                    },
+                    child: Icon(
+                      Icons.favorite_border,
+                      size: 35,
+                      color: appBlue,
+                    ),
+                  ),
       );
     });
   }
 }
+
+List processList = [];
+List myIds = [];

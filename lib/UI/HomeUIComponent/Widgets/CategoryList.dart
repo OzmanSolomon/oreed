@@ -102,7 +102,7 @@ class _CategoryListState extends State<CategoryList> {
                                           image: DecorationImage(
                                             fit: BoxFit.fitHeight,
                                             image: CachedNetworkImageProvider(
-                                                "http://oreeed.com/" +
+                                                "http://staging.oreeed.com/" +
                                                     apiResponse
                                                         .object[index].image),
                                           ),
@@ -200,7 +200,7 @@ Widget EmptySlider({BuildContext ctx, double height, double width}) {
               // color: Colors.green,
               // image: DecorationImage(
               //   fit: BoxFit.fitHeight,
-              //   image: AssetImage("http://oreeed.com/"),
+              //   image: AssetImage("http://staging.oreeed.com/"),
               // ),
             ),
           ),

@@ -366,7 +366,7 @@ class _searchAppbarState extends State<searchAppbar> {
                                             ]),
                                         child: CachedNetworkImage(
                                           imageUrl:
-                                              "http://oreeed.com/${productProvider.filteredProductList[index].productsImage}",
+                                              "http://staging.oreeed.com/${productProvider.filteredProductList[index].productsImage}",
                                           // height: 130.0,
                                           // width: 120.0,
                                           fit: BoxFit.cover,
@@ -379,9 +379,10 @@ class _searchAppbarState extends State<searchAppbar> {
                                         Navigator.of(context).push(
                                           PageRouteBuilder(
                                               pageBuilder: (_, __, ___) =>
-                                                  new ProductDetails(productProvider
-                                                          .filteredProductList[
-                                                      index]),
+                                                  new ProductDetails(
+                                                      productProvider
+                                                              .filteredProductList[
+                                                          index]),
                                               transitionDuration:
                                                   Duration(milliseconds: 900),
 

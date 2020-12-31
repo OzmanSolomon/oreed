@@ -377,7 +377,7 @@ class _OrderCardState extends State<OrderCard> {
                             decoration: BoxDecoration(
                                 image: DecorationImage(
                               image: CachedNetworkImageProvider(
-                                  'http://oreeed.com/${widget.itemProduct[position].image}'),
+                                  'http://staging.oreeed.com/${widget.itemProduct[position].image}'),
                               fit: BoxFit.fitHeight,
                             )),
                           ),

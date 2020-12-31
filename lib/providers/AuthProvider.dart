@@ -256,7 +256,7 @@ class AuthProvider with ChangeNotifier {
             Navigator.of(scaffoldKey.currentContext).pushReplacement(
                 PageRouteBuilder(
                     pageBuilder: (_, __, ___) =>
-                        new BottomNavigationBarPage(initIndex: 3),
+                        new BottomNavigationBarPage(initIndex: 0),
                     transitionDuration: Duration(milliseconds: 750)));
           } else {
             ShowSnackBar(
@@ -370,7 +370,8 @@ class AuthProvider with ChangeNotifier {
     );
     try {
       AuthRepo()
-          .processEditProfile(userRegistration: userRegistration)
+          .processEditProfile(scaffoldKey.currentContext,
+              userRegistration: userRegistration)
           .then((apiResponse) async {
         Navigator.pop(scaffoldKey.currentContext);
         if (apiResponse != null) {
@@ -381,6 +382,21 @@ class AuthProvider with ChangeNotifier {
                 bgColor: Colors.grey.withOpacity(0.5),
                 textColor: Colors.black,
                 height: 25);
+            Navigator.of(scaffoldKey.currentContext).pushReplacement(
+                PageRouteBuilder(
+                    pageBuilder: (_, __, ___) => new BottomNavigationBarPage(
+                          initIndex: 3,
+                        ),
+                    transitionDuration: Duration(milliseconds: 750),
+
+                    /// Set animation with opacity
+                    transitionsBuilder:
+                        (_, Animation<double> animation, __, Widget child) {
+                      return Opacity(
+                        opacity: animation.value,
+                        child: child,
+                      );
+                    }));
           } else {
             ShowSnackBar(
                 context: scaffoldKey.currentContext,
@@ -492,6 +508,7 @@ class AuthProvider with ChangeNotifier {
           .then((apiResponse) async {
         Navigator.pop(scaffoldKey.currentContext);
         Navigator.pop(scaffoldKey.currentContext);
+
         if (apiResponse != null) {
           if (apiResponse.code == 1) {
             ShowSnackBar(

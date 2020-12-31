@@ -9,6 +9,7 @@ import 'package:oreeed/Models/ProductsModel.dart';
 import 'package:oreeed/Services/ProductRepo.dart';
 import 'package:oreeed/UI/BrandUIComponent/NoData.dart';
 import 'package:oreeed/UI/HomeUIComponent/ProductDetails.dart';
+import 'package:oreeed/Utiles/databaseHelper.dart';
 import 'package:oreeed/providers/ProductsProvider.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
@@ -256,10 +257,13 @@ class _VerticalGProductsListWithoutHeaderState
   }
 }
 
+var userId;
+
 /// ItemGrid class
 class ItemGrid extends StatelessWidget {
   @override
   Product product;
+
   ItemGrid({this.product});
   Widget build(BuildContext context) {
     MediaQueryData mediaQueryData = MediaQuery.of(context);
@@ -308,7 +312,11 @@ class ItemGrid extends StatelessWidget {
                               topRight: Radius.circular(7.0)),
                           image: DecorationImage(
                               image: CachedNetworkImageProvider(
-                                  "http://oreeed.com/" + product.productsImage),
+                                  product.productsImage != null
+                                      ? "http://staging.oreeed.com/" +
+                                              product.productsImage ??
+                                          ''
+                                      : ''),
                               fit: BoxFit.cover)),
                     ),
                     product.discountPrice != null
@@ -322,7 +330,7 @@ class ItemGrid extends StatelessWidget {
                                     topLeft: Radius.circular(5.0))),
                             child: Center(
                                 child: Text(
-                              "${product.discountPrice}%",
+                              "${product.discountPrice ?? 0}%",
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w600),
@@ -332,64 +340,81 @@ class ItemGrid extends StatelessWidget {
                   ],
                 ),
                 Padding(padding: EdgeInsets.only(top: 7.0)),
-                Padding(
-                  padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-                  child: Text(
-                    product.productsName,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                        letterSpacing: 0.5,
-                        color: Colors.black54,
-                        fontFamily: "Montserrat",
-                        fontWeight: FontWeight.w500,
-                        fontSize: 13.0),
-                  ),
-                ),
-                Padding(padding: EdgeInsets.only(top: 1.0)),
-                Padding(
-                  padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-                  child: Text(
-                    product.productsPrice,
-                    style: TextStyle(
-                        fontFamily: "Montserrat",
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14.0),
-                  ),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.only(left: 15.0, right: 15.0, top: 5.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Text(
-                            product.rating,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      children: [
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(left: 15.0, right: 15.0),
+                          child: Text(
+                            product.productsName ?? "unkown",
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                letterSpacing: 0.5,
+                                color: Colors.black54,
+                                fontFamily: "Montserrat",
+                                fontWeight: FontWeight.w500,
+                                fontSize: 13.0),
+                          ),
+                        ),
+                        Padding(padding: EdgeInsets.only(top: 1.0)),
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(left: 15.0, right: 15.0),
+                          child: Text(
+                            product.productsPrice,
                             style: TextStyle(
                                 fontFamily: "Montserrat",
-                                color: Colors.black26,
                                 fontWeight: FontWeight.w500,
-                                fontSize: 12.0),
+                                fontSize: 14.0),
                           ),
-                          Icon(
-                            Icons.star,
-                            color: Colors.yellow,
-                            size: 14.0,
-                          )
-                        ],
-                      ),
-                      Text(
-                        product.isOriginal.toString() == "1" ? "original" : "",
-                        style: TextStyle(
-                            fontFamily: "Montserrat",
-                            color: Colors.black26,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 12.0),
-                      )
-                    ],
-                  ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 15.0, right: 15.0, top: 5.0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                                  Text(
+                                    product.rating ?? '5.0',
+                                    style: TextStyle(
+                                        fontFamily: "Montserrat",
+                                        color: Colors.black26,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 12.0),
+                                  ),
+                                  Icon(
+                                    Icons.star,
+                                    color: Colors.yellow,
+                                    size: 14.0,
+                                  )
+                                ],
+                              ),
+                              Text(
+                                product.isOriginal.toString() == "1"
+                                    ? "original"
+                                    : "",
+                                style: TextStyle(
+                                    fontFamily: "Montserrat",
+                                    color: Colors.black26,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 12.0),
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    Center(
+                      child: FavoriteIcon(
+                          product.productsId, int.parse(userId.toString())),
+                    )
+                  ],
                 ),
               ],
             ),
@@ -519,16 +544,16 @@ Widget isLoadinging({BuildContext context, int count}) {
   );
 }
 
-class FavoriteProductsList extends StatefulWidget {
+class VerticalProductsList extends StatefulWidget {
   final String title;
   final String router;
-  const FavoriteProductsList({Key key, this.title, this.router})
+  const VerticalProductsList({Key key, this.title, this.router})
       : super(key: key);
   @override
-  _FavoriteProductsListState createState() => _FavoriteProductsListState();
+  _VerticalProductsListState createState() => _VerticalProductsListState();
 }
 
-class _FavoriteProductsListState extends State<FavoriteProductsList> {
+class _VerticalProductsListState extends State<VerticalProductsList> {
   bool isLoading = true;
   Future<ApiResponse> _products;
   List<Product> _productList = [];
@@ -542,7 +567,6 @@ class _FavoriteProductsListState extends State<FavoriteProductsList> {
         });
       }
     });
-    // TODO: implement initState
     _products = ProductRepo().fetchProductList(widget.router);
     super.initState();
   }

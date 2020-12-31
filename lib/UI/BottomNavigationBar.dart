@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:oreeed/Library/Language_Library/lib/easy_localization_delegate.dart';
 import 'package:oreeed/Library/Language_Library/lib/easy_localization_provider.dart';
 import 'package:oreeed/UI/AcountUIComponent/Profile.dart';
-import 'package:oreeed/UI/BrandUIComponent/BrandLayout.dart';
+import 'package:oreeed/UI/BrandUIComponent/wishList.dart';
 import 'package:oreeed/UI/CartUIComponent/CartLayout.dart';
 import 'package:oreeed/UI/HomeUIComponent/Home.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'GenralWidgets/NetworkSensitive.dart';
+
+var globalToken;
 
 class BottomNavigationBarPage extends StatefulWidget {
   final int initIndex;
@@ -25,7 +28,7 @@ class _BottomNavigationBarPageState extends State<BottomNavigationBarPage> {
       case 0:
         return NetworkSensitive(child: Menu());
       case 1:
-        return NetworkSensitive(child: brand());
+        return NetworkSensitive(child: WishList());
       case 2:
         return NetworkSensitive(child: cart());
       case 3:
@@ -36,10 +39,18 @@ class _BottomNavigationBarPageState extends State<BottomNavigationBarPage> {
     }
   }
 
+  getToken() async {
+    var appSession = await SharedPreferences.getInstance();
+
+    // var token = appSession.get("token");
+    globalToken = appSession.get("token");
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    getToken();
     currentIndex = widget.initIndex != null ? widget.initIndex : 0;
   }
 

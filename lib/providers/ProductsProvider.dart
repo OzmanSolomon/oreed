@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:oreeed/Models/ProductsModel.dart';
+import 'package:oreeed/Services/BrandMenuCategoryRepo.dart';
 import 'package:oreeed/Services/ProductRepo.dart';
 import 'package:oreeed/UI/GenralWidgets/ServerProcessLoader.dart';
 import 'package:oreeed/UI/GenralWidgets/ShowSnacker.dart';
+import 'package:oreeed/UI/HomeUIComponent/ProductDetails.dart';
 import 'package:oreeed/Utiles/Constants.dart';
 import 'package:oreeed/Utiles/databaseHelper.dart';
 
@@ -12,31 +14,40 @@ import 'package:oreeed/Utiles/databaseHelper.dart';
 class ProductsProvider with ChangeNotifier {
   ProductsProvider() {
     print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Fetching Searchable Items...");
-    fetchProductList();
+    // fetchProductList();
   }
 
   DatabaseHelper helper = DatabaseHelper();
   bool isSearching = false;
   bool isSearchingReady = false;
-  List<int> _likedProducts = [];
+  List<dynamic> likedProducts = [];
   List<Product> productList = [];
   List<Product> _filteredProductList = [];
   List<Product> get filteredProductList => _filteredProductList;
-  List<int> get likedProductsLists => _likedProducts;
+  List<dynamic> get likedProductsLists => likedProducts;
 
-  void addToLikedProducts(int id) {
-    if (!likedProductsLists.contains(id)) {
-      _likedProducts.add(id);
-    }
-
-    _likedProducts.toSet().toList();
+  void addToLikedProducts(
+    context,
+    int id,
+    userId,
+  ) async {
+    processList.add(id);
     notifyListeners();
+    var response = ProductRepo().likeProduct(context, id, userId);
+    response.then((onValue) {
+      processList.remove(id);
+      notifyListeners();
+    });
   }
 
-  void deleteFromLikedProducts(int id) {
-    _likedProducts.remove(id);
-    _likedProducts.toSet().toList();
+  void deleteFromLikedProducts(context, int id, userId) {
+    processList.add(id);
     notifyListeners();
+    var response = ProductRepo().unLikeProduct(context, id, userId);
+    response.then((onValue) {
+      processList.remove(id);
+      notifyListeners();
+    });
   }
 
   void doSearchText(String searchKey) {
@@ -54,6 +65,7 @@ class ProductsProvider with ChangeNotifier {
       _filteredProductList.clear();
       _filteredProductList = [];
     }
+
     notifyListeners();
   }
 
@@ -63,14 +75,14 @@ class ProductsProvider with ChangeNotifier {
   }
 
   void resetLikedProducts() {
-    _likedProducts.clear();
-    _likedProducts = [];
+    likedProducts.clear();
+    likedProducts = [];
     notifyListeners();
   }
 
   void setLikedProducts(int id) {
     print("trying to add item with id :$id");
-    _likedProducts.add(id);
+    likedProducts.add(id);
     notifyListeners();
   }
 
@@ -106,7 +118,9 @@ class ProductsProvider with ChangeNotifier {
   }
 
   void addReview(
-      {GlobalKey<ScaffoldState> scaffoldKey,
+      {Product product,
+      GlobalKey<ScaffoldState> scaffoldKey,
+      userName,
       int userId,
       int productId,
       double rating,
@@ -122,7 +136,11 @@ class ProductsProvider with ChangeNotifier {
     try {
       ProductRepo()
           .addReview(
-              userId: userId, productId: productId, rating: rating, body: body)
+              userName: userName,
+              userId: userId,
+              productId: productId,
+              rating: rating,
+              body: body)
           .then((apiResponse) async {
         Navigator.pop(scaffoldKey.currentContext);
         Navigator.pop(scaffoldKey.currentContext);
@@ -140,6 +158,18 @@ class ProductsProvider with ChangeNotifier {
               elevation: 5,
               behavior: SnackBarBehavior.floating,
             ));
+            Navigator.of(scaffoldKey.currentContext).push(PageRouteBuilder(
+                pageBuilder: (_, __, ___) => new ProductDetails(product),
+                transitionDuration: Duration(milliseconds: 750),
+
+                /// Set animation with opacity
+                transitionsBuilder:
+                    (_, Animation<double> animation, __, Widget child) {
+                  return Opacity(
+                    opacity: animation.value,
+                    child: child,
+                  );
+                }));
           } else {
             ShowSnackBar(
                 context: scaffoldKey.currentContext,

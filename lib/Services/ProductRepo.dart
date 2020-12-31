@@ -3,8 +3,12 @@ import 'dart:convert';
 import 'package:oreeed/Models/ApiResponse.dart';
 import 'package:oreeed/Models/ProductsModel.dart';
 import 'package:oreeed/Models/ReviewsModel.dart';
+import 'package:oreeed/Services/BrandMenuCategoryRepo.dart';
+import 'package:oreeed/UI/HomeUIComponent/ProductDetails.dart';
 import 'package:oreeed/Utiles/Constants.dart';
+import 'package:oreeed/providers/ProductsProvider.dart';
 import 'package:oreeed/resources/ApiHandler.dart';
+import 'package:provider/provider.dart';
 
 ApiResponse specialList;
 ApiResponse flashSaleList;
@@ -133,8 +137,9 @@ class ProductRepo {
             url: baseuRL + router,
             body: {"language_id": 1}).then((serverApiResponse) async {
           if (serverApiResponse.code == 1) {
+            var products = json.decode(serverApiResponse.object.toString());
             final productsModel =
-                productsModelFromMap(serverApiResponse.object);
+                productsModelFromMap(products['product_data'].toString());
             if (productsModel.success == "1") {
               apiResponse = new ApiResponse(
                   code: 1,
@@ -230,14 +235,14 @@ class ProductRepo {
   }
 
   Future<ApiResponse> addReview(
-      {int userId, int productId, double rating, String body}) async {
+      {userName, int userId, int productId, double rating, String body}) async {
     ApiResponse apiResponse;
     try {
       await ApiHandler()
           .postMethodWithoutToken(url: baseuRL + 'givereview', body: {
         "language_id": 1,
         "products_id": productId,
-        "customers_name": userId,
+        "customers_name": userName,
         "customers_id": userId,
         "reviews_rating": rating,
         "reviews_read": body
@@ -263,68 +268,93 @@ class ProductRepo {
     return apiResponse;
   }
 
-  Future<ApiResponse> likeProduct(
-      int productId, int userId, String lang) async {
+  Future<ApiResponse> likeProduct(context, int productId, int userId) async {
     ApiResponse apiResponse;
     try {
+      var productsProvider =
+          Provider.of<ProductsProvider>(context, listen: false);
       print(
           "########################### Back Track to BrandMenuFlashCategoryRepo => login");
       await ApiHandler().postMethodWithoutToken(
           url: baseuRL + 'likeproduct',
           body: {
-            "language_id": lang,
-            "products_id": productId,
+            "liked_products_id": productId,
             "liked_customers_id": userId
           }).then((serverApiResponse) async {
         if (serverApiResponse.code == 1) {
-          final reviewsModel = reviewsModelFromMap(serverApiResponse.object);
-          if (reviewsModel.success == "1") {
+          final reviewsModel = json.decode(serverApiResponse.object);
+          if (reviewsModel['success'] == "1") {
+            List myList = reviewsModel['liked_products_id'] as List;
+            productsProvider.likedProducts = [];
+            myList.forEach((element) {
+              productsProvider.likedProducts.add(element);
+            });
+            productsProvider.likedProducts.toSet().toList();
+            favs = productsProvider.likedProducts;
             apiResponse = new ApiResponse(
-                code: 1,
-                msg: reviewsModel.message,
-                object: reviewsModel.reviewsList);
+                code: 1, msg: reviewsModel['message'], object: favs);
           } else {
+            myIds.removeWhere((element) => element == productId);
+
             apiResponse = new ApiResponse(
-                code: int.parse(reviewsModel.success),
-                msg: reviewsModel.message);
+                code: int.parse(reviewsModel['success']),
+                msg: reviewsModel['message']);
           }
         } else {
+          myIds.removeWhere((element) => element == productId);
+
           apiResponse =
               new ApiResponse(code: apiResponse.code, msg: apiResponse.msg);
         }
+        return apiResponse;
       });
     } catch (error) {
+      myIds.removeWhere((element) => element == productId);
+
       apiResponse = new ApiResponse(code: 0, msg: "Network Error");
     }
     return apiResponse;
   }
 
-  Future<ApiResponse> unLikeProduct(
-      int productId, int userId, String lang) async {
+  Future<ApiResponse> unLikeProduct(context, int productId, int userId) async {
     ApiResponse apiResponse;
     try {
-      await ApiHandler()
-          .postMethodWithoutToken(url: baseuRL + 'unlikeproduct', body: {
-        "language_id": lang,
-        "liked_products_id": productId,
-        "liked_customers_id": userId
-      }).then((serverApiResponse) async {
+      var productsProvider =
+          Provider.of<ProductsProvider>(context, listen: false);
+      await ApiHandler().postMethodWithoutToken(
+          url: baseuRL + 'unlikeproduct',
+          body: {
+            "liked_products_id": productId,
+            "liked_customers_id": userId
+          }).then((serverApiResponse) async {
         if (serverApiResponse.code == 1) {
-          final reviewsModel = reviewsModelFromMap(serverApiResponse.object);
-          if (reviewsModel.success == "1") {
+          final reviewsModel = json.decode(serverApiResponse.object);
+          if (reviewsModel['success'] == "1") {
+            List myList = reviewsModel['liked_products_id'] as List;
+            productsProvider.likedProducts = [];
+            myList.forEach((element) {
+              productsProvider.likedProducts.add(element);
+            });
+            productsProvider.likedProducts.toSet().toList();
+            favs = productsProvider.likedProducts;
             apiResponse = new ApiResponse(
-                code: 1,
-                msg: reviewsModel.message,
-                object: reviewsModel.reviewsList);
+                code: 1, msg: reviewsModel['message'], object: favs);
           } else {
+            myIds.add(productId);
+
             apiResponse = new ApiResponse(
-                code: int.parse(reviewsModel.success),
-                msg: reviewsModel.message);
+                code: int.parse(reviewsModel['success']),
+                msg: reviewsModel['message']);
           }
         } else {
+          myIds.add(productId);
+
           apiResponse =
               new ApiResponse(code: apiResponse.code, msg: apiResponse.msg);
         }
+        myIds.add(productId);
+
+        return apiResponse;
       });
     } catch (error) {
       apiResponse = new ApiResponse(code: 0, msg: "Network Error");

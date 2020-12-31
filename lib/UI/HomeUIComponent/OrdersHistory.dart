@@ -265,7 +265,7 @@ class _OrdersHistoryState extends State<OrdersHistory> {
               //                                           ]),
               //                                       child: CachedNetworkImage(
               //                                         imageUrl:
-              //                                             "http://oreeed.com/${cart.getCart[position].item.productsImage}",
+              //                                             "http://staging.oreeed.com/${cart.getCart[position].item.productsImage}",
               //                                         height: 130.0,
               //                                         width: 120.0,
               //                                         fit: BoxFit.cover,
@@ -532,7 +532,7 @@ class _OrdersHistoryState extends State<OrdersHistory> {
                   decoration: BoxDecoration(
                     image: DecorationImage(
                         image: CachedNetworkImageProvider(
-                            "http://oreeed.com/" + product.image),
+                            "http://staging.oreeed.com/" + product.image),
                         fit: BoxFit.cover),
                   ),
                 ),
@@ -557,7 +557,6 @@ class noItemCart extends StatelessWidget {
     MediaQueryData mediaQueryData = MediaQuery.of(context);
     return Container(
       width: 500.0,
-
       color: Colors.white,
       height: 500,
       child: SingleChildScrollView(
@@ -568,7 +567,10 @@ class noItemCart extends StatelessWidget {
               Padding(
                   padding:
                       EdgeInsets.only(top: mediaQueryData.padding.top + 50.0)),
-             Icon(Icons.remove_shopping_cart_rounded,size: 200,),
+              Icon(
+                Icons.remove_shopping_cart_rounded,
+                size: 200,
+              ),
               Padding(padding: EdgeInsets.only(bottom: 10.0)),
               Text(
                 "You Don't Have Any Order",

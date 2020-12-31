@@ -153,7 +153,7 @@ class ItemGrid extends StatelessWidget {
                                 child: Hero(
                                   tag: "hero-grid-${gridItem.productsId}",
                                   child: CachedNetworkImage(
-                                    imageUrl: "http://oreeed.com/" +
+                                    imageUrl: "http://staging.oreeed.com/" +
                                         gridItem.productsImage,
                                   ),
                                 ),
@@ -179,7 +179,8 @@ class ItemGrid extends StatelessWidget {
                         image: DecorationImage(
                           fit: BoxFit.cover,
                           image: CachedNetworkImageProvider(
-                              "http://oreeed.com/" + gridItem.productsImage),
+                              "http://staging.oreeed.com/" +
+                                  gridItem.productsImage),
                         ),
                       ),
                     ),

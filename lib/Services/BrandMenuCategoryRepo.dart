@@ -1,13 +1,63 @@
+import 'dart:convert';
+
 import 'package:oreeed/Models/ApiResponse.dart';
 import 'package:oreeed/Models/CategoryModel.dart';
 import 'package:oreeed/Models/TimeZone.dart';
 import 'package:oreeed/Utiles/Constants.dart';
+import 'package:oreeed/Utiles/databaseHelper.dart';
+import 'package:oreeed/providers/AuthProvider.dart';
+import 'package:oreeed/providers/ProductsProvider.dart';
 import 'package:oreeed/resources/ApiHandler.dart';
+import 'package:provider/provider.dart';
 
 ApiResponse categories;
+dynamic favs;
 
 class BrandMenuCategoryRepo {
   ////////////////////////////////  Method for LogInWithOtp
+
+  Future fetchFavList(context) async {
+    var productsProvider =
+        Provider.of<ProductsProvider>(context, listen: false);
+    ApiResponse apiResponse;
+    try {
+      if (favs == null) {
+        DatabaseHelper helper = DatabaseHelper();
+        User _user;
+        _user = (await helper.getUserList())[0];
+
+        print(
+            "########################### Back Track to BrandMenuCategoryRepo => login");
+        await ApiHandler().postMethodWithoutToken(
+            url: baseuRL + 'customer_liked_products',
+            body: {
+              "language_id": 1,
+              "customer_id": _user.id
+            }).then((serverApiResponse) async {
+          Map myValue = json.decode(serverApiResponse.object.toString());
+          if (myValue['success'] == '1') {
+            favs = apiResponse;
+            productsProvider.likedProducts = [];
+            List myList = myValue['data'] as List;
+            myList.forEach((element) {
+              productsProvider.likedProducts.add(element);
+            });
+            productsProvider.likedProducts.toSet().toList();
+            favs = productsProvider.likedProducts;
+          } else {
+            apiResponse =
+                new ApiResponse(code: apiResponse.code, msg: apiResponse.msg);
+            favs = apiResponse;
+          }
+        });
+      }
+      return favs;
+    } catch (error) {
+      apiResponse = new ApiResponse(code: 0, msg: "Network Error");
+      favs = apiResponse;
+    }
+    return favs;
+  }
 
   Future<ApiResponse> fetchCategoryList() async {
     ApiResponse apiResponse;

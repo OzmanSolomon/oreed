@@ -1,6 +1,9 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:oreeed/Models/ApiResponse.dart';
+import 'package:oreeed/UI/BottomNavigationBar.dart';
+import 'package:oreeed/UI/GenralWidgets/ServerProcessLoader.dart';
 import 'package:oreeed/Utiles/Constants.dart';
 import 'package:oreeed/Utiles/databaseHelper.dart';
 import 'package:oreeed/resources/ApiHandler.dart';
@@ -115,7 +118,7 @@ class AuthRepo {
     return apiResponse;
   }
 
-  Future<ApiResponse> processEditProfile(
+  Future<ApiResponse> processEditProfile(context,
       {lang = "en", Map<String, dynamic> userRegistration}) async {
     ApiResponse apiResponse;
     try {
@@ -135,6 +138,12 @@ class AuthRepo {
           databaseHelper.updateUser(user);
           apiResponse = new ApiResponse(
               code: serverApiResponse.code, msg: serverApiResponse.msg);
+          Navigator.pop(context);
+          Navigator.pop(context);
+          Navigator.of(context).pushReplacement(PageRouteBuilder(
+              pageBuilder: (_, __, ___) =>
+                  new BottomNavigationBarPage(initIndex: 3),
+              transitionDuration: Duration(milliseconds: 750)));
         } else {
           apiResponse = new ApiResponse(
               code: serverApiResponse.code, msg: serverApiResponse.msg);

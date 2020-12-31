@@ -7,14 +7,14 @@ class NotificationProvider with ChangeNotifier {
   bool _notifyTripStart = false;
   bool _notifyTripEnd = false;
   bool _notifyWhenTripComplete = false;
-
-  List<SingleNotificationObj> notifications = [];
+  bool isLoading = true;
+  List<NotificationData> notifications = [];
   String fCMToken;
   bool _isFetching = false;
   String responseMessage = "";
   int page = 1;
   int newNotifications = 0;
-  List<SingleNotificationObj> get getNotifications => notifications;
+  List<NotificationData> get getNotifications => notifications;
   String get getFCMToken => fCMToken;
   bool get isFetching => _isFetching;
   bool get notifyBeforeTrip => _notifyTripStart;
@@ -46,18 +46,18 @@ class NotificationProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void incrementer(List<SingleNotificationObj> list) {
+  void incrementer(List<NotificationData> list) {
     for (int i = 0; i < notifications.length; i++) {
-      if (notifications[i].data.isRead == false) {
-        newNotifications = newNotifications + 1;
-      }
+      // if (notifications[i].data.isRead == false) {
+      //   newNotifications = newNotifications + 1;
+      // }
       notifyListeners();
     }
   }
 
   void loadNotifications() async {
     _isFetching = true;
-    incrementer(notifications);
+    // incrementer(notifications);
     NotificationRepo().getNotifications().then((value) {
       _isFetching = false;
       switch (value.code) {
@@ -66,7 +66,7 @@ class NotificationProvider with ChangeNotifier {
           break;
         case 1:
           responseMessage = value.msg.toString();
-          List<SingleNotificationObj> list = value.object;
+          List<NotificationData> list = value.object;
           for (int i = 0; i < list.length; i++) {
             if (!notifications.contains(list[i])) {
               notifications.add(list[i]);
@@ -80,11 +80,11 @@ class NotificationProvider with ChangeNotifier {
           responseMessage = value.msg.toString();
           break;
       }
+      notifyListeners();
     });
-    notifyListeners();
   }
 
-  void addNotification(SingleNotificationObj notificationObj) {
+  void addNotification(NotificationData notificationObj) {
     if (notifications != null) {
       notifications.add(notificationObj);
     }
@@ -93,7 +93,7 @@ class NotificationProvider with ChangeNotifier {
 
   void messageIsRead(int index) {
     if (notifications.isNotEmpty) {
-      notifications[index].data.isRead = true;
+      // notifications[index].data.isRead = true;
     }
     notifyListeners();
   }
@@ -117,58 +117,74 @@ class NotificationProvider with ChangeNotifier {
 // final notificationObj = notificationObjFromMap(jsonString);
 
 NotificationObj notificationObjFromMap(String str) =>
-    NotificationObj.fromMap(json.decode(str));
+    NotificationObj.fromJson(json.decode(str));
 
-String notificationObjToMap(NotificationObj data) => json.encode(data.toMap());
+String notificationObjToMap(NotificationObj data) => json.encode(data.toJson());
 
 class NotificationObj {
-  NotificationObj({
-    this.responseCode,
-    this.responseStatus,
-    this.responseMessage,
-    this.data,
-  });
+  String success;
+  List<NotificationData> data;
+  String message;
 
-  int responseCode;
-  String responseStatus;
-  String responseMessage;
-  List<SingleNotificationObj> data;
+  NotificationObj({this.success, this.data, this.message});
 
-  factory NotificationObj.fromMap(Map<String, dynamic> json) => NotificationObj(
-        responseCode: json["ResponseCode"],
-        responseStatus: json["ResponseStatus"],
-        responseMessage: json["ResponseMessage"],
-        data: List<SingleNotificationObj>.from(
-            json["data"].map((x) => SingleNotificationObj.fromMap(x))),
-      );
+  NotificationObj.fromJson(Map<String, dynamic> json) {
+    success = json['success'];
+    if (json['data'] != null) {
+      data = new List<NotificationData>();
+      json['data'].forEach((v) {
+        data.add(new NotificationData.fromJson(v));
+      });
+    }
+    message = json['message'];
+  }
 
-  Map<String, dynamic> toMap() => {
-        "ResponseCode": responseCode,
-        "ResponseStatus": responseStatus,
-        "ResponseMessage": responseMessage,
-        "data": List<dynamic>.from(data.map((x) => x.toMap())),
-      };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['success'] = this.success;
+    if (this.data != null) {
+      data['data'] = this.data.map((v) => v.toJson()).toList();
+    }
+    data['message'] = this.message;
+    return data;
+  }
 }
 
-class SingleNotificationObj {
-  SingleNotificationObj({
-    this.notification,
-    this.data,
-  });
+class NotificationData {
+  int id;
+  int userId;
+  String title;
+  String message;
+  String createdAt;
+  String updatedAt;
 
-  Notification notification;
-  Data data;
+  NotificationData(
+      {this.id,
+      this.userId,
+      this.title,
+      this.message,
+      this.createdAt,
+      this.updatedAt});
 
-  factory SingleNotificationObj.fromMap(Map<String, dynamic> json) =>
-      SingleNotificationObj(
-        notification: Notification.fromMap(json["notification"]),
-        data: Data.fromMap(json["data"]),
-      );
+  NotificationData.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    userId = json['user_id'];
+    title = json['title'];
+    message = json['message'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+  }
 
-  Map<String, dynamic> toMap() => {
-        "notification": notification.toMap(),
-        "data": data.toMap(),
-      };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['user_id'] = this.userId;
+    data['title'] = this.title;
+    data['message'] = this.message;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    return data;
+  }
 }
 
 class Data {

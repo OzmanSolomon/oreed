@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oreeed/Library/Language_Library/lib/easy_localization_delegate.dart';
 import 'package:oreeed/Library/Language_Library/lib/easy_localization_provider.dart';
@@ -15,39 +16,13 @@ class notification extends StatefulWidget {
 
 class _notificationState extends State<notification> {
   final List<Post> items = new List();
+  Future _notification;
+
   @override
   void initState() {
     super.initState();
-    setState(() {
-      items.add(
-        Post(
-            image: "assets/oreeedImages/logo.PNG",
-            id: 1,
-            title: "Oreeed Shop",
-            desc: "Thanks for downloaded Oreeed shop application"),
-      );
-      items.add(
-        Post(
-            image: "assets/oreeedImages/logo.PNG",
-            id: 2,
-            title: "Oreeed Shop",
-            desc: "Your Item Delivery"),
-      );
-      items.add(
-        Post(
-            image: "assets/oreeedImages/logo.PNG",
-            id: 3,
-            title: "Oreeed Shop",
-            desc: "Pending List Item Shoes"),
-      );
-      items.add(
-        Post(
-            image: "assets/oreeedImages/logo.PNG",
-            id: 4,
-            title: "Oreeed Shop",
-            desc: "Get 10% Discount for macbook pro 2018"),
-      );
-    });
+    Provider.of<NotificationProvider>(context, listen: false)
+        .loadNotifications();
   }
 
   Widget build(BuildContext context) {
@@ -75,74 +50,80 @@ class _notificationState extends State<notification> {
           ),
           body: Consumer<NotificationProvider>(
               builder: (context, notificationProvider, _) {
-            return notificationProvider.getNotifications.isNotEmpty
-                ? ListView.builder(
-                    itemCount: notificationProvider.getNotifications.length,
-                    padding: const EdgeInsets.all(5.0),
-                    itemBuilder: (context, position) {
-                      return Dismissible(
-                          key: Key("$position"),
-                          onDismissed: (direction) {
-                            setState(() {
-                              // notificationProvider.getNotifications
-                              notificationProvider.deleteMessage(position);
-                              // items.removeAt(position);
-                            });
-                          },
-                          background: Container(
-                            color: Color(0xFF6991C7),
-                          ),
-                          child: Container(
-                            height: 88.0,
-                            child: Column(
-                              children: <Widget>[
-                                Divider(height: 5.0),
-                                ListTile(
-                                  title: Text(
-                                    '${notificationProvider.getNotifications[position].notification.title}',
-                                    style: TextStyle(
-                                        fontSize: 17.5,
-                                        color: Colors.black87,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                  subtitle: Padding(
-                                    padding: const EdgeInsets.only(top: 6.0),
-                                    child: Container(
-                                      width: 440.0,
-                                      child: Text(
-                                        '${notificationProvider.getNotifications[position].notification.body}',
-                                        style: new TextStyle(
-                                            fontSize: 15.0,
-                                            fontStyle: FontStyle.italic,
-                                            color: Colors.black38),
-                                        overflow: TextOverflow.ellipsis,
+            return notificationProvider.isFetching
+                ? Center(child: CupertinoActivityIndicator())
+                : notificationProvider.getNotifications.isNotEmpty
+                    ? ListView.builder(
+                        itemCount: notificationProvider.getNotifications.length,
+                        padding: const EdgeInsets.all(5.0),
+                        itemBuilder: (context, position) {
+                          return Dismissible(
+                              key: Key("$position"),
+                              onDismissed: (direction) {
+                                setState(() {
+                                  // notificationProvider.getNotifications
+                                  notificationProvider.deleteMessage(position);
+                                  // items.removeAt(position);
+                                });
+                              },
+                              background: Container(
+                                color: Color(0xFF6991C7),
+                              ),
+                              child: Container(
+                                height: 88.0,
+                                child: Column(
+                                  children: <Widget>[
+                                    Divider(height: 5.0),
+                                    ListTile(
+                                      title: Text(
+                                        '${notificationProvider.getNotifications[position].title}',
+                                        style: TextStyle(
+                                            fontSize: 17.5,
+                                            color: Colors.black87,
+                                            fontWeight: FontWeight.w600),
                                       ),
+                                      subtitle: Padding(
+                                        padding:
+                                            const EdgeInsets.only(top: 6.0),
+                                        child: Container(
+                                          width: 440.0,
+                                          child: Text(
+                                            '${notificationProvider.getNotifications[position].message}',
+                                            style: new TextStyle(
+                                                fontSize: 15.0,
+                                                fontStyle: FontStyle.italic,
+                                                color: Colors.black38),
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      ),
+                                      leading: Column(
+                                        children: <Widget>[
+                                          Container(
+                                            height: 40.0,
+                                            width: 40.0,
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(60.0)),
+                                              // image: DecorationImage(
+                                              //     image: CachedNetworkImageProvider(
+                                              //         'http://staging.oreeed.com/${notificationProvider.getNotifications[position].data.other}'),
+                                              // fit: BoxFit.fill)
+                                            ),
+                                            child: Icon(Icons.notifications,
+                                                size: 30),
+                                          )
+                                        ],
+                                      ),
+                                      onTap: () =>
+                                          _onTapItem(context, items[position]),
                                     ),
-                                  ),
-                                  leading: Column(
-                                    children: <Widget>[
-                                      Container(
-                                        height: 40.0,
-                                        width: 40.0,
-                                        decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(60.0)),
-                                            image: DecorationImage(
-                                                image: CachedNetworkImageProvider(
-                                                    'http://oreeed.com/${notificationProvider.getNotifications[position].data.other}'),
-                                                fit: BoxFit.fill)),
-                                      )
-                                    ],
-                                  ),
-                                  onTap: () =>
-                                      _onTapItem(context, items[position]),
+                                    Divider(height: 5.0),
+                                  ],
                                 ),
-                                Divider(height: 5.0),
-                              ],
-                            ),
-                          ));
-                    })
-                : noItemNotifications();
+                              ));
+                        })
+                    : noItemNotifications();
           }),
         ),
       ),

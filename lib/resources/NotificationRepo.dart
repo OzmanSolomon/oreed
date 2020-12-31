@@ -1,5 +1,8 @@
+import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'package:oreeed/Models/ApiResponse.dart';
+import 'package:oreeed/UI/BottomNavigationBar.dart';
+import 'package:oreeed/UI/Products/GridView/VerticalGProductsList.dart';
 import 'package:oreeed/providers/NotificationProvider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -12,29 +15,28 @@ class NotificationRepo {
     ApiResponse apiResponse;
     print("getTrips => state : $state");
     try {
+      // var appSession = await SharedPreferences.getInstance();
       var appSession = await SharedPreferences.getInstance();
+
+      // var token = appSession.get("token");
       var token = appSession.get("token");
-      final response = await client.get(
-          Uri.encodeFull(
-            baseuRL + 'notifications',
-          ),
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'Authorization': 'Bearer ' + token,
-          });
+
+      final response = await Dio().post(
+        // Uri.encodeFull(
+        "http://staging.oreeed.com/api/get_my_notifications",
+
+        data: {"customer_id": userId},
+      );
       if (response.statusCode == 200) {
-        final notificationObj = notificationObjFromMap(response.body);
-        if (notificationObj.responseCode == 1) {
+        final notificationObj = notificationObjFromMap(response.data);
+        if (notificationObj.success == '1') {
           apiResponse = new ApiResponse(
-              code: notificationObj.responseCode,
-              msg: notificationObj.responseMessage,
+              code: int.parse(notificationObj.success),
+              msg: notificationObj.message,
               object: notificationObj.data);
         } else {
           apiResponse = new ApiResponse(
-            code: notificationObj.responseCode,
-            msg: notificationObj.responseMessage,
-          );
+              msg: notificationObj.message, object: notificationObj.data);
         }
       } else {
         apiResponse = new ApiResponse(code: -1, msg: "Server Error !");
@@ -71,16 +73,16 @@ class NotificationRepo {
           });
       if (response.statusCode == 200) {
         final notificationObj = notificationObjFromMap(response.body);
-        if (notificationObj.responseCode == 1) {
+        if (notificationObj.success == '1') {
           apiResponse = new ApiResponse(
-              code: 1,
-              msg: notificationObj.responseMessage,
+              code: int.parse(notificationObj.success),
+              msg: notificationObj.message,
               object: notificationObj.data);
         } else {
           apiResponse = new ApiResponse(
-              code: notificationObj.responseCode,
-              msg: notificationObj.responseMessage,
-              object: null);
+            code: int.parse(notificationObj.success),
+            msg: notificationObj.message,
+          );
         }
       } else {
         apiResponse = new ApiResponse(

@@ -6,6 +6,7 @@
 // ApiHandler v0.1
 import 'package:dio/dio.dart';
 import 'package:oreeed/Models/ApiResponse.dart';
+import 'package:oreeed/UI/BottomNavigationBar.dart';
 import 'package:oreeed/Utiles/databaseHelper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -138,6 +139,7 @@ class ApiHandler {
     ApiResponse apiResponse;
     var appSession = await SharedPreferences.getInstance();
     var token = appSession.get("token");
+    globalToken = token;
     print(
         "#######################################  Token @-------------------------");
     print('@$token@');

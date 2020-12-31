@@ -274,7 +274,7 @@ class _DetailPageState extends State<DetailPage> {
                                         // width: 30,
                                         child: Center(
                                           child: OutlineButton.icon(
-                                            onPressed: () {},
+                                            // onPressed: () {},
                                             label: Text(
                                               "Edit",
                                               style: TextStyle(
