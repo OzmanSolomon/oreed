@@ -6,6 +6,7 @@ import 'package:oreeed/Models/ApiResponse.dart';
 import 'package:oreeed/Models/ProductsModel.dart';
 import 'package:oreeed/Services/ProductRepo.dart';
 import 'package:oreeed/UI/BrandUIComponent/NoData.dart';
+import 'package:oreeed/Utiles/Constants.dart';
 
 import '../ProductDetails.dart';
 
@@ -56,13 +57,13 @@ class _FlashSaleState extends State<FlashSale> {
                     var apiResponse = snapshot.data;
                     switch (snapshot.connectionState) {
                       case ConnectionState.none:
-                        return TryAgainLater();
+                        return Center(child: TryAgainLater());
                         break;
                       case ConnectionState.waiting:
-                        return LoaderFetchingData();
+                        return Center(child: LoaderFetchingData());
                         break;
                       case ConnectionState.active:
-                        return LoaderFetchingData();
+                        return Center(child: LoaderFetchingData());
                         break;
                       case ConnectionState.done:
                         if (apiResponse.code == 1) {
@@ -85,7 +86,7 @@ class _FlashSaleState extends State<FlashSale> {
                                 );
                               });
                         } else {
-                          return NoData();
+                          return Center(child: NoData());
                         }
                         break;
                       default:
@@ -150,8 +151,7 @@ class flashSaleItem extends StatelessWidget {
                     decoration: BoxDecoration(
                       image: DecorationImage(
                           image: CachedNetworkImageProvider(
-                            "http://staging.oreeed.com/" +
-                                product.productsFlashImage,
+                            imageUrl + product.productsFlashImage,
                           ),
                           fit: BoxFit.cover),
                     ),

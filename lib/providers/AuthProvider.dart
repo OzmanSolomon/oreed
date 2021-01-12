@@ -6,6 +6,7 @@ import 'package:oreeed/Services/AuthRepo.dart';
 import 'package:oreeed/UI/BottomNavigationBar.dart';
 import 'package:oreeed/UI/GenralWidgets/ServerProcessLoader.dart';
 import 'package:oreeed/UI/GenralWidgets/ShowSnacker.dart';
+import 'package:oreeed/UI/Products/GridView/VerticalGProductsList.dart';
 import 'package:oreeed/Utiles/Constants.dart';
 import 'package:oreeed/Utiles/databaseHelper.dart';
 import 'package:provider/provider.dart';
@@ -153,6 +154,8 @@ class AuthProvider with ChangeNotifier {
 
   Future<bool> logMeOut(String userId) async {
     SharedPreferences prefs;
+    prefs = await SharedPreferences.getInstance();
+
     await prefs.clear();
   }
 
@@ -173,7 +176,9 @@ class AuthProvider with ChangeNotifier {
       if (_user != null) {
         helper.deleteUser(int.parse(_user.id));
       }
-      AuthRepo().login(email: email, password: password).then((apiResponse) {
+      AuthRepo()
+          .login(email: email, password: password)
+          .then((apiResponse) async {
         Navigator.pop(scaffoldKey.currentContext);
         if (apiResponse != null) {
           switch (apiResponse.code) {
@@ -182,8 +187,11 @@ class AuthProvider with ChangeNotifier {
               var userData = Provider.of<AuthProvider>(
                   scaffoldKey.currentContext,
                   listen: false);
+              User _user;
 
               userData.reSetUser();
+              _user = (await helper.getUserList())[0];
+              userId = _user.id;
               Navigator.of(scaffoldKey.currentContext).pushReplacement(
                   PageRouteBuilder(
                       pageBuilder: (_, __, ___) =>

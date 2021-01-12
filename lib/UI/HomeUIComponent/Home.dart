@@ -5,6 +5,7 @@ import 'package:oreeed/Library/Language_Library/lib/easy_localization_delegate.d
 import 'package:oreeed/Library/Language_Library/lib/easy_localization_provider.dart';
 import 'package:oreeed/Models/ApiResponse.dart';
 import 'package:oreeed/Services/ConfigurationRepo.dart';
+import 'package:oreeed/UI/BrandUIComponent/NoData.dart';
 import 'package:oreeed/UI/HomeUIComponent/AppbarGradient.dart';
 import 'package:oreeed/UI/HomeUIComponent/Widgets/CategoryList.dart';
 import 'package:oreeed/UI/HomeUIComponent/Widgets/MenuItemList.dart';
@@ -51,19 +52,13 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
               var apiResponse = snapshot.data;
               switch (snapshot.connectionState) {
                 case ConnectionState.none:
-                  return EmptySlider(
-                    ctx: context,
-                    width: _width / 3,
-                    height: _width / 3,
-                  );
+                  return Center(child: TryAgainLater());
                   break;
                 case ConnectionState.waiting:
-                  return EmptySlider(
-                      ctx: context, height: _width / 3, width: _width / 3);
+                  return Center(child: LoaderFetchingData());
                   break;
                 case ConnectionState.active:
-                  return EmptySlider(
-                      ctx: context, height: _width / 3, width: _width / 3);
+                  return Center(child: LoaderFetchingData());
                   break;
                 case ConnectionState.done:
                   //print("######done object ${apiResponse.object}");

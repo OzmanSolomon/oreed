@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:oreeed/Models/ApiResponse.dart';
 import 'package:oreeed/Services/BrandMenuCategoryRepo.dart';
+import 'package:oreeed/UI/BrandUIComponent/NoData.dart';
+import 'package:oreeed/Utiles/Constants.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../CategoryDetail.dart';
@@ -36,16 +38,13 @@ class _CategoryListState extends State<CategoryList> {
           var apiResponse = snapshot.data;
           switch (snapshot.connectionState) {
             case ConnectionState.none:
-              return EmptySlider(
-                  ctx: context, height: widget.height, width: widget.width);
+              return Center(child: TryAgainLater());
               break;
             case ConnectionState.waiting:
-              return EmptySlider(
-                  ctx: context, height: widget.height, width: widget.width);
+              return Center(child: LoaderFetchingData());
               break;
             case ConnectionState.active:
-              return EmptySlider(
-                  ctx: context, height: widget.height, width: widget.width);
+              return Center(child: LoaderFetchingData());
               break;
             case ConnectionState.done:
               if (apiResponse.code == 1) {
@@ -102,7 +101,7 @@ class _CategoryListState extends State<CategoryList> {
                                           image: DecorationImage(
                                             fit: BoxFit.fitHeight,
                                             image: CachedNetworkImageProvider(
-                                                "http://staging.oreeed.com/" +
+                                                imageUrl +
                                                     apiResponse
                                                         .object[index].image),
                                           ),

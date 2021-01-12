@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oreeed/Library/Language_Library/lib/easy_localization_delegate.dart';
 import 'package:oreeed/Library/Language_Library/lib/easy_localization_provider.dart';
@@ -9,6 +10,7 @@ import 'package:oreeed/Models/ProductsModel.dart';
 import 'package:oreeed/Services/ProductRepo.dart';
 import 'package:oreeed/UI/BrandUIComponent/NoData.dart';
 import 'package:oreeed/UI/HomeUIComponent/ProductDetails.dart';
+import 'package:oreeed/Utiles/Constants.dart';
 import 'package:oreeed/Utiles/databaseHelper.dart';
 import 'package:oreeed/providers/ProductsProvider.dart';
 import 'package:provider/provider.dart';
@@ -303,21 +305,27 @@ class ItemGrid extends StatelessWidget {
               children: <Widget>[
                 Stack(
                   children: <Widget>[
-                    Container(
-                      height: mediaQueryData.size.height / 3.3,
-                      width: 200.0,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(7.0),
-                              topRight: Radius.circular(7.0)),
-                          image: DecorationImage(
-                              image: CachedNetworkImageProvider(
-                                  product.productsImage != null
-                                      ? "http://staging.oreeed.com/" +
-                                              product.productsImage ??
-                                          ''
-                                      : ''),
-                              fit: BoxFit.cover)),
+                    Stack(
+                      children: [
+                        CachedNetworkImage(
+                          imageUrl: product.productsImage != null
+                              ? imageUrl + product.productsImage ?? ''
+                              : '',
+                          fit: BoxFit.cover,
+                          height: mediaQueryData.size.height / 3.3,
+                          width: 200.0,
+                          placeholder: (context, url) =>
+                              CupertinoActivityIndicator(),
+                          errorWidget: (context, url, error) => new Icon(
+                            Icons.error,
+                            color: Colors.grey,
+                          ),
+                        ),
+                        Positioned(
+                          right: 0,
+                          child: FavoriteIcon(product.productsId, userId),
+                        )
+                      ],
                     ),
                     product.discountPrice != null
                         ? Container(
@@ -341,22 +349,26 @@ class ItemGrid extends StatelessWidget {
                 ),
                 Padding(padding: EdgeInsets.only(top: 7.0)),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Column(
                       children: [
-                        Padding(
-                          padding:
+                        Container(
+                          margin:
                               const EdgeInsets.only(left: 15.0, right: 15.0),
+                          width: 130,
                           child: Text(
                             product.productsName ?? "unkown",
                             overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.center,
+                            maxLines: 2,
                             style: TextStyle(
-                                letterSpacing: 0.5,
+
+                                // letterSpacing: 0.5,
                                 color: Colors.black54,
                                 fontFamily: "Montserrat",
                                 fontWeight: FontWeight.w500,
-                                fontSize: 13.0),
+                                fontSize: 9.0),
                           ),
                         ),
                         Padding(padding: EdgeInsets.only(top: 1.0)),
@@ -410,10 +422,6 @@ class ItemGrid extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Center(
-                      child: FavoriteIcon(
-                          product.productsId, int.parse(userId.toString())),
-                    )
                   ],
                 ),
               ],

@@ -10,6 +10,7 @@ import 'package:oreeed/Services/ProductRepo.dart';
 import 'package:oreeed/UI/BrandUIComponent/NoData.dart';
 import 'package:oreeed/UI/HomeUIComponent/Search.dart';
 import 'package:oreeed/UI/Products/GridView/VerticalGProductsList.dart';
+import 'package:oreeed/Utiles/Constants.dart';
 import 'package:oreeed/providers/ProductsProvider.dart';
 import 'package:provider/provider.dart';
 
@@ -69,7 +70,11 @@ class _WishListState extends State<WishList> {
     );
 
     var data = EasyLocalizationProvider.of(context).data;
-
+    var lineTxtStyle = TextStyle(
+        fontFamily: "Montserrat",
+        fontSize: 15,
+        fontWeight: FontWeight.w500,
+        color: Colors.grey);
     return EasyLocalizationProvider(
       data: data,
       child: Padding(
@@ -77,7 +82,36 @@ class _WishListState extends State<WishList> {
         child: Scaffold(
           /// Calling variable appbar
           appBar: _appbar,
-          body: _imageLoaded(context),
+          body: userId != null
+              ? _imageLoaded(context)
+              : Center(
+                  child: Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        // CircleAvatar(
+                        //   radius: 60,
+                        //   backgroundColor: appYellow,
+                        // ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          "Guest, Mode",
+                          style: lineTxtStyle,
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          "Try Login Or Register",
+                          style: lineTxtStyle,
+                        )
+                      ],
+                    ),
+                  ),
+                ),
         ),
       ),
     );
@@ -114,7 +148,9 @@ class _WishListBodyState extends State<WishListBody> {
         });
       }
     });
-    _products = BrandMenuCategoryRepo().fetchFavList(context);
+    if (userId != null) {
+      _products = BrandMenuCategoryRepo().fetchFavList(context);
+    }
     super.initState();
   }
 

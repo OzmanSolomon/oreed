@@ -5,6 +5,7 @@ import 'package:oreeed/Models/ApiResponse.dart';
 import 'package:oreeed/Models/MyOrdersModel.dart';
 import 'package:oreeed/Services/OrdersRepo.dart';
 import 'package:oreeed/UI/Products/GridView/VerticalGProductsList.dart';
+import 'package:oreeed/Utiles/Constants.dart';
 import 'package:oreeed/Utiles/databaseHelper.dart';
 import 'package:oreeed/providers/AuthProvider.dart';
 import 'package:oreeed/providers/CartProvider.dart';
@@ -532,7 +533,7 @@ class _OrdersHistoryState extends State<OrdersHistory> {
                   decoration: BoxDecoration(
                     image: DecorationImage(
                         image: CachedNetworkImageProvider(
-                            "http://staging.oreeed.com/" + product.image),
+                            imageUrl + product.image),
                         fit: BoxFit.cover),
                   ),
                 ),

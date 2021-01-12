@@ -6,6 +6,7 @@ import 'package:oreeed/Services/ProductRepo.dart';
 import 'package:oreeed/UI/BrandUIComponent/NoData.dart';
 import 'package:oreeed/UI/HomeUIComponent/CategoryDetail.dart';
 import 'package:oreeed/UI/HomeUIComponent/ProductDetails.dart';
+import 'package:oreeed/Utiles/Constants.dart';
 
 /// Component item Menu icon bellow a ImageSlider
 class HorizontalProductsList extends StatefulWidget {
@@ -121,8 +122,7 @@ class ProductItem extends StatelessWidget {
                               topRight: Radius.circular(7.0)),
                           image: DecorationImage(
                               image: CachedNetworkImageProvider(
-                                  "http://staging.oreeed.com/" +
-                                      product.productsImage),
+                                  imageUrl + product.productsImage),
                               fit: BoxFit.cover)),
                     ),
                     Padding(padding: EdgeInsets.only(top: 7.0)),

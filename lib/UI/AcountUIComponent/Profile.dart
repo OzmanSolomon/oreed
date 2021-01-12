@@ -117,7 +117,7 @@ class _profilState extends State<profil> {
                               image: DecorationImage(
                                 fit: BoxFit.cover,
                                 image: CachedNetworkImageProvider(
-                                  "http://staging.oreeed.com/${_user.avatar.toString()}",
+                                  imageUrl + "${_user.avatar.toString()}",
                                 ),
                               ),
                             ),

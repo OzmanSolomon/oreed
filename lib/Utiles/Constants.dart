@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-const String baseuRL = "http://staging.oreeed.com/api/";
-const String imageUrl = "http://staging.oreeed.com/";
+const String baseuRL = "http://staging2.oreeed.com/api/";
+const String imageUrl = "http://staging2.oreeed.com/";
 const String CFAssetImage = "images/five.png";
 const String appName = "Oreeed";
 const Color appBlue = Color(0xff033766);

@@ -8,6 +8,7 @@ import 'package:oreeed/Services/ProductRepo.dart';
 import 'package:oreeed/UI/BrandUIComponent/NoData.dart';
 import 'package:oreeed/UI/HomeUIComponent/ProductDetails.dart';
 import 'package:oreeed/UI/Products/ListView/HorizontalProductsList.dart';
+import 'package:oreeed/Utiles/Constants.dart';
 import 'package:oreeed/providers/ProductsProvider.dart';
 import 'package:provider/provider.dart';
 
@@ -366,7 +367,7 @@ class _searchAppbarState extends State<searchAppbar> {
                                             ]),
                                         child: CachedNetworkImage(
                                           imageUrl:
-                                              "http://staging.oreeed.com/${productProvider.filteredProductList[index].productsImage}",
+                                              "${imageUrl + productProvider.filteredProductList[index].productsImage}",
                                           // height: 130.0,
                                           // width: 120.0,
                                           fit: BoxFit.cover,

@@ -5,6 +5,7 @@ import 'package:oreeed/Services/BrandMenuCategoryRepo.dart';
 import 'package:oreeed/Services/ProductRepo.dart';
 import 'package:oreeed/UI/BrandUIComponent/NoData.dart';
 import 'package:oreeed/UI/HomeUIComponent/ProductDetails.dart';
+import 'package:oreeed/Utiles/Constants.dart';
 
 /// Component item Menu icon bellow a ImageSlider
 class MenuItemList extends StatefulWidget {
@@ -109,13 +110,13 @@ class _WeekPromotionListState extends State<WeekPromotionList> {
             var apiResponse = snapshot.data;
             switch (snapshot.connectionState) {
               case ConnectionState.none:
-                return TryAgainLater();
+                return Center(child: TryAgainLater());
                 break;
               case ConnectionState.waiting:
-                return LoaderFetchingData();
+                return Center(child: LoaderFetchingData());
                 break;
               case ConnectionState.active:
-                return LoaderFetchingData();
+                return Center(child: LoaderFetchingData());
                 break;
               case ConnectionState.done:
                 if (apiResponse.code == 1) {
@@ -135,10 +136,8 @@ class _WeekPromotionListState extends State<WeekPromotionList> {
                               color: Colors.grey,
                               image: DecorationImage(
                                 fit: BoxFit.cover,
-                                image: CachedNetworkImageProvider(
-                                    "http://staging.oreeed.com/" +
-                                        apiResponse
-                                            .object[index].productsImage),
+                                image: CachedNetworkImageProvider(imageUrl +
+                                    apiResponse.object[index].productsImage),
                               ),
                             ),
                             width: MediaQuery.of(context).size.width * 0.3,
@@ -172,7 +171,7 @@ class _WeekPromotionListState extends State<WeekPromotionList> {
                         );
                       });
                 } else {
-                  return NoData();
+                  return Center(child: NoData());
                 }
                 break;
               default:

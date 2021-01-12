@@ -6,11 +6,13 @@ import 'package:oreeed/Library/Language_Library/lib/easy_localization_provider.d
 import 'package:oreeed/UI/AcountUIComponent/EditProfile.dart';
 import 'package:oreeed/UI/GenralWidgets/ShowSnacker.dart';
 import 'package:oreeed/UI/LoginOrSignup/widgets/TextFromField.dart';
+import 'package:oreeed/UI/Products/GridView/VerticalGProductsList.dart';
 import 'package:oreeed/Utiles/Constants.dart';
 import 'package:oreeed/Utiles/databaseHelper.dart';
 import 'package:oreeed/providers/AuthProvider.dart';
 import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileInfo extends StatefulWidget {
   @override
@@ -108,10 +110,19 @@ class _profileInfoState extends State<ProfileInfo> {
                               style:
                                   TextStyle(color: Colors.white, fontSize: 20),
                             ),
-                            onPressed: () {
-                              authProvider.logMeOut(_user.id).then((value) {
-                                initValues(context);
-                              });
+                            onPressed: () async {
+                              // authProvider
+                              //     .logMeOut(_user.id)
+                              //     .then((value) async {
+                              SharedPreferences prefs;
+                              prefs = await SharedPreferences.getInstance();
+
+                              await prefs.clear();
+                              await DatabaseHelper()
+                                  .deleteUser(int.parse(_user.id));
+                              userId = null;
+                              initValues(context);
+                              // });
                             },
                             color: Colors.redAccent,
                           ),

@@ -6,6 +6,7 @@ import 'package:oreeed/Library/Language_Library/lib/easy_localization_provider.d
 import 'package:oreeed/UI/CartUIComponent/CheckOut.dart';
 import 'package:oreeed/UI/GenralWidgets/ShowSnacker.dart';
 import 'package:oreeed/UI/LoginOrSignup/NewLogin.dart';
+import 'package:oreeed/Utiles/Constants.dart';
 import 'package:oreeed/Utiles/databaseHelper.dart';
 import 'package:oreeed/providers/CartProvider.dart';
 import 'package:provider/provider.dart';
@@ -177,8 +178,8 @@ class _cartState extends State<cart> {
                                                             spreadRadius: 0.1)
                                                       ]),
                                                   child: CachedNetworkImage(
-                                                    imageUrl:
-                                                        "http://staging.oreeed.com/${cart.getCart[position].productsImage}",
+                                                    imageUrl: imageUrl +
+                                                        "${cart.getCart[position].productsImage}",
                                                     height: 130.0,
                                                     width: 120.0,
                                                     fit: BoxFit.cover,
@@ -426,42 +427,19 @@ class _cartState extends State<cart> {
                       ),
                     ),
                   )
-                : noItemCart());
+                : Container(
+                    height: MediaQuery.of(context).size.height,
+                    child: Center(
+                      child: Text(
+                        AppLocalizations.of(context).tr('cartNoItem'),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 18.5,
+                            color: Colors.black26.withOpacity(0.2),
+                            fontFamily: "Montserrat"),
+                      ),
+                    )));
       }),
-    );
-  }
-}
-
-/// If no item cart this class showing
-
-class noItemCart extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    MediaQueryData mediaQueryData = MediaQuery.of(context);
-    return Container(
-      width: 500.0,
-      color: Colors.white,
-      height: double.infinity,
-      child: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Padding(padding: EdgeInsets.only(bottom: 10.0)),
-              Center(
-                child: Text(
-                  AppLocalizations.of(context).tr('cartNoItem'),
-                  style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 18.5,
-                      color: Colors.black26.withOpacity(0.2),
-                      fontFamily: "Montserrat"),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }

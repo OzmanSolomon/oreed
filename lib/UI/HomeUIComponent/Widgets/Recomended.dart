@@ -6,6 +6,7 @@ import 'package:oreeed/Models/ProductsModel.dart';
 import 'package:oreeed/Services/ProductRepo.dart';
 import 'package:oreeed/UI/BrandUIComponent/NoData.dart';
 import 'package:oreeed/UI/HomeUIComponent/ProductDetails.dart';
+import 'package:oreeed/Utiles/Constants.dart';
 
 class RecommendedList extends StatefulWidget {
   @override
@@ -46,37 +47,42 @@ class _RecommendedListState extends State<RecommendedList> {
                 var apiResponse = snapshot.data;
                 switch (snapshot.connectionState) {
                   case ConnectionState.none:
-                    return TryAgainLater();
+                    return Center(child: TryAgainLater());
                     break;
                   case ConnectionState.waiting:
                     return Container(
-                      child: LoaderFetchingData(),
+                      child: Center(child: LoaderFetchingData()),
                       height: 50,
                     );
                     break;
                   case ConnectionState.active:
                     return Container(
-                      child: LoaderFetchingData(),
+                      child: Center(child: LoaderFetchingData()),
                       height: 50,
                     );
                     break;
                   case ConnectionState.done:
                     if (apiResponse.code == 1) {
-                      return GridView.count(
-                        shrinkWrap: true,
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 25.0, vertical: 20.0),
-                        crossAxisSpacing: 10.0,
-                        mainAxisSpacing: 10.0,
-                        crossAxisCount: 2,
-                        scrollDirection: Axis.vertical,
-                        children: List.generate(
-                          apiResponse.object.length,
-                          (index) => ItemGrid(apiResponse.object[index]),
+                      return Container(
+                        width: MediaQuery.of(context).size.width,
+                        child: GridView.count(
+                          childAspectRatio: (150 / 250),
+                          primary: false,
+                          shrinkWrap: true,
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 25.0, vertical: 20.0),
+                          crossAxisSpacing: 10.0,
+                          mainAxisSpacing: 10.0,
+                          crossAxisCount: 2,
+                          scrollDirection: Axis.vertical,
+                          children: List.generate(
+                            apiResponse.object.length,
+                            (index) => ItemGrid(apiResponse.object[index]),
+                          ),
                         ),
                       );
                     } else {
-                      return NoData();
+                      return Center(child: NoData());
                     }
                     break;
                   default:
@@ -120,7 +126,8 @@ class ItemGrid extends StatelessWidget {
         );
       },
       child: Container(
-        width: 100,
+        width: 300,
+        height: 400,
         decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -153,8 +160,7 @@ class ItemGrid extends StatelessWidget {
                                 child: Hero(
                                   tag: "hero-grid-${gridItem.productsId}",
                                   child: CachedNetworkImage(
-                                    imageUrl: "http://staging.oreeed.com/" +
-                                        gridItem.productsImage,
+                                    imageUrl: imageUrl + gridItem.productsImage,
                                   ),
                                 ),
                                 onTap: () {
@@ -168,20 +174,17 @@ class ItemGrid extends StatelessWidget {
                       ),
                     );
                   },
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(maxHeight: 130, maxWidth: 100),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(7.0),
-                          topRight: Radius.circular(7.0),
-                        ),
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: CachedNetworkImageProvider(
-                              "http://staging.oreeed.com/" +
-                                  gridItem.productsImage),
-                        ),
+                  child: Container(
+                    height: 170,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(7.0),
+                        topRight: Radius.circular(7.0),
+                      ),
+                      image: DecorationImage(
+                        fit: BoxFit.fill,
+                        image: CachedNetworkImageProvider(
+                            imageUrl + gridItem.productsImage),
                       ),
                     ),
                   ),

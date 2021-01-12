@@ -14,6 +14,8 @@ import 'package:oreeed/UI/BrandUIComponent/NoData.dart';
 import 'package:oreeed/UI/CartUIComponent/CartLayout.dart';
 import 'package:oreeed/UI/GenralWidgets/ShowSnacker.dart';
 import 'package:oreeed/UI/HomeUIComponent/ReviewLayout.dart';
+import 'package:oreeed/UI/LoginOrSignup/ChoseLoginOrSignup.dart';
+import 'package:oreeed/UI/LoginOrSignup/NewLogin.dart';
 import 'package:oreeed/UI/Products/GridView/VerticalGProductsList.dart';
 import 'package:oreeed/UI/TEstZone/FullImagePageRoute.dart';
 import 'package:oreeed/Utiles/Constants.dart';
@@ -82,13 +84,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(
-                            top: 20.0, left: 20.0, right: 20.0, bottom: 20.0),
-                        child: Html(
-                          data: gridItem.productsDescription,
-                          //Optional parameters:
-                        ),
-                      ),
+                          padding: const EdgeInsets.only(
+                              top: 20.0, left: 20.0, right: 20.0, bottom: 20.0),
+                          child: descriptionHtml(gridItem.productsDescription)),
                       // Padding(
                       //   padding: const EdgeInsets.only(left: 20.0),
                       //   child: Text(
@@ -291,9 +289,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                         "hero-grid-${gridItem.productsId}",
                                                     child: GestureDetector(
                                                       child: CachedNetworkImage(
-                                                        imageUrl:
-                                                            "http://staging.oreeed.com/" +
-                                                                _selected,
+                                                        imageUrl: imageUrl +
+                                                            _selected,
                                                       ),
                                                       onTap: () {
                                                         Navigator.of(context)
@@ -303,7 +300,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                                   animation,
                                                                   anotherAnimation) {
                                                                 return FullImagePageRoute(
-                                                                    "http://staging.oreeed.com/" +
+                                                                    imageUrl +
                                                                         _selected);
                                                               },
                                                               transitionDuration:
@@ -340,8 +337,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                 Align(
                                                   alignment: Alignment.topRight,
                                                   child: FavoriteIcon(
-                                                      gridItem.id,
-                                                      int.parse(_user.id)),
+                                                      gridItem.id, (_user.id)),
                                                 ),
                                               ],
                                             ),
@@ -366,8 +362,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                   child: Center(
                                                     child: CachedNetworkImage(
                                                       imageUrl:
-                                                          "http://staging.oreeed.com/" +
-                                                              e.image,
+                                                          imageUrl + e.image,
                                                       placeholder: (context,
                                                               url) =>
                                                           CupertinoActivityIndicator(),
@@ -485,7 +480,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                 image:
                                                     CachedNetworkImageProvider(
                                                   gridItem.productsImage != null
-                                                      ? "http://staging.oreeed.com/" +
+                                                      ? imageUrl +
                                                           gridItem.productsImage
                                                       : "",
                                                 ),
@@ -495,7 +490,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                           Align(
                                             alignment: Alignment.topRight,
                                             child: FavoriteIcon(
-                                                gridItem.id, int.parse(userId)),
+                                                gridItem.id, (userId)),
                                           ),
                                         ],
                                       ),
@@ -506,7 +501,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                               pageBuilder: (context, animation,
                                                   anotherAnimation) {
                                                 return FullImagePageRoute(
-                                                  "http://staging.oreeed.com/" +
+                                                  imageUrl +
                                                       gridItem.productsImage,
                                                 );
                                               },
@@ -538,16 +533,18 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       decoration: BoxDecoration(
                                         image: DecorationImage(
                                           image: CachedNetworkImageProvider(
-                                            "http://staging.oreeed.com/" +
-                                                gridItem.productsImage,
+                                            gridItem.productsImage != null
+                                                ? imageUrl +
+                                                    gridItem.productsImage
+                                                : '',
                                           ),
                                         ),
                                       ),
                                     ),
                                     Align(
                                       alignment: Alignment.topRight,
-                                      child: FavoriteIcon(
-                                          gridItem.id, int.parse(_user.id)),
+                                      child:
+                                          FavoriteIcon(gridItem.id, (_user.id)),
                                     ),
                                   ],
                                 ),
@@ -586,7 +583,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       ? gridItem.productsPrice +
                                           ' ' +
                                           gridItem.currency.toString()
-                                      : gridItem.productsPrice + ' ' + "SDG",
+                                      : gridItem.productsPrice ??
+                                          '0' + ' ' + "SDG",
                                   style: _customTextStyle,
                                 ),
                                 Padding(padding: EdgeInsets.only(top: 10.0)),
@@ -619,7 +617,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                   MainAxisAlignment.center,
                                               children: <Widget>[
                                                 Text(
-                                                  gridItem.rating,
+                                                  gridItem.rating ?? '0.0',
                                                   style: TextStyle(
                                                       color: Colors.white),
                                                 ),
@@ -641,8 +639,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                                         padding:
                                             const EdgeInsets.only(right: 15.0),
                                         child: Text(
-                                          gridItem.isOriginal.toString() == "1"
-                                              ? "original"
+                                          gridItem.isOriginal != null
+                                              ? gridItem.isOriginal
+                                                          .toString() ==
+                                                      "1"
+                                                  ? "original"
+                                                  : ""
                                               : "",
                                           style: TextStyle(
                                               color: Colors.black54,
@@ -811,20 +813,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                                         right: 20.0,
                                         bottom: 10.0,
                                         left: 20.0),
-                                    child: Html(
-                                      data: gridItem.productsDescription,
-                                      //Optional parameters:
-                                      style: {
-                                        "div": Style(
-                                            padding: EdgeInsets.all(6),
-                                            backgroundColor: Colors.grey,
-                                            textAlign: TextAlign.center,
-                                            fontSize: FontSize.medium,
-                                            wordSpacing: 30.0
-//                                        text-align:center,
-                                            ),
-                                      },
-                                    ),
+                                    child: descriptionHtml(
+                                        gridItem.productsDescription),
                                   ),
                                   Padding(
                                     padding:
@@ -953,12 +943,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                     size: 25.0,
                                                     starCount: 5,
                                                     rating: double.parse(
-                                                        gridItem.rating),
+                                                        gridItem.rating ?? '0'),
                                                     color: Colors.yellow,
                                                   ),
                                                   SizedBox(width: 5.0),
                                                   Text(
-                                                    "${gridItem.totalUserRated} Reviews",
+                                                    "${gridItem.totalUserRated ?? 0} Reviews",
                                                   )
                                                 ]),
                                           ],
@@ -1287,6 +1277,31 @@ class _ProductDetailsState extends State<ProductDetails> {
     );
   }
 
+  dynamic descriptionHtml(data) {
+    try {
+      return Html(
+        data: data,
+        //Optional parameters:
+        style: {
+          "div": Style(
+              padding: EdgeInsets.all(6),
+              backgroundColor: Colors.grey,
+              textAlign: TextAlign.center,
+              fontSize: FontSize.medium,
+              wordSpacing: 30.0
+//                                        text-align:center,
+              ),
+        },
+      );
+    } catch (e) {
+      return Text(
+        'No Description Available Right Now',
+        // style: _subHeaderCustomStyle.copyWith(
+        //     color: Colors.indigoAccent, fontSize: 14.0),
+      );
+    }
+  }
+
   Widget _Rating({String date, String details, double rating, String image}) {
     return ListTile(
       leading: Container(
@@ -1489,8 +1504,7 @@ class FavoriteItem extends StatelessWidget {
                             topRight: Radius.circular(7.0)),
                         image: DecorationImage(
                             image: CachedNetworkImageProvider(
-                                "http://staging.oreeed.com/" +
-                                    gridItem.productsImage),
+                                imageUrl + gridItem.productsImage),
                             fit: BoxFit.cover)),
                   ),
                   Padding(padding: EdgeInsets.only(top: 15.0)),
@@ -1542,7 +1556,7 @@ class FavoriteItem extends StatelessWidget {
                           ],
                         ),
                         Text(
-                          gridItem.productsPrice,
+                          gridItem.productsPrice ?? '0',
                           style: TextStyle(
                               fontFamily: "Montserrat",
                               color: Colors.black26,
@@ -1631,11 +1645,12 @@ class _TopRatedListState extends State<TopRatedList> {
 
 class FavoriteIcon extends StatelessWidget {
   final int id;
-  final int userId;
+  dynamic userId;
   FavoriteIcon(this.id, this.userId);
 
   @override
   Widget build(BuildContext context) {
+    userId = userId != null ? int.parse(userId.toString()) : userId;
     return Consumer<ProductsProvider>(builder: (context, productProvider, _) {
       myIds = [];
       if (favs != null && favs.isNotEmpty) {
@@ -1647,30 +1662,43 @@ class FavoriteIcon extends StatelessWidget {
         padding: EdgeInsets.only(right: 18.0, top: 12),
         child: processList.contains(id)
             ? CupertinoActivityIndicator()
-            : favs != null && myIds.contains(id)
+            : userId == null
                 ? InkWell(
                     onTap: () {
-                      myIds.removeWhere((element) => element == id);
-                      productProvider.deleteFromLikedProducts(
-                          context, id, userId);
-                    },
-                    child: Icon(
-                      Icons.favorite,
-                      size: 35,
-                      color: appBlue,
-                    ),
-                  )
-                : InkWell(
-                    onTap: () {
-                      myIds.add(id);
-                      productProvider.addToLikedProducts(context, id, userId);
+                      Navigator.of(context).pushReplacement(PageRouteBuilder(
+                          pageBuilder: (_, __, ___) => new ChoseLogin()));
                     },
                     child: Icon(
                       Icons.favorite_border,
                       size: 35,
                       color: appBlue,
                     ),
-                  ),
+                  )
+                : favs != null && myIds.contains(id)
+                    ? InkWell(
+                        onTap: () {
+                          myIds.removeWhere((element) => element == id);
+                          productProvider.deleteFromLikedProducts(
+                              context, id, userId);
+                        },
+                        child: Icon(
+                          Icons.favorite,
+                          size: 35,
+                          color: appBlue,
+                        ),
+                      )
+                    : InkWell(
+                        onTap: () {
+                          myIds.add(id);
+                          productProvider.addToLikedProducts(
+                              context, id, userId);
+                        },
+                        child: Icon(
+                          Icons.favorite_border,
+                          size: 35,
+                          color: appBlue,
+                        ),
+                      ),
       );
     });
   }

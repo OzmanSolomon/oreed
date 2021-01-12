@@ -176,10 +176,19 @@ class _SplashScreenState extends State<SplashScreen> {
           ),
         );
       } else {
-        Navigator.of(context).pushReplacement(
+        Navigator.of(context).push(
           PageRouteBuilder(
-            pageBuilder: (_, __, ___) => ChoseLogin(),
-          ),
+              pageBuilder: (_, __, ___) => new BottomNavigationBarPage(),
+              transitionDuration: Duration(milliseconds: 750),
+
+              /// Set animation with opacity
+              transitionsBuilder:
+                  (_, Animation<double> animation, __, Widget child) {
+                return Opacity(
+                  opacity: animation.value,
+                  child: child,
+                );
+              }),
         );
       }
     }
@@ -361,10 +370,23 @@ class _ThirdScreenState extends State<ThirdScreen> {
                               ),
                             );
                           } else {
-                            Navigator.of(context).pushReplacement(
+                            Navigator.of(context).push(
                               PageRouteBuilder(
-                                pageBuilder: (_, __, ___) => ChoseLogin(),
-                              ),
+                                  pageBuilder: (_, __, ___) =>
+                                      new BottomNavigationBarPage(),
+                                  transitionDuration:
+                                      Duration(milliseconds: 750),
+
+                                  /// Set animation with opacity
+                                  transitionsBuilder: (_,
+                                      Animation<double> animation,
+                                      __,
+                                      Widget child) {
+                                    return Opacity(
+                                      opacity: animation.value,
+                                      child: child,
+                                    );
+                                  }),
                             );
                           }
                         }
@@ -443,21 +465,23 @@ class _ThirdScreenState extends State<ThirdScreen> {
                               ),
                             );
                           } else {
-                            Navigator.of(context).pushReplacement(
+                            Navigator.of(context).push(
                               PageRouteBuilder(
-                                pageBuilder: (_, __, ___) => new ChoseLogin(),
-                                transitionsBuilder: (_,
-                                    Animation<double> animation,
-                                    __,
-                                    Widget widget) {
-                                  return Opacity(
-                                    opacity: animation.value,
-                                    child: widget,
-                                  );
-                                },
-                                transitionDuration:
-                                    Duration(milliseconds: 1500),
-                              ),
+                                  pageBuilder: (_, __, ___) =>
+                                      new BottomNavigationBarPage(),
+                                  transitionDuration:
+                                      Duration(milliseconds: 750),
+
+                                  /// Set animation with opacity
+                                  transitionsBuilder: (_,
+                                      Animation<double> animation,
+                                      __,
+                                      Widget child) {
+                                    return Opacity(
+                                      opacity: animation.value,
+                                      child: child,
+                                    );
+                                  }),
                             );
                           }
                         }

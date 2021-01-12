@@ -23,7 +23,7 @@ class NotificationRepo {
 
       final response = await Dio().post(
         // Uri.encodeFull(
-        "http://staging.oreeed.com/api/get_my_notifications",
+        baseuRL + "get_my_notifications",
 
         data: {"customer_id": userId},
       );

@@ -8,7 +8,7 @@ class NoData extends StatelessWidget {
     return Container(
       width: 500.0,
       color: Colors.white,
-      height: 200,
+      // height: 200,
       child: SingleChildScrollView(
         child: Center(
           child: Column(
@@ -35,39 +35,19 @@ class NoData extends StatelessWidget {
 class LoaderFetchingData extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    MediaQueryData mediaQueryData = MediaQuery.of(context);
-    return Container(
-      width: 500.0,
-      color: Colors.white,
-      height: double.infinity,
-      child: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Padding(
-                padding:
-                    EdgeInsets.only(top: mediaQueryData.padding.top + 50.0),
-              ),
-              SizedBox(
-                width: 250.0,
-                child: TextLiquidFill(
-                  text: 'Fetching . . .',
-                  waveColor: Color(0xff033766),
-                  boxBackgroundColor: Colors.white,
-                  loadDuration: Duration(seconds: 2),
-                  waveDuration: Duration(seconds: 2),
-                  textStyle: TextStyle(
+    return Center(
+      child: TextLiquidFill(
+        text: 'Fetching . . .',
+        waveColor: Color(0xff033766),
+        boxBackgroundColor: Colors.white,
+        loadDuration: Duration(seconds: 2),
+        waveDuration: Duration(seconds: 2),
+        textStyle: TextStyle(
 //                    color: Colors.black,
-                    fontSize: 30.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  boxHeight: 300.0,
-                ),
-              ),
-            ],
-          ),
+          fontSize: 30.0,
+          fontWeight: FontWeight.bold,
         ),
+        boxHeight: 100.0,
       ),
     );
   }
