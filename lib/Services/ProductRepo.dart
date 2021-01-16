@@ -12,7 +12,6 @@ import 'package:provider/provider.dart';
 
 ApiResponse specialList;
 ApiResponse flashSaleList;
-ApiResponse favList;
 
 class ProductRepo {
   ////////////////////////////////  Method for LogInWithOtp
@@ -132,39 +131,34 @@ class ProductRepo {
   Future<ApiResponse> fetchProductList(String router) async {
     ApiResponse apiResponse;
     try {
-      if (favList == null) {
-        await ApiHandler().postMethodWithoutToken(
-            url: baseuRL + router,
-            body: {"language_id": 1}).then((serverApiResponse) async {
-          if (serverApiResponse.code == 1) {
-            var products = json.decode(serverApiResponse.object.toString());
-            final productsModel =
-                productsModelFromMap(products['product_data'].toString());
-            if (productsModel.success == "1") {
-              apiResponse = new ApiResponse(
-                  code: 1,
-                  msg: productsModel.message,
-                  object: productsModel.product);
-              favList = apiResponse;
-            } else {
-              apiResponse = new ApiResponse(
-                  code: int.parse(productsModel.success),
-                  msg: productsModel.message,
-                  object: []);
-              favList = apiResponse;
-            }
+      await ApiHandler().postMethodWithoutToken(
+          url: baseuRL + router,
+          body: {"language_id": 1}).then((serverApiResponse) async {
+        if (serverApiResponse.code == 1) {
+          final productsModel = productsModelFromMap(serverApiResponse.object);
+          if (productsModel.success == "1") {
+            apiResponse = new ApiResponse(
+                code: 1,
+                msg: productsModel.message,
+                object: productsModel.product);
+            return apiResponse;
           } else {
             apiResponse = new ApiResponse(
-                code: apiResponse.code, msg: apiResponse.msg, object: []);
-            favList = apiResponse;
+                code: int.parse(productsModel.success),
+                msg: productsModel.message,
+                object: []);
+            return apiResponse;
           }
-        });
-      }
+        } else {
+          apiResponse = new ApiResponse(
+              code: apiResponse.code, msg: apiResponse.msg, object: []);
+          return apiResponse;
+        }
+      });
     } catch (error) {
       apiResponse = new ApiResponse(code: 0, msg: "Network Error");
-      favList = apiResponse;
+      return apiResponse;
     }
-    return favList;
   }
 
   Future<ApiResponse> fetchProductByCategory(String id) async {

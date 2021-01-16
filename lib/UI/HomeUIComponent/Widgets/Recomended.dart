@@ -82,7 +82,8 @@ class _RecommendedListState extends State<RecommendedList> {
                         ),
                       );
                     } else {
-                      return Center(child: NoData());
+                      return Container(
+                          height: 80, child: Center(child: NoData()));
                     }
                     break;
                   default:

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oreeed/Models/ApiResponse.dart';
 import 'package:oreeed/Models/ProductsModel.dart';
 import 'package:oreeed/Services/BrandMenuCategoryRepo.dart';
 import 'package:oreeed/Services/ProductRepo.dart';
@@ -86,14 +87,18 @@ class ProductsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void fetchProductList() async {
+  Future<ApiResponse> fetchProductList() async {
+    ApiResponse myApiResponse;
     try {
-      ProductRepo().fetchProductList("most_liked").then((apiResponse) {
+      await ProductRepo()
+          .fetchProductList("get_all_products")
+          .then((apiResponse) {
+        myApiResponse = apiResponse;
         if (apiResponse != null) {
           switch (apiResponse.code) {
             case 1:
               List<Product> products = apiResponse.object;
-              if (products.isNotEmpty != null && products.isNotEmpty) {
+              if (products != null && products.isNotEmpty) {
                 productList.clear();
                 productList.addAll(products);
                 isSearchingReady = true;
@@ -105,16 +110,21 @@ class ProductsProvider with ChangeNotifier {
               break;
           }
         } else {
+          myApiResponse = new ApiResponse(code: 0, msg: "Network Error");
+
           productList.clear();
           productList = [];
           notifyListeners();
         }
       });
     } catch (Exception) {
+      myApiResponse = new ApiResponse(code: 0, msg: "Network Error");
+
       productList.clear();
       productList = [];
       notifyListeners();
     }
+    return myApiResponse;
   }
 
   void addReview(
@@ -158,18 +168,18 @@ class ProductsProvider with ChangeNotifier {
               elevation: 5,
               behavior: SnackBarBehavior.floating,
             ));
-            Navigator.of(scaffoldKey.currentContext).push(PageRouteBuilder(
-                pageBuilder: (_, __, ___) => new ProductDetails(product),
-                transitionDuration: Duration(milliseconds: 750),
+            // Navigator.of(scaffoldKey.currentContext).push(PageRouteBuilder(
+            //     pageBuilder: (_, __, ___) => new ProductDetails(product),
+            //     transitionDuration: Duration(milliseconds: 750),
 
-                /// Set animation with opacity
-                transitionsBuilder:
-                    (_, Animation<double> animation, __, Widget child) {
-                  return Opacity(
-                    opacity: animation.value,
-                    child: child,
-                  );
-                }));
+            //     /// Set animation with opacity
+            //     transitionsBuilder:
+            //         (_, Animation<double> animation, __, Widget child) {
+            //       return Opacity(
+            //         opacity: animation.value,
+            //         child: child,
+            //       );
+            //     }));
           } else {
             ShowSnackBar(
                 context: scaffoldKey.currentContext,

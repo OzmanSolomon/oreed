@@ -26,7 +26,9 @@ class _searchAppbarState extends State<searchAppbar> {
   @override
   void initState() {
     super.initState();
-    _products = ProductRepo().fetchProductList("most_liked");
+    // Provider.of<ProductsProvider>(context, listen: false).fetchProductList();
+    _products = Provider.of<ProductsProvider>(context, listen: false)
+        .fetchProductList();
   }
 
   @override
@@ -127,13 +129,13 @@ class _searchAppbarState extends State<searchAppbar> {
                     var apiResponse = snapshot.data;
                     switch (snapshot.connectionState) {
                       case ConnectionState.none:
-                        return Container();
+                        return Center(child: TryAgainLater());
                         break;
                       case ConnectionState.waiting:
-                        return Container();
+                        return Center(child: LoaderFetchingData());
                         break;
                       case ConnectionState.active:
-                        return Container();
+                        return Center(child: LoaderFetchingData());
                         break;
                       case ConnectionState.done:
                         if (apiResponse.code == 1) {
@@ -342,7 +344,8 @@ class _searchAppbarState extends State<searchAppbar> {
                       ),
                       Flexible(
                         child: Visibility(
-                          visible: !productProvider.filteredProductList.isEmpty,
+                          visible:
+                              productProvider.filteredProductList.isNotEmpty,
                           child: Container(
                             height: MediaQuery.of(context).size.height - 200,
                             child: Padding(

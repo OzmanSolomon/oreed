@@ -166,8 +166,7 @@ class _CategoryListState extends State<CategoryList> {
                   ],
                 );
               } else {
-                return EmptySlider(
-                    ctx: context, height: widget.height, width: widget.width);
+                return Center(child: NoData());
               }
               break;
             default:
