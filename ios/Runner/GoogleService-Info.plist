@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>816857496204-knvmme30ouknsunse8l2a6icrr8h39dt.apps.googleusercontent.com</string>
+	<string>816857496204-18es03a935rllhp32ptl07e2erpg7j2e.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.816857496204-knvmme30ouknsunse8l2a6icrr8h39dt</string>
+	<string>com.googleusercontent.apps.816857496204-18es03a935rllhp32ptl07e2erpg7j2e</string>
 	<key>API_KEY</key>
 	<string>AIzaSyBMyZT0TzIG2BxMYgsWOOaQBvCDL383ouY</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.cremetechnology.oreed</string>
+	<string>com.cremetechnology.oreeed</string>
 	<key>PROJECT_ID</key>
 	<string>oreeed-b044c</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:816857496204:ios:dd38d10fbe7c343e2ad9a9</string>
+	<string>1:816857496204:ios:910bda4164efc2292ad9a9</string>
 </dict>
 </plist>

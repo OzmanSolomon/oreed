@@ -337,7 +337,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                 Align(
                                                   alignment: Alignment.topRight,
                                                   child: FavoriteIcon(
-                                                      gridItem.id, (_user.id)),
+                                                      gridItem.id, (userId)),
                                                 ),
                                               ],
                                             ),
@@ -685,27 +685,28 @@ class _ProductDetailsState extends State<ProductDetails> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: <Widget>[
-                                            gridItem.attributes[1].values
-                                                    .isNotEmpty
+                                            gridItem.attributes[1]
+                                                        .productsOptions !=
+                                                    null
                                                 ? Text(
                                                     AppLocalizations.of(context)
                                                         .tr('size'),
                                                     style:
                                                         _subHeaderCustomStyle)
                                                 : Container(),
-                                            gridItem.attributes[1].values
-                                                    .isNotEmpty
+                                            gridItem.attributes[1]
+                                                        .productsOptions !=
+                                                    null
                                                 ? Row(
                                                     children: List.generate(
                                                       /// Get data in flashSaleItem.dart (ListItem folder)
-                                                      gridItem.attributes[1]
-                                                          .values.length,
+                                                      gridItem
+                                                          .attributes.length,
                                                       (index) =>
                                                           RadioButtonCustom(
                                                         txt: gridItem
-                                                            .attributes[1]
-                                                            .values[index]
-                                                            .value,
+                                                            .attributes[index]
+                                                            .productsOptions,
                                                       ),
                                                     ),
                                                   )
@@ -720,8 +721,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                                             Padding(
                                                 padding:
                                                     EdgeInsets.only(top: 10.0)),
-                                            gridItem.attributes[0].values
-                                                    .isNotEmpty
+                                            gridItem.attributes[0]
+                                                        .productsOptions !=
+                                                    null
                                                 ? Text(
                                                     AppLocalizations.of(context)
                                                         .tr('color'),
@@ -729,44 +731,41 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                         _subHeaderCustomStyle,
                                                   )
                                                 : Container(),
-                                            gridItem.attributes[0].values
-                                                    .isNotEmpty
+                                            gridItem.attributes[0]
+                                                        .productsOptions !=
+                                                    null
                                                 ? Row(
                                                     children: List.generate(
                                                       /// Get data in flashSaleItem.dart (ListItem folder)
-                                                      gridItem.attributes[0]
-                                                          .values.length,
+                                                      gridItem
+                                                          .attributes.length,
                                                       (index) => RadioButtonColor(gridItem
-                                                                  .attributes[0]
-                                                                  .values[index]
-                                                                  .value ==
+                                                                  .attributes[
+                                                                      index]
+                                                                  .productsOptionsValues ==
                                                               'blue'
                                                           ? Colors.blue
                                                           : gridItem
                                                                       .attributes[
-                                                                          0]
-                                                                      .values[
                                                                           index]
-                                                                      .value ==
+                                                                      .productsOptionsValues ==
                                                                   'Red'
                                                               ? Colors.red
                                                               : gridItem
                                                                           .attributes[
-                                                                              0]
-                                                                          .values[
                                                                               index]
-                                                                          .value ==
+                                                                          .productsOptionsValues ==
                                                                       'Pink'
                                                                   ? Colors.pink
-                                                                  : gridItem.attributes[0].values[index].value ==
+                                                                  : gridItem.attributes[index].productsOptionsValues ==
                                                                           'green'
                                                                       ? Colors
                                                                           .green
-                                                                      : gridItem.attributes[0].values[index].value ==
+                                                                      : gridItem.attributes[index].productsOptionsValues ==
                                                                               'Sky Blue'
                                                                           ? Colors
                                                                               .blueAccent
-                                                                          : gridItem.attributes[0].values[index].value == 'Purple'
+                                                                          : gridItem.attributes[index].productsOptionsValues == 'Purple'
                                                                               ? Colors.purple
                                                                               : Colors.black),
                                                     ),

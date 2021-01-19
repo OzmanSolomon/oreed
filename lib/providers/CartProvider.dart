@@ -278,7 +278,7 @@ class CartItem {
 
   Map<String, dynamic> toMap() {
     var _attributes = [];
-    item.attributes.forEach((item) => _attributes.add(item.toMap()));
+    item.attributes.forEach((item) => _attributes.add(item.toJson()));
     print("###&&&&&&&&&&&&&&&& item ${item.attributes.length}");
     print("###&&&&&&&&&&&&&&&& _attributes $_attributes");
     Map<String, dynamic> map = {

@@ -205,7 +205,7 @@ class Product {
         defaultStock: json["defaultStock"],
         attributes: json["attributes"] != null
             ? List<Attribute>.from(
-                json["attributes"].map((x) => Attribute.fromMap(x)))
+                json["attributes"].map((x) => Attribute.fromJson(x)))
             : [],
       );
 
@@ -255,28 +255,49 @@ class Product {
         "reviewed_customers":
             List<dynamic>.from(reviewedCustomers.map((x) => x.toMap())),
         "defaultStock": defaultStock,
-        "attributes": List<dynamic>.from(attributes.map((x) => x.toMap())),
+        "attributes": List<dynamic>.from(attributes.map((x) => x.toJson())),
       };
 }
 
 class Attribute {
-  Attribute({
-    this.option,
-    this.values,
-  });
+  int productsOptionsId;
+  String productsOptions;
+  int productsAttributesId;
+  int productsOptionsValuesId;
+  String productsOptionsValues;
+  String optionsValuesPrice;
+  String pricePrefix;
 
-  Option option;
-  List<Value> values;
+  Attribute(
+      {this.productsOptionsId,
+      this.productsOptions,
+      this.productsAttributesId,
+      this.productsOptionsValuesId,
+      this.productsOptionsValues,
+      this.optionsValuesPrice,
+      this.pricePrefix});
 
-  factory Attribute.fromMap(Map<String, dynamic> json) => Attribute(
-        option: Option.fromMap(json["option"]),
-        values: List<Value>.from(json["values"].map((x) => Value.fromMap(x))),
-      );
+  Attribute.fromJson(Map<String, dynamic> json) {
+    productsOptionsId = json['products_options_id'];
+    productsOptions = json['products_options'];
+    productsAttributesId = json['products_attributes_id'];
+    productsOptionsValuesId = json['products_options_values_id'];
+    productsOptionsValues = json['products_options_values'];
+    optionsValuesPrice = json['options_values_price'];
+    pricePrefix = json['price_prefix'];
+  }
 
-  Map<String, dynamic> toMap() => {
-        "option": option.toMap(),
-        "values": List<dynamic>.from(values.map((x) => x.toMap())),
-      };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['products_options_id'] = this.productsOptionsId;
+    data['products_options'] = this.productsOptions;
+    data['products_attributes_id'] = this.productsAttributesId;
+    data['products_options_values_id'] = this.productsOptionsValuesId;
+    data['products_options_values'] = this.productsOptionsValues;
+    data['options_values_price'] = this.optionsValuesPrice;
+    data['price_prefix'] = this.pricePrefix;
+    return data;
+  }
 }
 
 class Option {
