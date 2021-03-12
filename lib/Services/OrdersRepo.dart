@@ -79,6 +79,7 @@ class OrdersRepo {
   Future<ApiResponse> placeOrder({FullOrder fullOrder}) async {
     ApiResponse apiResponse;
     try {
+      print(json.encode(fullOrder.toMap().toString()));
       await ApiHandler()
           .postMethodWithoutToken(
               url: baseuRL + 'addtoorder', body: fullOrder.toMap())
@@ -88,7 +89,6 @@ class OrdersRepo {
           if (res["success"] == "1") {
             apiResponse = new ApiResponse(
                 code: 1, msg: res["message"], object: res["data"]);
-              
           } else {
             apiResponse = new ApiResponse(
                 code: int.parse(res["success"]), msg: res["message"]);

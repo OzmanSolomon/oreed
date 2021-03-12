@@ -661,12 +661,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                         ),
 
                         /// Background white for chose Size and Color
-                        gridItem.attributes.isNotEmpty
-                            ? gridItem.attributes.length > 1
+                        gridItem.givenAttributes.isNotEmpty
+                            ? gridItem.givenAttributes.length > 1
                                 ? Padding(
                                     padding: const EdgeInsets.only(top: 10.0),
                                     child: Container(
-                                      height: 220.0,
+                                      // height: 220.0,
                                       width: 600.0,
                                       decoration: BoxDecoration(
                                           color: Colors.white,
@@ -685,32 +685,80 @@ class _ProductDetailsState extends State<ProductDetails> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: <Widget>[
-                                            gridItem.attributes[1]
-                                                        .productsOptions !=
-                                                    null
-                                                ? Text(
-                                                    AppLocalizations.of(context)
-                                                        .tr('size'),
-                                                    style:
-                                                        _subHeaderCustomStyle)
-                                                : Container(),
-                                            gridItem.attributes[1]
-                                                        .productsOptions !=
-                                                    null
-                                                ? Row(
-                                                    children: List.generate(
-                                                      /// Get data in flashSaleItem.dart (ListItem folder)
-                                                      gridItem
-                                                          .attributes.length,
-                                                      (index) =>
-                                                          RadioButtonCustom(
-                                                        txt: gridItem
-                                                            .attributes[index]
-                                                            .productsOptions,
-                                                      ),
-                                                    ),
-                                                  )
-                                                : Container(),
+                                            Column(
+                                                children: List.generate(
+
+                                                    /// Get data in flashSaleItem.dart (ListItem folder)
+                                                    gridItem
+                                                        .givenAttributes.length,
+                                                    (index) => Column(
+                                                            children: <Widget>[
+                                                              gridItem.givenAttributes
+                                                                          .isNotEmpty &&
+                                                                      gridItem
+                                                                          .givenAttributes[
+                                                                              index]
+                                                                          .values
+                                                                          .isNotEmpty &&
+                                                                      gridItem.givenAttributes[index].values[0].value !=
+                                                                          null
+                                                                  ? Text(
+                                                                      AppLocalizations.of(context).tr(gridItem
+                                                                          .givenAttributes[
+                                                                              index]
+                                                                          .option
+                                                                          .name),
+                                                                      style:
+                                                                          _subHeaderCustomStyle)
+                                                                  : Container(),
+                                                              gridItem.givenAttributes
+                                                                          .isNotEmpty &&
+                                                                      gridItem
+                                                                          .givenAttributes[
+                                                                              index]
+                                                                          .values
+                                                                          .isNotEmpty &&
+                                                                      gridItem
+                                                                              .givenAttributes[index]
+                                                                              .values[0]
+                                                                              .value !=
+                                                                          null
+                                                                  ? Row(
+                                                                      children:
+                                                                          List.generate(
+                                                                        /// Get data in flashSaleItem.dart (ListItem folder)
+                                                                        gridItem
+                                                                            .givenAttributes[index]
+                                                                            .values
+                                                                            .length,
+                                                                        (index2) => gridItem.givenAttributes[0].option.name ==
+                                                                                'color'
+                                                                            ? RadioButtonColor(
+                                                                                gridItem.givenAttributes[index].values[index2].value == 'blue'
+                                                                                    ? Colors.blue
+                                                                                    : gridItem.givenAttributes[index].values[index2].value == 'Red'
+                                                                                        ? Colors.red
+                                                                                        : gridItem.givenAttributes[index].values[index2].value == 'Pink'
+                                                                                            ? Colors.pink
+                                                                                            : gridItem.givenAttributes[index].values[index2].value == 'green'
+                                                                                                ? Colors.green
+                                                                                                : gridItem.givenAttributes[index].values[index2].value == 'Sky Blue'
+                                                                                                    ? Colors.blueAccent
+                                                                                                    : gridItem.givenAttributes[index].values[index2].value == 'Purple'
+                                                                                                        ? Colors.purple
+                                                                                                        : Colors.black,
+                                                                                gridItem,
+                                                                                gridItem.givenAttributes[index],
+                                                                              )
+                                                                            : RadioButtonCustom(
+                                                                                txt: gridItem.givenAttributes[index].values[index2].value,
+                                                                                product: gridItem,
+                                                                                attribute: gridItem.givenAttributes[index],
+                                                                              ),
+                                                                      ),
+                                                                    )
+                                                                  : Container()
+                                                            ]))),
                                             Padding(
                                                 padding:
                                                     EdgeInsets.only(top: 15.0)),
@@ -721,9 +769,16 @@ class _ProductDetailsState extends State<ProductDetails> {
                                             Padding(
                                                 padding:
                                                     EdgeInsets.only(top: 10.0)),
-                                            gridItem.attributes[0]
-                                                        .productsOptions !=
-                                                    null
+                                            gridItem.givenAttributes
+                                                        .isNotEmpty &&
+                                                    gridItem.givenAttributes[0]
+                                                        .values.isNotEmpty &&
+                                                    gridItem.givenAttributes[0]
+                                                            .values[0].value !=
+                                                        null &&
+                                                    gridItem.givenAttributes[0]
+                                                            .option.name ==
+                                                        'color'
                                                 ? Text(
                                                     AppLocalizations.of(context)
                                                         .tr('color'),
@@ -731,43 +786,61 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                         _subHeaderCustomStyle,
                                                   )
                                                 : Container(),
-                                            gridItem.attributes[0]
-                                                        .productsOptions !=
-                                                    null
+                                            gridItem.givenAttributes
+                                                        .isNotEmpty &&
+                                                    gridItem.givenAttributes[0]
+                                                        .values.isNotEmpty &&
+                                                    gridItem.givenAttributes[0]
+                                                            .values[0].value !=
+                                                        null &&
+                                                    gridItem.givenAttributes[0]
+                                                            .option.name ==
+                                                        'color'
                                                 ? Row(
                                                     children: List.generate(
                                                       /// Get data in flashSaleItem.dart (ListItem folder)
-                                                      gridItem
-                                                          .attributes.length,
-                                                      (index) => RadioButtonColor(gridItem
-                                                                  .attributes[
-                                                                      index]
-                                                                  .productsOptionsValues ==
-                                                              'blue'
-                                                          ? Colors.blue
-                                                          : gridItem
-                                                                      .attributes[
-                                                                          index]
-                                                                      .productsOptionsValues ==
-                                                                  'Red'
-                                                              ? Colors.red
-                                                              : gridItem
-                                                                          .attributes[
-                                                                              index]
-                                                                          .productsOptionsValues ==
-                                                                      'Pink'
-                                                                  ? Colors.pink
-                                                                  : gridItem.attributes[index].productsOptionsValues ==
-                                                                          'green'
-                                                                      ? Colors
-                                                                          .green
-                                                                      : gridItem.attributes[index].productsOptionsValues ==
-                                                                              'Sky Blue'
-                                                                          ? Colors
-                                                                              .blueAccent
-                                                                          : gridItem.attributes[index].productsOptionsValues == 'Purple'
-                                                                              ? Colors.purple
-                                                                              : Colors.black),
+                                                      gridItem.givenAttributes
+                                                          .length,
+                                                      (index) =>
+                                                          RadioButtonColor(
+                                                        gridItem
+                                                                    .givenAttributes[
+                                                                        index]
+                                                                    .values[0]
+                                                                    .value ==
+                                                                'blue'
+                                                            ? Colors.blue
+                                                            : gridItem
+                                                                        .givenAttributes[
+                                                                            index]
+                                                                        .values[
+                                                                            0]
+                                                                        .value ==
+                                                                    'Red'
+                                                                ? Colors.red
+                                                                : gridItem
+                                                                            .givenAttributes[
+                                                                                index]
+                                                                            .values[
+                                                                                0]
+                                                                            .value ==
+                                                                        'Pink'
+                                                                    ? Colors
+                                                                        .pink
+                                                                    : gridItem.givenAttributes[index].values[0].value ==
+                                                                            'green'
+                                                                        ? Colors
+                                                                            .green
+                                                                        : gridItem.givenAttributes[index].values[0].value ==
+                                                                                'Sky Blue'
+                                                                            ? Colors.blueAccent
+                                                                            : gridItem.givenAttributes[index].values[0].value == 'Purple'
+                                                                                ? Colors.purple
+                                                                                : Colors.black,
+                                                        gridItem,
+                                                        gridItem.givenAttributes[
+                                                            index],
+                                                      ),
                                                     ),
                                                   )
                                                 : Container(),
@@ -1211,15 +1284,27 @@ class _ProductDetailsState extends State<ProductDetails> {
                   onTap: () {
                     // if (widget.gridItem.productsMaxStock > 0) {
                     // if (!cartProvider.getCart.contains(widget.gridItem)) {
-                    cartProvider.addToCart(
-                      product: widget.gridItem,
-                    );
-                    ShowSnackBar(
-                        context: _key.currentContext,
-                        msg: AppLocalizations.of(context).tr('itemAdded'),
-                        bgColor: Colors.blue.withOpacity(0.5),
-                        textColor: Colors.black,
-                        height: 25);
+                    if (widget.gridItem.attributes.length >=
+                        widget.gridItem.givenAttributes.length) {
+                      cartProvider.addToCart(
+                        product: widget.gridItem,
+                      );
+                      ShowSnackBar(
+                          context: _key.currentContext,
+                          msg: AppLocalizations.of(context).tr('itemAdded'),
+                          bgColor: Colors.blue.withOpacity(0.5),
+                          textColor: Colors.black,
+                          height: 25);
+                    } else {
+                      ShowSnackBar(
+                          context: _key.currentContext,
+                          msg: AppLocalizations.of(context)
+                              .tr('pleaseselectAttribute'),
+                          bgColor: Colors.blue.withOpacity(0.5),
+                          textColor: Colors.black,
+                          height: 25);
+                    }
+
                     // } else {
                     //   ShowSnackBar(
                     //       context: _key.currentContext,
@@ -1343,21 +1428,35 @@ class _ProductDetailsState extends State<ProductDetails> {
 /// RadioButton for item choose in size
 class RadioButtonCustom extends StatefulWidget {
   String txt;
+  Product product;
+  Attribute attribute;
 
-  RadioButtonCustom({this.txt});
+  RadioButtonCustom({this.txt, this.product, this.attribute});
 
   @override
-  _RadioButtonCustomState createState() => _RadioButtonCustomState(this.txt);
+  _RadioButtonCustomState createState() => _RadioButtonCustomState(
+        this.txt,
+        this.product,
+        this.attribute,
+      );
 }
 
 class _RadioButtonCustomState extends State<RadioButtonCustom> {
-  _RadioButtonCustomState(this.txt);
+  _RadioButtonCustomState(
+    this.txt,
+    this.product,
+    this.attribute,
+  );
 
   String txt;
+  Product product;
+  Attribute attribute;
+
   bool itemSelected = true;
 
   @override
   Widget build(BuildContext context) {
+    itemSelected = product.attributes.contains(attribute);
     return Padding(
       padding: const EdgeInsets.only(top: 10.0, left: 2, right: 2),
       child: InkWell(
@@ -1366,12 +1465,20 @@ class _RadioButtonCustomState extends State<RadioButtonCustom> {
             setState(() {
               if (itemSelected == false) {
                 setState(() {
-                  itemSelected = true;
+                  product.attributes.add(attribute);
+                  // itemSelected = true;
                 });
+                // Provider.of<CartProvider>(context, listen: false)
+                //     .selectedAttributesId
+                //     .add(id);
               } else if (itemSelected == true) {
                 setState(() {
-                  itemSelected = false;
+                  // itemSelected = false;
+                  product.attributes.remove(attribute);
                 });
+                // Provider.of<CartProvider>(context, listen: false)
+                //     .selectedAttributesId
+                //     .remove(id);
               }
             });
           }
@@ -1404,21 +1511,27 @@ class _RadioButtonCustomState extends State<RadioButtonCustom> {
 /// RadioButton for item choose in color
 class RadioButtonColor extends StatefulWidget {
   Color clr;
+  Product product;
+  Attribute attribute;
 
-  RadioButtonColor(this.clr);
+  RadioButtonColor(this.clr, this.product, this.attribute);
 
   @override
-  _RadioButtonColorState createState() => _RadioButtonColorState(this.clr);
+  _RadioButtonColorState createState() =>
+      _RadioButtonColorState(this.clr, this.product, this.attribute);
 }
 
 class _RadioButtonColorState extends State<RadioButtonColor> {
   bool itemSelected = true;
   Color clr;
+  Product product;
+  Attribute attribute;
 
-  _RadioButtonColorState(this.clr);
+  _RadioButtonColorState(this.clr, this.product, this.attribute);
 
   @override
   Widget build(BuildContext context) {
+    itemSelected = product.attributes.contains(attribute);
     return Padding(
       padding: const EdgeInsets.only(top: 10.0),
       child: InkWell(
@@ -1426,12 +1539,20 @@ class _RadioButtonColorState extends State<RadioButtonColor> {
           if (mounted) {
             if (itemSelected == false) {
               setState(() {
-                itemSelected = true;
+                // itemSelected = true;
+                product.attributes.add(attribute);
               });
+              // Provider.of<CartProvider>(context, listen: false)
+              //     .selectedAttributesId
+              //     .add(id);
             } else if (itemSelected == true) {
               setState(() {
-                itemSelected = false;
+                // itemSelected = false;
+                product.attributes.add(attribute);
               });
+              // Provider.of<CartProvider>(context, listen: false)
+              //     .selectedAttributesId
+              //     .remove(id);
             }
           }
         },

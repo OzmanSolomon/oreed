@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:oreeed/Library/Language_Library/lib/easy_localization_delegate.dart';
 import 'package:oreeed/Models/ProductsModel.dart';
@@ -16,7 +18,7 @@ class CartProvider with ChangeNotifier {
   int _stage = 1;
   int _selectDeliveryMethod = 1;
   int _selectedPayMent = 1;
-
+  List<int> selectedAttributesId = [];
   List<Product> get getCart => _inCart;
   double get getTotalPrice => _total;
   MyAddresses get myCurrentAddresses => _currentAddress;
@@ -31,8 +33,7 @@ class CartProvider with ChangeNotifier {
 
   void removeFromCart(int index) {
     updateTotalAccount(_inCart[index].productsQuantity *
-        double.parse(
-            _inCart[index].productsPrice ?? _inCart[index].flashPrice));
+        double.parse(_inCart[index].finalPrice ?? _inCart[index].flashPrice));
     _inCart.removeAt(index);
     notifyListeners();
   }
@@ -60,7 +61,7 @@ class CartProvider with ChangeNotifier {
   void calculateTotalPrice() {
     _total = 0.0;
     _inCart.forEach((element) {
-      _total += element.productsQuantity * double.parse(element.productsPrice);
+      _total += element.productsQuantity * double.parse(element.finalPrice);
     });
     notifyListeners();
   }
@@ -113,7 +114,6 @@ class CartProvider with ChangeNotifier {
   void placeOrder({GlobalKey<ScaffoldState> scaffoldKey, User user}) async {
     var _myProducts = [];
     _inCart.forEach((item) => _myProducts.add(item.toMap()));
-    _inCart.clear();
     Navigator.of(scaffoldKey.currentContext).push(
       PageRouteBuilder(
           opaque: false,
@@ -122,16 +122,27 @@ class CartProvider with ChangeNotifier {
           }),
     );
     //print("############################################");
-    print("User: ${user.toMap()}");
-    //print("############################################");
-    print("Total: $_total");
-    //print("############################################");
-    print("Address: ${_currentAddress.toMap()}");
-    //print("############################################");
-    print("Cart Items: ${_myProducts}");
-    print("$_selectDeliveryMethod");
+    // print("User: ${user.toMap()}");
+    // //print("############################################");
+    // print("Total: $_total");
+    // //print("############################################");
+    // print("Address: ${_currentAddress.toMap()}");
+    // //print("############################################");
+    // print("Cart Items: ${_myProducts}");
+    // print("$_selectDeliveryMethod");
 
     try {
+      // List<Attribute> requestAttribute = [];
+      // _myProducts.forEach((product) {
+      //   product.attributes = [];
+      // });
+      // _myProducts.forEach((product) {
+      //   product.givenAttributes.forEach((attribute) {
+      //     selectedAttributesId.contains(attribute.id)
+      //         ? product.attributes.add(attribute)
+      //         : print(attribute);
+      //   });
+      // });
       FullOrder myOrder = new FullOrder(
           total: _total,
           itemList: _myProducts,
@@ -150,6 +161,7 @@ class CartProvider with ChangeNotifier {
                   bgColor: Colors.grey.withOpacity(0.9),
                   textColor: Colors.black,
                   height: 25);
+              _inCart.clear();
               Navigator.of(scaffoldKey.currentContext).push(
                 PageRouteBuilder(
                     pageBuilder: (_, __, ___) => new BottomNavigationBarPage(),
@@ -285,7 +297,7 @@ class CartItem {
       "customers_basket_quantity": qty,
       "products_id": item.productsId,
       "price": item.productsPrice,
-      "final_price": item.productsPrice,
+      "final_price": item.finalPrice,
       "products_name": item.productsName,
       "attributes": _attributes,
     };

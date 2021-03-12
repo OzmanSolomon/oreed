@@ -200,7 +200,7 @@ class ApiHandler {
         url,
         data: body,
         options: Options(
-          sendTimeout: 5000,
+          // sendTimeout: 5000,
           //receiveTimeout: 3000,
           headers: {
             'Content-Type': 'application/json',

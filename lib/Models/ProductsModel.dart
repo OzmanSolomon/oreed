@@ -84,6 +84,8 @@ class Product {
     this.reviewedCustomers,
     this.defaultStock,
     this.attributes,
+    this.givenAttributes,
+    this.finalPrice,
   });
 
   int productsId;
@@ -129,6 +131,8 @@ class Product {
   int oneRatio;
   List<ReviewedCustomer> reviewedCustomers;
   int defaultStock;
+  String finalPrice;
+  List<Attribute> givenAttributes;
   List<Attribute> attributes;
 
   // "flash_start_date": 1601858700,
@@ -177,6 +181,9 @@ class Product {
         manufacturersUrl: json["manufacturers_url"],
         discountPrice:
             json["discount_price"] == null ? null : json["discount_price"],
+        finalPrice: json["discount_price"] == null
+            ? json["products_price"]
+            : '${int.parse(json["products_price"]) - int.parse(json["discount_price"])}',
         flashStartDate:
             json["flash_start_date"] == null ? null : json["flash_start_date"],
         flashExpiresDate: json["flash_expires_date"] == null
@@ -203,14 +210,16 @@ class Product {
                 .map((x) => ReviewedCustomer.fromMap(x)))
             : [],
         defaultStock: json["defaultStock"],
-        attributes: json["attributes"] != null
+        givenAttributes: json["attributes"] != null
             ? List<Attribute>.from(
                 json["attributes"].map((x) => Attribute.fromJson(x)))
             : [],
+        attributes: [],
       );
 
   Map<String, dynamic> toMap() => {
         "products_id": productsId,
+        "final_price": finalPrice,
         "products_quantity": productsQuantity,
         "products_model": productsModel == null ? null : productsModel,
         "products_image": productsImage,
@@ -256,46 +265,35 @@ class Product {
             List<dynamic>.from(reviewedCustomers.map((x) => x.toMap())),
         "defaultStock": defaultStock,
         "attributes": List<dynamic>.from(attributes.map((x) => x.toJson())),
+        "attributes":
+            List<dynamic>.from(givenAttributes.map((x) => x.toJson())),
       };
 }
 
 class Attribute {
-  int productsOptionsId;
-  String productsOptions;
-  int productsAttributesId;
-  int productsOptionsValuesId;
-  String productsOptionsValues;
-  String optionsValuesPrice;
-  String pricePrefix;
+  Option option;
+  List<Value> values;
 
-  Attribute(
-      {this.productsOptionsId,
-      this.productsOptions,
-      this.productsAttributesId,
-      this.productsOptionsValuesId,
-      this.productsOptionsValues,
-      this.optionsValuesPrice,
-      this.pricePrefix});
+  Attribute({this.option, this.values});
 
   Attribute.fromJson(Map<String, dynamic> json) {
-    productsOptionsId = json['products_options_id'];
-    productsOptions = json['products_options'];
-    productsAttributesId = json['products_attributes_id'];
-    productsOptionsValuesId = json['products_options_values_id'];
-    productsOptionsValues = json['products_options_values'];
-    optionsValuesPrice = json['options_values_price'];
-    pricePrefix = json['price_prefix'];
+    option = json['option'] != null ? new Option.fromMap(json['option']) : null;
+    if (json['values'] != null) {
+      values = new List<Value>();
+      json['values'].forEach((v) {
+        values.add(new Value.fromMap(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['products_options_id'] = this.productsOptionsId;
-    data['products_options'] = this.productsOptions;
-    data['products_attributes_id'] = this.productsAttributesId;
-    data['products_options_values_id'] = this.productsOptionsValuesId;
-    data['products_options_values'] = this.productsOptionsValues;
-    data['options_values_price'] = this.optionsValuesPrice;
-    data['price_prefix'] = this.pricePrefix;
+    if (this.option != null) {
+      data['option'] = this.option.toMap();
+    }
+    if (this.values != null) {
+      data['values'] = this.values.map((v) => v.toMap()).toList();
+    }
     return data;
   }
 }
